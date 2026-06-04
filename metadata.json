@@ -1,0 +1,6 @@
+{
+  "name": "DEEP CLOUD",
+  "description": "Premium luxury e-commerce mobile app experience for high-end vapes, featuring glowing RGB overlays, age-verification flow, interactive flavor wheels, and real-time tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

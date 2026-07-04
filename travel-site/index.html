@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>من قطر إلى الأردن | رحلات ومواعيد وباقات سياحية</title>
+<meta name="description" content="احجز رحلتك من الدوحة إلى الأردن: طيران مباشر، باقات سياحية إلى البتراء ووادي رم والبحر الميت وعمّان، وأسعار تبدأ من 1,499 ر.ق.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --maroon:#8A1538;
+    --maroon-dark:#6B0F2B;
+    --maroon-light:#A93356;
+    --terracotta:#C1652D;
+    --terracotta-light:#E0894F;
+    --sand:#FBF3E7;
+    --sand-dark:#F0DFC4;
+    --navy:#14313B;
+    --navy-light:#1F4A57;
+    --gold:#D4A24C;
+    --ink:#2A2321;
+    --muted:#6E6259;
+    --white:#FFFFFF;
+    --radius-lg:22px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow-sm:0 2px 10px rgba(20,49,59,.06);
+    --shadow-md:0 12px 30px rgba(20,49,59,.12);
+    --shadow-lg:0 20px 50px rgba(20,49,59,.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Cairo', system-ui, sans-serif;
+    background:var(--sand);
+    color:var(--ink);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  input{font-family:inherit;}
+  .container{width:100%; max-width:1180px; margin:0 auto; padding:0 20px;}
+  .section-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(138,21,56,.08); color:var(--maroon);
+    font-weight:700; font-size:.8rem; padding:6px 16px; border-radius:99px;
+    margin-bottom:14px;
+  }
+  .section-head{text-align:center; max-width:640px; margin:0 auto 44px;}
+  .section-head h2{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; color:var(--navy); margin-bottom:12px;}
+  .section-head p{color:var(--muted); font-size:1.02rem;}
+  section{padding:70px 0;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 28px; border-radius:99px; font-weight:700; font-size:.95rem;
+    transition:.25s transform,.25s box-shadow,.25s background,.25s opacity; white-space:nowrap;
+  }
+  .btn-primary{background:var(--maroon); color:var(--white); box-shadow:0 10px 24px rgba(138,21,56,.28);}
+  .btn-primary:hover{background:var(--maroon-dark); transform:translateY(-2px);}
+  .btn-gold{background:var(--gold); color:var(--navy); box-shadow:0 10px 24px rgba(212,162,76,.35);}
+  .btn-gold:hover{transform:translateY(-2px); opacity:.92;}
+  .btn-outline{background:transparent; border:2px solid var(--white); color:var(--white);}
+  .btn-outline:hover{background:var(--white); color:var(--navy);}
+  .btn-block{width:100%;}
+  .btn-sm{padding:10px 18px; font-size:.85rem;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; inset-inline:0; top:0; z-index:1000;
+    background:rgba(251,243,231,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(20,49,59,.06);
+    transition:.3s box-shadow, .3s background;
+  }
+  header.scrolled{box-shadow:var(--shadow-sm); background:rgba(251,243,231,.97);}
+  .navbar{display:flex; align-items:center; justify-content:space-between; padding:14px 0;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--navy);}
+  .logo .logo-badge{
+    width:42px; height:42px; border-radius:12px;
+    background:linear-gradient(135deg,var(--maroon),var(--terracotta));
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.1rem;
+    box-shadow:var(--shadow-sm);
+  }
+  .logo span{color:var(--maroon);}
+  .nav-links{display:flex; align-items:center; gap:30px;}
+  .nav-links a{font-weight:600; font-size:.95rem; color:var(--ink); position:relative; padding:6px 0;}
+  .nav-links a::after{content:"";position:absolute; right:0; bottom:0; width:0; height:2px; background:var(--maroon); transition:.25s;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-actions{display:flex; align-items:center; gap:14px;}
+  .icon-btn{
+    width:42px; height:42px; border-radius:50%; background:var(--white);
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-sm); color:var(--navy); font-size:1.05rem;
+  }
+  .hamburger{display:none; width:42px; height:42px; border-radius:12px; background:var(--white); align-items:center; justify-content:center; box-shadow:var(--shadow-sm); position:relative; z-index:1200;}
+  .hamburger span, .hamburger::before, .hamburger::after{content:""; display:block; width:20px; height:2px; background:var(--navy); border-radius:2px; transition:.3s;}
+  .hamburger::before{position:absolute; transform:translateY(-7px);}
+  .hamburger::after{position:absolute; transform:translateY(7px);}
+  .hamburger.open span{opacity:0;}
+  .hamburger.open::before{transform:rotate(45deg);}
+  .hamburger.open::after{transform:rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed; inset:0; background:var(--navy); z-index:1100;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:26px;
+    transform:translateY(-100%); transition:.35s ease;
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{color:var(--white); font-size:1.4rem; font-weight:700;}
+  .mobile-menu .btn{margin-top:10px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; padding:150px 0 100px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(212,162,76,.25), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(193,101,45,.35), transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, #0d2229 60%, var(--maroon-dark) 130%);
+    color:var(--white); overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0; opacity:.12;
+    background-image:radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  .hero-skyline{position:absolute; bottom:0; inset-inline:0; height:120px; opacity:.5;}
+  .hero-inner{position:relative; z-index:2; text-align:center; max-width:760px; margin:0 auto;}
+  .hero-inner .section-tag{background:rgba(255,255,255,.12); color:var(--gold);}
+  .hero h1{font-size:clamp(2.1rem,5.4vw,3.4rem); font-weight:900; line-height:1.3; margin-bottom:18px;}
+  .hero h1 em{font-style:normal; color:var(--gold);}
+  .hero p.lead{font-size:1.1rem; color:rgba(255,255,255,.82); max-width:560px; margin:0 auto 34px;}
+  .hero-badges{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:38px;}
+  .hero-badge{
+    display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14); padding:10px 18px; border-radius:99px; font-size:.85rem; font-weight:600;
+  }
+  .hero-badge i{color:var(--gold);}
+
+  /* ---------- Search widget ---------- */
+  .search-card{
+    position:relative; z-index:3; max-width:980px; margin:44px auto 0;
+    background:var(--white); border-radius:var(--radius-lg); padding:26px;
+    box-shadow:var(--shadow-lg);
+  }
+  .search-tabs{display:flex; gap:8px; margin-bottom:20px;}
+  .search-tab{
+    padding:9px 20px; border-radius:99px; font-weight:700; font-size:.88rem; color:var(--muted); background:var(--sand);
+  }
+  .search-tab.active{background:var(--maroon); color:#fff;}
+  .search-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:end;}
+  .field{text-align:right;}
+  .field label{display:block; font-size:.76rem; font-weight:700; color:var(--muted); margin-bottom:7px; text-transform:uppercase; letter-spacing:.03em;}
+  .field .field-box{
+    display:flex; align-items:center; gap:10px; background:var(--sand); border:1.5px solid transparent;
+    border-radius:var(--radius-sm); padding:12px 14px; transition:.2s;
+  }
+  .field .field-box:focus-within{border-color:var(--maroon); background:#fff;}
+  .field .field-box i{color:var(--maroon);}
+  .field select, .field input{
+    width:100%; background:transparent; border:none; outline:none; font-weight:700; color:var(--navy); font-size:.92rem;
+  }
+  .swap-btn{
+    justify-self:center; width:38px; height:38px; border-radius:50%; background:var(--sand-dark);
+    display:flex; align-items:center; justify-content:center; color:var(--maroon); flex-shrink:0;
+  }
+  .search-submit{margin-top:18px; display:flex; justify-content:flex-start;}
+
+  /* ---------- Trust strip ---------- */
+  .trust-strip{background:var(--white); border-bottom:1px solid var(--sand-dark);}
+  .trust-strip .container{display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px; padding:26px 20px;}
+  .trust-item{display:flex; align-items:center; gap:12px; flex:1 1 200px;}
+  .trust-item i{width:44px; height:44px; border-radius:12px; background:var(--sand); display:flex; align-items:center; justify-content:center; color:var(--maroon); font-size:1.1rem;}
+  .trust-item strong{display:block; font-size:.95rem; color:var(--navy);}
+  .trust-item span{font-size:.8rem; color:var(--muted);}
+
+  /* ---------- Features ---------- */
+  .features-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .feature-card{
+    background:var(--white); border-radius:var(--radius-md); padding:28px 22px; text-align:center;
+    box-shadow:var(--shadow-sm); transition:.3s;
+  }
+  .feature-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-md);}
+  .feature-icon{
+    width:60px; height:60px; border-radius:16px; margin:0 auto 18px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--maroon),var(--terracotta)); color:#fff; font-size:1.4rem;
+  }
+  .feature-card h3{font-size:1.05rem; color:var(--navy); margin-bottom:8px; font-weight:700;}
+  .feature-card p{font-size:.88rem; color:var(--muted);}
+
+  /* ---------- Destinations ---------- */
+  .destinations-scroller{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+  }
+  .dest-card{
+    position:relative; border-radius:var(--radius-lg); overflow:hidden; height:340px;
+    box-shadow:var(--shadow-sm); scroll-snap-align:start;
+  }
+  .dest-card .dest-bg{position:absolute; inset:0;}
+  .dest-card .dest-overlay{
+    position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:22px;
+    background:linear-gradient(0deg, rgba(10,15,18,.88) 5%, rgba(10,15,18,.15) 60%, transparent 100%);
+    color:#fff;
+  }
+  .dest-card .dest-icon{
+    position:absolute; top:18px; left:18px; width:42px; height:42px; border-radius:12px;
+    background:rgba(255,255,255,.18); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  }
+  .dest-card h3{font-size:1.25rem; font-weight:800; margin-bottom:6px;}
+  .dest-card p{font-size:.85rem; color:rgba(255,255,255,.82); margin-bottom:12px;}
+  .dest-card .dest-link{font-size:.82rem; font-weight:700; color:var(--gold); display:inline-flex; align-items:center; gap:6px;}
+  .dest-1{background:linear-gradient(150deg,#7a3a1f,#c1652d 55%,#e0a15c);}
+  .dest-2{background:linear-gradient(150deg,#3a2a1a,#a97a3f 55%,#e6c98a);}
+  .dest-3{background:linear-gradient(150deg,#0c3b45,#146e73 55%,#4fb3ae);}
+  .dest-4{background:linear-gradient(150deg,#2c1421,#8a1538 55%,#c15a71);}
+  .dest-5{background:linear-gradient(150deg,#0a2733,#146a8a 55%,#5fc2d6);}
+  .dest-6{background:linear-gradient(150deg,#2c2410,#8a6f18 55%,#d9bd5c);}
+
+  /* ---------- Packages ---------- */
+  .packages-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
+  .package-card{
+    background:var(--white); border-radius:var(--radius-lg); padding:32px 26px; box-shadow:var(--shadow-sm);
+    display:flex; flex-direction:column; position:relative; border:2px solid transparent; transition:.3s;
+  }
+  .package-card.featured{border-color:var(--gold); box-shadow:var(--shadow-md); transform:scale(1.03);}
+  .package-badge{
+    position:absolute; top:-14px; right:50%; transform:translateX(50%);
+    background:var(--gold); color:var(--navy); font-size:.76rem; font-weight:800; padding:6px 18px; border-radius:99px;
+  }
+  .package-name{font-size:1.15rem; font-weight:800; color:var(--navy); margin-bottom:6px;}
+  .package-duration{font-size:.85rem; color:var(--muted); margin-bottom:18px;}
+  .package-price{display:flex; align-items:baseline; gap:6px; margin-bottom:22px;}
+  .package-price .from{font-size:.8rem; color:var(--muted);}
+  .package-price .amount{font-size:2rem; font-weight:900; color:var(--maroon);}
+  .package-price .cur{font-size:.9rem; font-weight:700; color:var(--muted);}
+  .package-list{flex:1; margin-bottom:24px;}
+  .package-list li{display:flex; align-items:flex-start; gap:10px; font-size:.9rem; color:var(--ink); margin-bottom:12px;}
+  .package-list li i{color:var(--terracotta); margin-top:3px;}
+
+  /* ---------- Flight schedule ---------- */
+  .schedule-wrap{background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden;}
+  table.schedule{width:100%; border-collapse:collapse; font-size:.92rem;}
+  table.schedule thead{background:var(--navy); color:#fff;}
+  table.schedule th, table.schedule td{padding:16px 18px; text-align:right;}
+  table.schedule tbody tr:not(:last-child){border-bottom:1px solid var(--sand-dark);}
+  table.schedule tbody tr:hover{background:var(--sand);}
+  .airline-tag{display:inline-flex; align-items:center; gap:8px; font-weight:700;}
+  .airline-dot{width:10px; height:10px; border-radius:50%; background:var(--maroon);}
+  .airline-dot.rj{background:var(--terracotta);}
+  .schedule-note{font-size:.8rem; color:var(--muted); padding:14px 18px; background:var(--sand);}
+
+  /* ---------- Testimonials ---------- */
+  .testimonials-scroller{
+    display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x proximity; padding-bottom:10px; margin:0 -20px; padding-inline:20px;
+    scrollbar-width:none;
+  }
+  .testimonials-scroller::-webkit-scrollbar{display:none;}
+  .testimonial-card{
+    scroll-snap-align:start; flex:0 0 340px; background:var(--white); border-radius:var(--radius-md); padding:26px; box-shadow:var(--shadow-sm);
+  }
+  .stars{color:var(--gold); margin-bottom:14px; font-size:.9rem;}
+  .testimonial-card p.quote{font-size:.94rem; color:var(--ink); margin-bottom:18px;}
+  .testi-person{display:flex; align-items:center; gap:12px;}
+  .testi-avatar{
+    width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--maroon),var(--gold));
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800;
+  }
+  .testi-person strong{display:block; font-size:.88rem; color:var(--navy);}
+  .testi-person span{font-size:.78rem; color:var(--muted);}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px; margin:0 auto;}
+  .faq-item{background:var(--white); border-radius:var(--radius-sm); margin-bottom:12px; box-shadow:var(--shadow-sm); overflow:hidden;}
+  .faq-q{display:flex; align-items:center; justify-content:space-between; padding:18px 22px; font-weight:700; color:var(--navy); font-size:.96rem;}
+  .faq-q i{color:var(--maroon); transition:.25s;}
+  .faq-item.open .faq-q i{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:.3s ease; padding:0 22px;}
+  .faq-item.open .faq-a{max-height:220px; padding-bottom:20px;}
+  .faq-a p{color:var(--muted); font-size:.9rem;}
+
+  /* ---------- Newsletter/CTA ---------- */
+  .cta-section{
+    background:linear-gradient(120deg, var(--maroon), var(--terracotta));
+    border-radius:var(--radius-lg); color:#fff; padding:50px 40px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .cta-section h2{font-size:clamp(1.4rem,3.4vw,2rem); font-weight:800; margin-bottom:10px;}
+  .cta-section p{color:rgba(255,255,255,.85); margin-bottom:26px;}
+  .newsletter-form{display:flex; max-width:460px; margin:0 auto; gap:10px; background:#fff; padding:6px; border-radius:99px;}
+  .newsletter-form input{flex:1; border:none; outline:none; padding:12px 18px; border-radius:99px; font-size:.9rem;}
+  .newsletter-form button{border-radius:99px; padding:12px 24px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy); color:rgba(255,255,255,.75); padding:60px 0 100px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:36px; margin-bottom:40px;}
+  .footer-logo{display:flex; align-items:center; gap:10px; color:#fff; font-weight:800; font-size:1.2rem; margin-bottom:14px;}
+  .footer-col h4{color:#fff; font-size:.95rem; font-weight:700; margin-bottom:16px;}
+  .footer-col li{margin-bottom:10px; font-size:.88rem;}
+  .footer-col li a:hover{color:var(--gold);}
+  .footer-contact li{display:flex; align-items:center; gap:10px;}
+  .footer-social{display:flex; gap:10px; margin-top:16px;}
+  .footer-social a{width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;}
+  .footer-social a:hover{background:var(--maroon);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1); padding-top:22px; text-align:center; font-size:.8rem;}
+
+  /* ---------- Mobile bottom nav ---------- */
+  .mobile-bottom-nav{
+    display:none; position:fixed; bottom:0; inset-inline:0; z-index:900;
+    background:var(--white); box-shadow:0 -6px 20px rgba(20,49,59,.1);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+    border-top-left-radius:20px; border-top-right-radius:20px;
+  }
+  .mobile-bottom-nav ul{display:flex; justify-content:space-around;}
+  .mobile-bottom-nav a, .mobile-bottom-nav button{
+    display:flex; flex-direction:column; align-items:center; gap:4px; font-size:.68rem; font-weight:700;
+    color:var(--muted); background:transparent; padding:6px 10px; border-radius:12px;
+  }
+  .mobile-bottom-nav a i, .mobile-bottom-nav button i{font-size:1.1rem;}
+  .mobile-bottom-nav a.active, .mobile-bottom-nav button.active{color:var(--maroon);}
+
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(20,20,20,.55); z-index:2000; display:none;
+    align-items:flex-end; justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:#fff; width:100%; max-width:440px; border-radius:24px 24px 0 0; padding:28px 24px;
+    max-height:88vh; overflow-y:auto; animation:slideUp .3s ease;
+  }
+  @keyframes slideUp{from{transform:translateY(40px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+  .modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;}
+  .modal-head h3{font-size:1.2rem; font-weight:800; color:var(--navy);}
+  .modal-close{width:34px; height:34px; border-radius:50%; background:var(--sand); display:flex; align-items:center; justify-content:center; color:var(--navy);}
+  .modal-tabs{display:flex; background:var(--sand); border-radius:99px; padding:4px; margin-bottom:22px;}
+  .modal-tab{flex:1; text-align:center; padding:10px; border-radius:99px; font-weight:700; font-size:.85rem; color:var(--muted);}
+  .modal-tab.active{background:var(--maroon); color:#fff;}
+  .form-group{margin-bottom:16px;}
+  .form-group label{display:block; font-size:.8rem; font-weight:700; color:var(--navy); margin-bottom:8px;}
+  .form-group .field-box{background:var(--sand); border-radius:var(--radius-sm); padding:13px 16px; display:flex; align-items:center; gap:10px;}
+  .form-group input{background:transparent; border:none; outline:none; width:100%; font-size:.92rem;}
+
+  /* ---------- Toast ---------- */
+  #toast{
+    position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--navy); color:#fff; padding:14px 24px; border-radius:99px; font-size:.86rem; font-weight:700;
+    box-shadow:var(--shadow-lg); z-index:3000; opacity:0; pointer-events:none; transition:.3s; display:flex; align-items:center; gap:10px;
+  }
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  #toast i{color:var(--gold);}
+
+  .back-to-top{
+    position:fixed; bottom:100px; left:20px; width:44px; height:44px; border-radius:50%; background:var(--maroon); color:#fff;
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-md); opacity:0; pointer-events:none; transition:.3s; z-index:800;
+  }
+  .back-to-top.show{opacity:1; pointer-events:auto;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .features-grid{grid-template-columns:repeat(2,1fr);}
+    .destinations-scroller{grid-template-columns:repeat(2,1fr);}
+    .packages-grid{grid-template-columns:1fr; max-width:420px; margin:0 auto;}
+    .package-card.featured{transform:none;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .search-grid{grid-template-columns:repeat(2,1fr);}
+    .swap-btn{display:none;}
+  }
+  @media (max-width:768px){
+    .nav-links, .nav-actions .btn, .icon-btn{display:none;}
+    .hamburger{display:flex;}
+    .mobile-bottom-nav{display:block;}
+    body{padding-bottom:76px;}
+    .hero{padding:120px 0 70px;}
+    .search-card{padding:18px;}
+    section{padding:50px 0;}
+    .destinations-scroller{grid-template-columns:1fr 1fr; gap:14px;}
+    .dest-card{height:220px;}
+    .dest-card h3{font-size:1rem;}
+    .schedule-wrap{overflow-x:auto;}
+    table.schedule{min-width:640px;}
+    .cta-section{padding:36px 20px;}
+    .newsletter-form{flex-direction:column; background:transparent; padding:0; gap:10px;}
+    .newsletter-form input{border-radius:12px; background:#fff;}
+    .newsletter-form button{border-radius:12px;}
+    .back-to-top{bottom:86px;}
+  }
+  @media (max-width:520px){
+    .destinations-scroller{grid-template-columns:1fr;}
+    .dest-card{height:260px;}
+    .trust-strip .container{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header id="header">
+  <div class="container navbar">
+    <a href="#home" class="logo">
+      <span class="logo-badge"><i class="fa-solid fa-plane-departure"></i></span>
+      من قطر <span>إلى الأردن</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#home">الرئيسية</a>
+      <a href="#destinations">الوجهات</a>
+      <a href="#packages">الباقات</a>
+      <a href="#flights">الرحلات</a>
+      <a href="#testimonials">آراء العملاء</a>
+      <a href="#faq">الأسئلة الشائعة</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="openModal()" aria-label="تسجيل الدخول"><i class="fa-regular fa-user"></i></button>
+      <a href="#packages" class="btn btn-primary btn-sm">احجز الآن</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="القائمة"><span></span></button>
+  </div>
+</header>
+
+<!-- Mobile fullscreen menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="toggleMobileMenu()">الرئيسية</a>
+  <a href="#destinations" onclick="toggleMobileMenu()">الوجهات</a>
+  <a href="#packages" onclick="toggleMobileMenu()">الباقات</a>
+  <a href="#flights" onclick="toggleMobileMenu()">الرحلات</a>
+  <a href="#testimonials" onclick="toggleMobileMenu()">آراء العملاء</a>
+  <a href="#faq" onclick="toggleMobileMenu()">الأسئلة الشائعة</a>
+  <a href="#packages" class="btn btn-gold" onclick="toggleMobileMenu()">احجز الآن</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <span class="section-tag"><i class="fa-solid fa-star"></i> رحلات مباشرة يوميًا من الدوحة</span>
+    <h1>اكتشف الأردن.. من <em>قطر</em> إلى قلب التاريخ</h1>
+    <p class="lead">البتراء، وادي رم، والبحر الميت في انتظارك. باقات سياحية متكاملة برحلات طيران مباشرة من الدوحة إلى عمّان بمدة ساعتين ونصف فقط.</p>
+    <div class="hero-badges">
+      <div class="hero-badge"><i class="fa-solid fa-plane"></i> رحلات مباشرة</div>
+      <div class="hero-badge"><i class="fa-regular fa-clock"></i> 2:35 ساعة فقط</div>
+      <div class="hero-badge"><i class="fa-solid fa-passport"></i> تأشيرة إلكترونية سهلة</div>
+      <div class="hero-badge"><i class="fa-solid fa-headset"></i> دعم على مدار الساعة</div>
+    </div>
+  </div>
+
+  <!-- Search widget -->
+  <div class="container">
+    <form class="search-card" id="searchForm">
+      <div class="search-tabs">
+        <span class="search-tab active"><i class="fa-solid fa-plane"></i> ذهاب وعودة</span>
+        <span class="search-tab">ذهاب فقط</span>
+      </div>
+      <div class="search-grid">
+        <div class="field">
+          <label>من</label>
+          <div class="field-box"><i class="fa-solid fa-plane-departure"></i>
+            <select>
+              <option>الدوحة (DOH)</option>
+              <option>الريان</option>
+            </select>
+          </div>
+        </div>
+        <div class="swap-btn" aria-hidden="true"><i class="fa-solid fa-arrows-rotate"></i></div>
+        <div class="field">
+          <label>إلى</label>
+          <div class="field-box"><i class="fa-solid fa-plane-arrival"></i>
+            <select>
+              <option>عمّان (AMM)</option>
+              <option>العقبة (AQJ)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>تاريخ المغادرة</label>
+          <div class="field-box"><i class="fa-regular fa-calendar"></i><input type="date"></div>
+        </div>
+        <div class="field">
+          <label>تاريخ العودة</label>
+          <div class="field-box"><i class="fa-regular fa-calendar"></i><input type="date"></div>
+        </div>
+        <div class="field">
+          <label>المسافرون</label>
+          <div class="field-box"><i class="fa-solid fa-user-group"></i>
+            <select>
+              <option>مسافر واحد</option>
+              <option>مسافران</option>
+              <option>عائلة (3-5)</option>
+              <option>مجموعة (+6)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="search-submit">
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> ابحث عن رحلات</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-item"><i class="fa-solid fa-plane"></i><div><strong>رحلات مباشرة</strong><span>الدوحة – عمّان يوميًا</span></div></div>
+    <div class="trust-item"><i class="fa-solid fa-shield-heart"></i><div><strong>حجز آمن</strong><span>دفع إلكتروني موثوق</span></div></div>
+    <div class="trust-item"><i class="fa-solid fa-money-bill-wave"></i><div><strong>أفضل الأسعار</strong><span>باقات تبدأ من 1,499 ر.ق</span></div></div>
+    <div class="trust-item"><i class="fa-solid fa-headset"></i><div><strong>دعم 24/7</strong><span>فريقنا بانتظارك دومًا</span></div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="why">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">لماذا نحن</span>
+      <h2>لماذا تختار الأردن قادمًا من قطر؟</h2>
+      <p>وجهة قريبة، غنية بالتاريخ والطبيعة، وسهلة الوصول لأهل قطر والمقيمين فيها</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-plane"></i></div>
+        <h3>رحلات مباشرة يوميًا</h3>
+        <p>طيران مباشر من الدوحة إلى عمّان دون توقف، بمدة تقارب ساعتين ونصف فقط.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-passport"></i></div>
+        <h3>تأشيرة ميسّرة</h3>
+        <p>إجراءات دخول مبسطة لمواطني ومقيمي دول الخليج، مع دعم كامل من فريقنا.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-mountain-sun"></i></div>
+        <h3>تنوع طبيعي وتاريخي</h3>
+        <p>من عجائب الدنيا في البتراء إلى صحراء وادي رم القمرية والبحر الميت العلاجي.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+        <h3>باقات مخصصة</h3>
+        <p>باقات عائلية وشهر عسل ومجموعات، مصممة خصيصًا لتناسب ميزانيتك ووقتك.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section id="destinations" style="background:var(--white)">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">الوجهات</span>
+      <h2>أبرز الوجهات في الأردن</h2>
+      <p>اختر من بين أجمل المعالم التاريخية والطبيعية التي تقصدها الرحلات من قطر</p>
+    </div>
+    <div class="destinations-scroller">
+      <div class="dest-card dest-1">
+        <div class="dest-icon"><i class="fa-solid fa-landmark"></i></div>
+        <div class="dest-overlay">
+          <h3>البتراء</h3>
+          <p>إحدى عجائب الدنيا السبع، مدينة أثرية منحوتة بالكامل في الصخر الوردي.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+      <div class="dest-card dest-2">
+        <div class="dest-icon"><i class="fa-solid fa-campground"></i></div>
+        <div class="dest-overlay">
+          <h3>وادي رم</h3>
+          <p>الصحراء القمرية.. تخييم تحت النجوم، سفاري بالجيب، ورحلات منطاد.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+      <div class="dest-card dest-3">
+        <div class="dest-icon"><i class="fa-solid fa-water"></i></div>
+        <div class="dest-overlay">
+          <h3>البحر الميت</h3>
+          <p>أخفض نقطة على سطح الأرض، ومنتجعات علاجية فاخرة بإطلالة ساحرة.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+      <div class="dest-card dest-4">
+        <div class="dest-icon"><i class="fa-solid fa-city"></i></div>
+        <div class="dest-overlay">
+          <h3>عمّان</h3>
+          <p>العاصمة النابضة بالحياة، تمزج بين التاريخ الروماني وأجواء المدينة الحديثة.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+      <div class="dest-card dest-5">
+        <div class="dest-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+        <div class="dest-overlay">
+          <h3>العقبة</h3>
+          <p>شواطئ البحر الأحمر الذهبية، والغوص بين الشعاب المرجانية الملونة.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+      <div class="dest-card dest-6">
+        <div class="dest-icon"><i class="fa-solid fa-chess-rook"></i></div>
+        <div class="dest-overlay">
+          <h3>جرش</h3>
+          <p>واحدة من أفضل المدن الرومانية المحفوظة خارج إيطاليا، بأعمدتها الخالدة.</p>
+          <span class="dest-link">اكتشف المزيد <i class="fa-solid fa-arrow-left"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Packages -->
+<section id="packages">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">الباقات السياحية</span>
+      <h2>اختر الباقة التي تناسبك</h2>
+      <p>جميع الباقات تشمل تذاكر الطيران من الدوحة، الإقامة، والجولات السياحية</p>
+    </div>
+    <div class="packages-grid">
+      <div class="package-card">
+        <div class="package-name">الباقة الاقتصادية</div>
+        <div class="package-duration"><i class="fa-regular fa-calendar"></i> 5 أيام / 4 ليالٍ</div>
+        <div class="package-price"><span class="from">تبدأ من</span><span class="amount">1,499</span><span class="cur">ر.ق / للشخص</span></div>
+        <ul class="package-list">
+          <li><i class="fa-solid fa-check"></i> تذاكر طيران ذهاب وعودة (الدوحة - عمّان)</li>
+          <li><i class="fa-solid fa-check"></i> إقامة 4 ليالٍ في فندق 3 نجوم</li>
+          <li><i class="fa-solid fa-check"></i> جولة نصف يوم في عمّان</li>
+          <li><i class="fa-solid fa-check"></i> زيارة البحر الميت ليوم كامل</li>
+          <li><i class="fa-solid fa-check"></i> تأمين سفر أساسي</li>
+        </ul>
+        <button class="btn btn-outline-dark btn-block" style="background:var(--sand); color:var(--navy);" onclick="openModal('الباقة الاقتصادية')">احجز الآن</button>
+      </div>
+      <div class="package-card featured">
+        <span class="package-badge">الأكثر طلبًا</span>
+        <div class="package-name">الباقة المميزة</div>
+        <div class="package-duration"><i class="fa-regular fa-calendar"></i> 7 أيام / 6 ليالٍ</div>
+        <div class="package-price"><span class="from">تبدأ من</span><span class="amount">2,699</span><span class="cur">ر.ق / للشخص</span></div>
+        <ul class="package-list">
+          <li><i class="fa-solid fa-check"></i> تذاكر طيران ذهاب وعودة (الدوحة - عمّان)</li>
+          <li><i class="fa-solid fa-check"></i> إقامة 6 ليالٍ في فنادق 4-5 نجوم</li>
+          <li><i class="fa-solid fa-check"></i> جولة كاملة إلى البتراء ووادي رم</li>
+          <li><i class="fa-solid fa-check"></i> يوم استرخاء في البحر الميت</li>
+          <li><i class="fa-solid fa-check"></i> مرشد سياحي خاص وإفطار يومي</li>
+        </ul>
+        <button class="btn btn-primary btn-block" onclick="openModal('الباقة المميزة')">احجز الآن</button>
+      </div>
+      <div class="package-card">
+        <div class="package-name">باقة شهر العسل VIP</div>
+        <div class="package-duration"><i class="fa-regular fa-calendar"></i> 8 أيام / 7 ليالٍ</div>
+        <div class="package-price"><span class="from">تبدأ من</span><span class="amount">4,299</span><span class="cur">ر.ق / للزوجين</span></div>
+        <ul class="package-list">
+          <li><i class="fa-solid fa-check"></i> إقامة فاخرة في منتجعات 5 نجوم</li>
+          <li><i class="fa-solid fa-check"></i> عشاء رومانسي خاص في وادي رم</li>
+          <li><i class="fa-solid fa-check"></i> رحلة منطاد فوق صحراء وادي رم</li>
+          <li><i class="fa-solid fa-check"></i> سيارة خاصة مع سائق طوال الرحلة</li>
+          <li><i class="fa-solid fa-check"></i> جميع الجولات والدخول للمواقع</li>
+        </ul>
+        <button class="btn btn-gold btn-block" onclick="openModal('باقة شهر العسل VIP')">احجز الآن</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Flight schedule -->
+<section id="flights" style="background:var(--white)">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">جدول الرحلات</span>
+      <h2>رحلات يومية من الدوحة إلى عمّان</h2>
+      <p>مواعيد تقريبية لأبرز شركات الطيران المشغّلة على الخط المباشر</p>
+    </div>
+    <div class="schedule-wrap">
+      <table class="schedule">
+        <thead>
+          <tr><th>شركة الطيران</th><th>رقم الرحلة</th><th>المغادرة (الدوحة)</th><th>الوصول (عمّان)</th><th>المدة</th><th>التكرار</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="airline-tag"><span class="airline-dot"></span> Qatar Airways</span></td><td>QR350</td><td>08:15</td><td>09:50</td><td>2س 35د</td><td>يوميًا</td></tr>
+          <tr><td><span class="airline-tag"><span class="airline-dot rj"></span> Royal Jordanian</span></td><td>RJ115</td><td>14:30</td><td>16:05</td><td>2س 35د</td><td>يوميًا</td></tr>
+          <tr><td><span class="airline-tag"><span class="airline-dot"></span> Qatar Airways</span></td><td>QR352</td><td>22:40</td><td>00:15 (+1)</td><td>2س 35د</td><td>يوميًا</td></tr>
+        </tbody>
+      </table>
+      <div class="schedule-note"><i class="fa-solid fa-circle-info"></i> المواعيد تقريبية وقابلة للتغيير حسب شركة الطيران، يُرجى تأكيد التوقيت الدقيق عند إتمام الحجز.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">آراء عملائنا</span>
+      <h2>ماذا يقول مسافرونا؟</h2>
+      <p>تجارب حقيقية من مسافرين اختاروا الأردن وجهتهم القادمة من قطر</p>
+    </div>
+    <div class="testimonials-scroller">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"رحلة رائعة من الدوحة، التنظيم كان ممتازًا من الاستقبال في المطار حتى نهاية الجولة."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">أ.ك</div>
+          <div><strong>أحمد الكواري</strong><span>الدوحة، قطر</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"وادي رم كانت تجربة العمر، أنصح بشدة بباقة شهر العسل لكل عروس وعريس."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">س.خ</div>
+          <div><strong>سارة وخالد</strong><span>الدوحة، قطر</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <p class="quote">"أسعار مناسبة جدًا وخدمة سريعة في الحجز عبر الموقع، سأكرر التجربة قريبًا."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">م.ع</div>
+          <div><strong>محمد العبيدلي</strong><span>الريان، قطر</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--white)">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">الأسئلة الشائعة</span>
+      <h2>لديك سؤال؟ لدينا الإجابة</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">هل أحتاج تأشيرة للسفر من قطر إلى الأردن؟ <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>نعم، لكن الإجراءات ميسّرة عبر التأشيرة الإلكترونية أو التأشيرة عند الوصول لمعظم الجنسيات، وفريقنا يساعدك في استكمال الأوراق قبل السفر.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">كم تستغرق الرحلة من الدوحة إلى عمّان؟ <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>الرحلة المباشرة تستغرق نحو ساعتين و35 دقيقة فقط، مع رحلات يومية على مدار الأسبوع.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">ما هي أفضل فترة لزيارة الأردن؟ <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>أفضل الأوقات هي فصلي الربيع (مارس - مايو) والخريف (سبتمبر - نوفمبر) لاعتدال الطقس في عمّان والبتراء.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">هل يمكن تخصيص الباقة السياحية؟ <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>بالتأكيد، يمكن تعديل عدد الأيام والفنادق والجولات في أي باقة لتناسب احتياجاتك، تواصل معنا لتصميم برنامج خاص بك.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">ما هي طرق الدفع المتاحة؟ <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>نقبل الدفع عبر البطاقات الائتمانية، التحويل البنكي، وخدمات الدفع الإلكتروني المحلية في قطر.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section>
+  <div class="container">
+    <div class="cta-section">
+      <h2>اشترك ليصلك أفضل عروض السفر إلى الأردن</h2>
+      <p>عروض حصرية وأسعار خاصة تصل مباشرة إلى بريدك الإلكتروني</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="بريدك الإلكتروني" required>
+        <button type="submit" class="btn btn-gold">اشتراك</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo"><span class="logo-badge"><i class="fa-solid fa-plane-departure"></i></span> من قطر إلى الأردن</div>
+        <p style="font-size:.88rem;">وجهتك الأولى لتنظيم رحلات مميزة من الدوحة إلى الأردن، بأفضل الأسعار وأعلى جودة خدمة.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#destinations">الوجهات</a></li>
+          <li><a href="#packages">الباقات</a></li>
+          <li><a href="#flights">جدول الرحلات</a></li>
+          <li><a href="#faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الوجهات</h4>
+        <ul>
+          <li><a href="#destinations">البتراء</a></li>
+          <li><a href="#destinations">وادي رم</a></li>
+          <li><a href="#destinations">البحر الميت</a></li>
+          <li><a href="#destinations">عمّان</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <ul class="footer-contact">
+          <li><i class="fa-solid fa-phone"></i> ‎+974 4444 5555</li>
+          <li><i class="fa-solid fa-envelope"></i> info@qatar-jordan-travel.qa</li>
+          <li><i class="fa-solid fa-location-dot"></i> الدوحة، قطر</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 من قطر إلى الأردن. جميع الحقوق محفوظة.</div>
+  </div>
+</footer>
+
+<!-- Mobile bottom nav -->
+<nav class="mobile-bottom-nav">
+  <ul>
+    <li><a href="#home" class="active"><i class="fa-solid fa-house"></i>الرئيسية</a></li>
+    <li><a href="#destinations"><i class="fa-solid fa-map-location-dot"></i>الوجهات</a></li>
+    <li><a href="#packages"><i class="fa-solid fa-suitcase-rolling"></i>الباقات</a></li>
+    <li><a href="#flights"><i class="fa-solid fa-ticket"></i>رحلاتي</a></li>
+    <li><button onclick="openModal()"><i class="fa-regular fa-user"></i>حسابي</button></li>
+  </ul>
+</nav>
+
+<!-- Login/Booking Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">تسجيل الدخول</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" id="tabLogin" onclick="switchTab('login')">تسجيل الدخول</div>
+      <div class="modal-tab" id="tabSignup" onclick="switchTab('signup')">حساب جديد</div>
+    </div>
+    <form id="authForm">
+      <p id="bookingContext" style="display:none; background:var(--sand); padding:12px 16px; border-radius:var(--radius-sm); font-size:.85rem; margin-bottom:16px; color:var(--maroon); font-weight:700;"></p>
+      <div class="form-group" id="nameGroup" style="display:none;">
+        <label>الاسم الكامل</label>
+        <div class="field-box"><i class="fa-regular fa-user"></i><input type="text" placeholder="اكتب اسمك الكامل"></div>
+      </div>
+      <div class="form-group">
+        <label>رقم الجوال</label>
+        <div class="field-box"><i class="fa-solid fa-phone"></i><input type="tel" placeholder="+974 XXXX XXXX"></div>
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <div class="field-box"><i class="fa-solid fa-lock"></i><input type="password" placeholder="••••••••"></div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="authSubmit">تسجيل الدخول</button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="العودة للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+  // Header shadow + back to top on scroll
+  const header = document.getElementById('header');
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 30;
+    header.classList.toggle('scrolled', scrolled);
+    backToTop.classList.toggle('show', window.scrollY > 500);
+  });
+
+  // Mobile hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function toggleMobileMenu(){
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  }
+
+  // Mobile bottom nav active state
+  const bottomLinks = document.querySelectorAll('.mobile-bottom-nav a');
+  bottomLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      bottomLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // FAQ accordion
+  function toggleFaq(el){
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  }
+
+  // Modal (login / booking)
+  const modalOverlay = document.getElementById('modalOverlay');
+  const bookingContext = document.getElementById('bookingContext');
+  function openModal(packageName){
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if(packageName){
+      bookingContext.style.display = 'block';
+      bookingContext.innerHTML = '<i class="fa-solid fa-suitcase-rolling"></i> أنت بصدد حجز: ' + packageName;
+      switchTab('signup');
+    } else {
+      bookingContext.style.display = 'none';
+    }
+  }
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e){
+    if(e.target === modalOverlay) closeModal();
+  }
+  function switchTab(tab){
+    const isLogin = tab === 'login';
+    document.getElementById('tabLogin').classList.toggle('active', isLogin);
+    document.getElementById('tabSignup').classList.toggle('active', !isLogin);
+    document.getElementById('nameGroup').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('modalTitle').textContent = isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد';
+    document.getElementById('authSubmit').textContent = isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب والمتابعة';
+  }
+
+  // Toast helper
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  function showToast(msg){
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Search form (demo, no backend)
+  document.getElementById('searchForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    showToast('جاري البحث عن أفضل الرحلات المتاحة...');
+    document.getElementById('packages').scrollIntoView({behavior:'smooth'});
+  });
+
+  // Newsletter form (demo, no backend)
+  document.getElementById('newsletterForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    showToast('تم الاشتراك بنجاح، شكرًا لك!');
+    this.reset();
+  });
+
+  // Auth form (demo, no backend)
+  document.getElementById('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    showToast('تم إرسال طلبك بنجاح، سيتواصل فريقنا معك قريبًا.');
+    closeModal();
+  });
+</script>
+</body>
+</html>

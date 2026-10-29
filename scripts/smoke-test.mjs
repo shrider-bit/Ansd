@@ -80,13 +80,18 @@ try {
   check((await state(p)).role === 'survivor', 'practice: player is the survivor');
   await waitFor(p, () => window.__granny.state().phase === 'playing', null, 10000);
   check(true, 'practice: round starts after countdown');
+  // Hold W until the player has moved. Software rendering on CI can be ~2 FPS,
+  // where game time runs slower than wall time, so don't rely on a fixed delay.
   const before = await state(p);
   await p.keyboard.down('KeyW');
-  await sleep(1500);
+  let moved = 0;
+  for (let i = 0; i < 16 && moved <= 1; i++) {
+    await sleep(500);
+    const now = await state(p);
+    moved = Math.hypot(now.x - before.x, now.z - before.z);
+  }
   await p.keyboard.up('KeyW');
-  const after = await state(p);
-  const moved = Math.hypot(after.x - before.x, after.z - before.z);
-  check(moved > 0.5, `practice: keyboard movement works (moved ${moved.toFixed(2)} m)`);
+  check(moved > 1, `practice: keyboard movement works (moved ${moved.toFixed(2)} m)`);
   // Walk to the bedroom door and open it with E.
   await walk(p, [[-6.5, -3.0]]);
   await p.evaluate(() => window.__granny.teleport(-6.5, -3.0, Math.PI));

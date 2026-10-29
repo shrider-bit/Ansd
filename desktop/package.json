@@ -1,0 +1,26 @@
+{
+  "name": "grannys-house-desktop",
+  "productName": "Granny's House",
+  "version": "0.1.0",
+  "description": "Granny's House: Ahmed vs Miral - Windows app",
+  "author": "Granny's House",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win portable nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "43.8.4",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.grannyshouse.ahmedvsmiral",
+    "productName": "Granny's House",
+    "files": ["main.cjs", "app/**"],
+    "directories": { "output": "release" },
+    "win": { "artifactName": "GrannysHouse-${version}-${arch}-${target}.${ext}" },
+    "portable": { "artifactName": "GrannysHouse-Portable.exe" },
+    "nsis": { "artifactName": "GrannysHouse-Setup.exe", "oneClick": false, "allowToChangeInstallationDirectory": true, "perMachine": false }
+  }
+}

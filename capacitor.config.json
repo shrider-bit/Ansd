@@ -1,0 +1,8 @@
+{
+  "appId": "com.grannyshouse.ahmedvsmiral",
+  "appName": "Granny's House",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false
+  }
+}

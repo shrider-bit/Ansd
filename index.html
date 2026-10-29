@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#07060a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Granny's House: Ahmed vs Miral</title>
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Nunito:wght@400;700;900&display=swap" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+
+      <div id="hud" class="hidden">
+        <div id="hide-overlay"></div>
+        <div id="hud-top">
+          <div id="role-badge"></div>
+          <div id="timer">5:00</div>
+          <div id="room-name"></div>
+        </div>
+        <div id="objective"></div>
+        <div id="crosshair"></div>
+        <div id="prompt"></div>
+        <div id="toast"></div>
+        <div id="stamina"><div id="stamina-fill"></div></div>
+        <div id="inventory">
+          <div class="slot" id="slot-key" title="Front door key"></div>
+          <div class="slot" title="Empty"></div>
+          <div class="slot" title="Empty"></div>
+        </div>
+        <div id="voice-bar"></div>
+        <div id="countdown"></div>
+        <div id="vignette"></div>
+        <div id="flash"></div>
+        <div id="scare"></div>
+        <div id="net-status"></div>
+        <div id="fps"></div>
+        <div id="touch-ui">
+          <div id="stick"><div id="stick-knob"></div></div>
+          <button class="tbtn" id="btn-pause" aria-label="Pause">II</button>
+          <button class="tbtn" id="btn-act">USE</button>
+          <button class="tbtn" id="btn-run">RUN</button>
+          <button class="tbtn" id="btn-crouch">DUCK</button>
+          <button class="tbtn" id="btn-light">LIGHT</button>
+        </div>
+      </div>
+
+      <div id="screens">
+        <section class="screen active" id="screen-loading">
+          <h1 class="title">GRANNY'S HOUSE</h1>
+          <p class="loading-text">Unlocking the creaky front door...</p>
+        </section>
+
+        <section class="screen" id="screen-main">
+          <h1 class="title">GRANNY'S HOUSE</h1>
+          <h2 class="subtitle">AHMED <span>vs</span> MIRAL</h2>
+          <nav class="menu">
+            <button data-action="play" class="primary">PLAY <small>(practice vs computer Granny)</small></button>
+            <button data-action="create">CREATE ROOM</button>
+            <button data-action="join">JOIN ROOM</button>
+            <button data-action="settings">SETTINGS</button>
+            <button data-action="howto">HOW TO PLAY</button>
+          </nav>
+          <p class="footnote" id="version"></p>
+        </section>
+
+        <section class="screen" id="screen-character">
+          <h2 class="heading">Who are you?</h2>
+          <div class="characters">
+            <button class="char-card" data-character="ahmed"><span class="avatar ahmed"></span>AHMED</button>
+            <button class="char-card" data-character="miral"><span class="avatar miral"></span>MIRAL</button>
+          </div>
+          <div class="row" id="practice-length-row">
+            <label>Round length
+              <select id="practice-length">
+                <option value="180">3 minutes</option>
+                <option value="300" selected>5 minutes</option>
+                <option value="600">10 minutes</option>
+              </select>
+            </label>
+          </div>
+          <p class="hint" id="character-hint"></p>
+          <button class="back" data-action="back">BACK</button>
+        </section>
+
+        <section class="screen" id="screen-join">
+          <h2 class="heading">Join a room</h2>
+          <p class="hint">Type the code shown on the other player's screen.</p>
+          <input id="join-code" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCDE" />
+          <div class="menu">
+            <button class="primary" data-action="join-go">JOIN</button>
+            <button class="back" data-action="back">BACK</button>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-lobby">
+          <h2 class="heading">Private room</h2>
+          <div class="room-code-box">
+            <span>ROOM CODE</span>
+            <strong id="lobby-code">-----</strong>
+            <button id="copy-code" class="small">Copy</button>
+          </div>
+          <p class="hint">Share this code with the other player. They press <b>JOIN ROOM</b> and type it in.</p>
+          <div class="lobby-players" id="lobby-players"></div>
+          <div class="row">
+            <span>You are:</span>
+            <button class="small char-pick" data-pick="ahmed">Ahmed</button>
+            <button class="small char-pick" data-pick="miral">Miral</button>
+          </div>
+          <div class="row">
+            <label>Round length
+              <select id="lobby-length">
+                <option value="180">3 minutes</option>
+                <option value="300">5 minutes</option>
+                <option value="600">10 minutes</option>
+                <option value="900">15 minutes</option>
+              </select>
+            </label>
+          </div>
+          <p class="hint" id="lobby-status"></p>
+          <div class="menu">
+            <button class="primary" id="lobby-start" data-action="lobby-start">START MATCH</button>
+            <button class="back" data-action="leave">LEAVE ROOM</button>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-settings">
+          <h2 class="heading">Settings</h2>
+          <div class="settings">
+            <label>Volume <input type="range" id="set-volume" min="0" max="1" step="0.05" /></label>
+            <label>Scare level
+              <select id="set-intensity">
+                <option value="mild">Mild - spooky sounds, few scares</option>
+                <option value="normal">Normal - creepy voices and chases</option>
+                <option value="scary">Scary - darker, more jump scares</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" id="set-reduce-loud" /> Softer sudden loud sounds</label>
+            <label>Granny's voice
+              <select id="set-lang">
+                <option value="en">English</option>
+                <option value="ar">العربية (Arabic)</option>
+              </select>
+            </label>
+            <label>Voice pitch (deeper - higher) <input type="range" id="set-pitch" min="0" max="1" step="0.05" /></label>
+            <button class="small" id="test-voice">Test Granny's voice</button>
+            <label>Look sensitivity <input type="range" id="set-sens" min="0.3" max="2.5" step="0.1" /></label>
+            <label class="check"><input type="checkbox" id="set-invert" /> Invert look up/down</label>
+            <label>Graphics
+              <select id="set-quality">
+                <option value="low">Low (phones, older laptops)</option>
+                <option value="medium">Medium</option>
+                <option value="high">High (shadows)</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" id="set-fps" /> Show FPS</label>
+            <label>Game server (only if your game link didn't come from the server)
+              <input type="text" id="set-server" placeholder="e.g. grannys-house.onrender.com" autocomplete="off" spellcheck="false" />
+            </label>
+          </div>
+          <button class="back" data-action="back">BACK</button>
+        </section>
+
+        <section class="screen" id="screen-howto">
+          <h2 class="heading">How to play</h2>
+          <div class="howto">
+            <div>
+              <h3>Survivor</h3>
+              <p>Find the <b>key</b>, unlock the <b>front door</b> and escape before time runs out. Hide in <b>wardrobes</b>, the <b>pantry</b> or <b>under the bed</b>. Running is loud and tires you out!</p>
+            </div>
+            <div>
+              <h3>Granny</h3>
+              <p>Listen for footsteps and doors, call the survivor's name with your <b>voice buttons</b>, search hiding spots and <b>catch</b> them before they escape.</p>
+            </div>
+            <div>
+              <h3>Keyboard &amp; mouse</h3>
+              <p><b>WASD</b> move · <b>Mouse</b> look · <b>Shift</b> run · <b>C</b> crouch · <b>E</b> use / hide · <b>F</b> flashlight · <b>1-5</b> Granny voices · <b>Esc</b> pause</p>
+            </div>
+            <div>
+              <h3>Phone / tablet</h3>
+              <p>Left thumb: move · Right thumb: look · <b>USE</b>, <b>RUN</b>, <b>DUCK</b>, <b>LIGHT</b> buttons. Turn your phone sideways.</p>
+            </div>
+            <div>
+              <h3>Two players</h3>
+              <p>One player taps <b>CREATE ROOM</b> and reads out the code. The other taps <b>JOIN ROOM</b>. After each round you <b>swap roles</b> automatically.</p>
+            </div>
+          </div>
+          <button class="back" data-action="back">BACK</button>
+        </section>
+
+        <section class="screen" id="screen-pause">
+          <h2 class="heading">Paused</h2>
+          <p class="hint" id="pause-hint"></p>
+          <div class="menu">
+            <button class="primary" data-action="resume">RESUME</button>
+            <button data-action="settings">SETTINGS</button>
+            <button data-action="restart">RESTART MATCH</button>
+            <button class="back" data-action="quit">QUIT TO MENU</button>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-end">
+          <h1 class="end-title" id="end-title"></h1>
+          <p class="end-sub" id="end-sub"></p>
+          <div class="scores" id="end-scores"></div>
+          <p class="hint" id="end-next"></p>
+          <div class="menu">
+            <button class="back" data-action="quit">QUIT TO MENU</button>
+          </div>
+        </section>
+
+        <div id="dialog" class="hidden"><div class="dialog-box"><p id="dialog-text"></p><button class="small" id="dialog-ok">OK</button></div></div>
+      </div>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

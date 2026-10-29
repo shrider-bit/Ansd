@@ -1,0 +1,13 @@
+# One-click deploy of the multiplayer server + web game on Render.com
+# (Dashboard -> New -> Blueprint -> pick this repository).
+services:
+  - type: web
+    name: grannys-house
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

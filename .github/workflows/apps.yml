@@ -1,0 +1,106 @@
+name: Build apps
+
+# Builds the Android APK and Windows EXE. On the main branch (or a v* tag)
+# they are published on the repository's Releases page so they can be
+# downloaded and installed without any developer tools.
+on:
+  push:
+    branches: [main, 'claude/**']
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Address of your multiplayer server, e.g. wss://grannys-house.onrender.com/ws
+  # Set it under Settings -> Secrets and variables -> Actions -> Variables.
+  VITE_SERVER_URL: ${{ vars.GAME_SERVER_URL }}
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Reuse the debug signing key between builds (so updates install over the old app)
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: android-debug-keystore-v1
+      - run: npm ci
+      - run: npm run build:client
+      - name: Build APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./scripts/build-android.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: release/GrannysHouse.apk
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:client
+      - name: Copy the game into the desktop app
+        shell: bash
+        run: rm -rf desktop/app && cp -r dist desktop/app
+      - name: Build Windows EXE
+        working-directory: desktop
+        run: |
+          npm ci
+          npm run dist:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-exe
+          path: |
+            desktop/release/GrannysHouse-Portable.exe
+            desktop/release/GrannysHouse-Setup.exe
+          if-no-files-found: error
+
+  release:
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    needs: [android, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          ls -la artifacts
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+            gh release create "$TAG" artifacts/* --title "Granny's House $TAG" --notes "Android: install GrannysHouse.apk. Windows: run GrannysHouse-Portable.exe or GrannysHouse-Setup.exe."
+          else
+            gh release delete latest --yes --cleanup-tag || true
+            gh release create latest artifacts/* --prerelease --target "$GITHUB_SHA" \
+              --title "Latest build ($(date -u +%Y-%m-%d))" \
+              --notes "Automatic build of the main branch (${GITHUB_SHA:0:7}). Android: download GrannysHouse.apk and open it. Windows: download GrannysHouse-Portable.exe and run it (or use GrannysHouse-Setup.exe to install)."
+          fi

@@ -1,0 +1,10 @@
+{
+  "name": "Granny's House: Ahmed vs Miral",
+  "short_name": "Granny's House",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#07060a",
+  "theme_color": "#07060a",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

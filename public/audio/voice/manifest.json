@@ -1,0 +1,4 @@
+{
+  "comment": "List recorded Granny voice files here (see docs/AUDIO.md). Paths are relative to this folder, e.g. \"en/ahmed_1.mp3\". Lines not listed fall back to the built-in speech voice.",
+  "files": []
+}

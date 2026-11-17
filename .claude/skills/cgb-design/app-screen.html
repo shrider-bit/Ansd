@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>CGB Design App Screen</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root, [data-theme="light"] {
+      --background: #FFFFFF; --bg: var(--background);
+      --surface1: #F8F5F6; --surface2: #EFE8EA; --surface3: #E6DDE0;
+      --border: #E6DDE0; --border-visible: #D3C6CA;
+      --text1: #1F1F1F; --text2: #6B6B6B; --text3: #7A6B70; --text4: #A8999E;
+      --accent: #8E1837; --accent-fill: #8E1837; --accent-fill-hover: #7B1436;
+      --on-accent: #FFFFFF; --on-accent-soft: #FFFFFFB8; --on-accent-line: #FFFFFF38; --on-accent-wash: #FFFFFF1F;
+      --accent-subtle: #FBF0F3;
+      --info: #002C77; --info-bg: #EAF0FA; --highlight: #DF456D;
+      --success: #00B050; --success-text: #0A7A3D; --success-bg: #E6F7EE;
+      --warning: #E9C56B; --warning-text: #8A6A14; --warning-bg: #FCF6E4;
+      --error: #C00000; --error-text: #C00000; --error-bg: #FBEAEA;
+      --status-hold: #A6A6A6;
+      --chart-qatari: #8E1837; --chart-non-qatari: #E9C56B;
+      --sidebar: #8E1837; --hero-field: #7B1436; --hero-ink: #8E1837;
+      --shadow-2: 0 8px 24px -12px rgba(31, 31, 31, 0.18);
+      --shadow-3: 0 24px 48px -20px rgba(31, 31, 31, 0.28);
+      --font-display: "Lusail+", "Tajawal", "Cairo", Arial, sans-serif;
+      --font-body: "Lusail+", "Tajawal", "Cairo", Arial, sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+      --text-display: 40px; --text-heading: 28px; --text-subheading: 20px; --text-body: 16px;
+      --text-body-sm: 14px; --text-caption: 13px; --text-label: 12px;
+      --space-2xs: 2px; --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+      --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+      --radius-element: 6px; --radius-control: 10px; --radius-component: 14px; --radius-container: 16px; --radius-pill: 999px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1); --duration-fast: 150ms; --duration-medium: 200ms; --duration-slow: 250ms;
+    }
+    [data-theme="dark"] {
+      --background: #1A1014;
+      --surface1: #2A1A1F; --surface2: #3A2830; --surface3: #4A3840;
+      --border: #3A2830; --border-visible: #4A3840;
+      --text1: #F5F0F2; --text2: #D3C6CA; --text3: #A8999E; --text4: #7A6B70;
+      --accent: #DF456D; --accent-fill: #B4345A; --accent-fill-hover: #8E1837;
+      --accent-subtle: #360A16;
+      --info: #8FAEE6; --info-bg: #001A47;
+      --success-text: #00B050; --success-bg: #0B3D22;
+      --warning-text: #E9C56B; --warning-bg: #4A3A0C;
+      --error-text: #F08A8A; --error-bg: #4A0E0E;
+      --chart-qatari: #B4345A;
+      --sidebar: #4A0E1E;
+      --shadow-2: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+      --shadow-3: 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+    }
+    html { font-family: var(--font-body); font-size: var(--text-body); line-height: 1.75; }
+    body { background: var(--background); color: var(--text1); -webkit-font-smoothing: antialiased; transition: background var(--duration-slow) var(--ease), color var(--duration-slow) var(--ease); }
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.35; letter-spacing: 0; }
+    button { font: inherit; background: transparent; border: none; color: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    bdi { unicode-bidi: isolate; }
+    ::selection { background: var(--accent-fill); color: var(--on-accent); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .ico { width: 18px; height: 18px; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .sample { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; line-height: 1; border-radius: var(--radius-pill); background: var(--surface2); color: var(--text2); font-size: var(--text-label); font-weight: 500; white-space: nowrap; }
+    .floating-bar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: var(--radius-pill); background: var(--background); box-shadow: var(--shadow-3); }
+    .mode-btn { height: 36px; border-radius: var(--radius-pill); display: flex; align-items: center; gap: 6px; padding: 0 14px; font-size: var(--text-caption); font-weight: 500; color: var(--text2); transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease); }
+    .mode-btn:hover { color: var(--text1); }
+    .mode-btn.active { background: var(--surface2); color: var(--text1); }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    body { background: var(--surface1); padding: var(--space-xl) var(--space-md) 112px; min-height: 100vh; }
+    .num { font-variant-numeric: tabular-nums; }
+    .stage { max-width: 1240px; margin: 0 auto; }
+    .stage-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; margin-bottom: var(--space-md); }
+    .stage-head h1 { font-size: var(--text-subheading); }
+
+    /* Browser frame */
+    .frame { background: var(--background); border-radius: var(--radius-container); box-shadow: var(--shadow-3); overflow: hidden; }
+    .frame-bar { height: 44px; display: flex; align-items: center; gap: var(--space-md); padding-inline: var(--space-md); background: var(--surface2); direction: ltr; }
+    .frame-dots { display: flex; gap: 6px; }
+    .frame-dot { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--border-visible); }
+    .frame-url { flex: 1; max-width: 420px; margin: 0 auto; height: 26px; border-radius: var(--radius-element); background: var(--background); color: var(--text2); font-family: var(--font-mono); font-size: var(--text-label); display: flex; align-items: center; justify-content: center; }
+
+    .app { display: grid; grid-template-columns: 232px 380px minmax(0, 1fr); min-height: 760px; position: relative; }
+
+    /* Sidebar: the one large maroon area */
+    .side { background: var(--sidebar); color: var(--on-accent-soft); padding: var(--space-lg) var(--space-md); display: flex; flex-direction: column; gap: var(--space-lg); }
+    .side-title { color: var(--on-accent); font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.4; }
+    .side-sub { font-size: var(--text-label); }
+    .side-nav { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .side-link { height: 40px; display: flex; align-items: center; gap: var(--space-sm); padding-inline: 12px; border-radius: var(--radius-control); font-size: var(--text-body-sm); transition: background var(--duration-fast) var(--ease); }
+    .side-link:hover { background: var(--on-accent-wash); }
+    .side-link.is-active { background: var(--on-accent-wash); color: var(--on-accent); font-weight: 500; }
+    .side-link .ico { width: 20px; height: 20px; }
+    .side-count { margin-inline-start: auto; font-size: var(--text-label); }
+    .side-user { margin-top: auto; display: flex; align-items: center; gap: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--on-accent-line); font-size: var(--text-caption); }
+    .avatar { width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--on-accent-wash); color: var(--on-accent); display: flex; align-items: center; justify-content: center; }
+    .side-user strong { display: block; color: var(--on-accent); font-weight: 500; }
+
+    /* List column */
+    .list { border-inline-end: 1px solid var(--border); display: flex; flex-direction: column; min-width: 0; }
+    .list-head { padding: var(--space-md); display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); }
+    .list-title { display: flex; align-items: center; justify-content: space-between; }
+    .list-title h2 { font-size: var(--text-subheading); }
+    .search { height: 40px; border: 1px solid var(--border-visible); border-radius: var(--radius-control); padding-inline: 12px; display: flex; align-items: center; gap: var(--space-sm); color: var(--text3); font-size: var(--text-body-sm); }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; padding: 6px 12px; line-height: 1; border-radius: var(--radius-pill); font-size: var(--text-label); font-weight: 500; background: var(--surface1); color: var(--text2); }
+    .chip.is-on { background: var(--accent-fill); color: var(--on-accent); }
+    .rows { display: flex; flex-direction: column; }
+    .row { padding: 12px var(--space-md); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; transition: background var(--duration-fast) var(--ease); }
+    .row:hover { background: var(--surface1); }
+    .row.is-selected { background: var(--surface2); }
+    .row-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+    .row-title { font-size: var(--text-body-sm); font-weight: 500; line-height: 1.5; }
+    .row-meta { font-size: var(--text-label); color: var(--text3); display: flex; gap: var(--space-sm); }
+    .row.is-off .row-title { color: var(--text3); }
+    .row.is-off .row-meta { color: var(--text4); }
+
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; line-height: 1; border-radius: var(--radius-pill); font-size: var(--text-label); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+    .badge::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); }
+    .badge-new { background: var(--info-bg); color: var(--info); }
+    .badge-new::before { background: var(--info); }
+    .badge-progress { background: var(--warning-bg); color: var(--warning-text); }
+    .badge-progress::before { background: var(--warning); }
+    .badge-done { background: var(--success-bg); color: var(--success-text); }
+    .badge-done::before { background: var(--success); }
+    .badge-late { background: var(--error-bg); color: var(--error-text); }
+    .badge-late::before { background: var(--error); }
+    .badge-hold { background: var(--surface3); color: var(--text2); }
+    .badge-hold::before { background: var(--status-hold); }
+
+    /* Detail column */
+    .detail { padding: var(--space-lg) var(--space-xl); display: flex; flex-direction: column; gap: var(--space-lg); min-width: 0; }
+    .crumbs { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-caption); color: var(--text2); }
+    .crumbs .ico { width: 14px; height: 14px; color: var(--text4); }
+    .detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
+    .detail-head h2 { font-size: var(--text-heading); }
+    .detail-actions { display: flex; gap: var(--space-sm); position: relative; }
+    .btn { height: 40px; padding-inline: 16px; border-radius: var(--radius-control); font-size: var(--text-body-sm); font-weight: 500; display: inline-flex; align-items: center; gap: var(--space-sm); white-space: nowrap; transition: background var(--duration-fast) var(--ease); }
+    .btn-primary { background: var(--accent-fill); color: var(--on-accent); }
+    .btn-primary:hover, .btn-primary.is-hover { background: var(--accent-fill-hover); }
+    .btn-secondary { border: 1px solid var(--border-visible); }
+    .btn-secondary:hover { background: var(--surface1); }
+    .flip { transform: scaleX(-1); }
+    .cursor { position: absolute; inset-inline-end: 30px; top: 24px; width: 22px; height: 22px; color: var(--text1); fill: var(--background); pointer-events: none; }
+
+    .meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); padding: var(--space-md); background: var(--surface1); border-radius: var(--radius-component); }
+    .meta-key { font-size: var(--text-label); font-weight: 500; color: var(--text2); }
+    .meta-val { font-size: var(--text-body-sm); font-weight: 500; }
+    .late-text { color: var(--error-text); }
+
+    .block h3 { font-size: var(--text-body); margin-bottom: var(--space-sm); }
+    .block p { font-size: var(--text-body-sm); color: var(--text2); max-width: 62ch; }
+    .code { font-family: var(--font-mono); font-size: var(--text-label); direction: ltr; unicode-bidi: isolate; background: var(--surface1); padding: 2px 6px; border-radius: var(--radius-element); color: var(--text1); }
+
+    .progress { display: flex; align-items: center; gap: 12px; }
+    .progress-track { flex: 1; height: 8px; border-radius: var(--radius-pill); background: var(--surface3); overflow: hidden; }
+    .progress-fill { height: 100%; width: 60%; border-radius: var(--radius-pill); background: var(--accent-fill); }
+    .progress-val { font-size: var(--text-body-sm); font-weight: 700; }
+
+    .checks { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
+    .check { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--text-body-sm); }
+    .box { width: 20px; height: 20px; border-radius: var(--radius-element); border: 1px solid var(--border-visible); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .box.is-on { background: var(--accent-fill); border-color: transparent; color: var(--on-accent); }
+    .box .ico { width: 14px; height: 14px; }
+    .check.is-done span { color: var(--text3); }
+
+    .feed { display: flex; flex-direction: column; }
+    .feed-item { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--space-md); padding-block: 10px; border-top: 1px solid var(--border); font-size: var(--text-body-sm); }
+    .feed-time { color: var(--text3); font-size: var(--text-caption); }
+    .feed-item strong { font-weight: 500; }
+
+    .compose { display: flex; gap: var(--space-sm); }
+    .input { flex: 1; min-width: 0; height: 44px; border: 1px solid var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); border-radius: var(--radius-control); padding-inline: 14px; display: flex; align-items: center; font-size: var(--text-body-sm); color: var(--text3); }
+
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 340px minmax(0, 1fr); }
+      .side { display: none; }
+    }
+    @media (max-width: 760px) {
+      .app { grid-template-columns: minmax(0, 1fr); }
+      .list { border-inline-end: none; }
+      .detail { padding: var(--space-lg) var(--space-md); border-top: 1px solid var(--border); }
+      .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feed-item { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="stage-head">
+      <h1>نظام مهام الفريق</h1>
+      <span class="sample"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 9h.01" /> <path d="M11 12h1v4h1" /></svg>بيانات توضيحية، الأسماء والمهام غير حقيقية</span>
+    </div>
+
+    <div class="frame">
+      <div class="frame-bar">
+        <div class="frame-dots"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span></div>
+        <div class="frame-url">tasks.example.gov.qa/q4</div>
+      </div>
+
+      <div class="app">
+        <aside class="side">
+          <div>
+            <p class="side-title">نظام مهام الفريق</p>
+            <p class="side-sub">إدارة تحليلات القوى العاملة</p>
+          </div>
+          <nav class="side-nav" aria-label="أقسام النظام">
+            <a class="side-link" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /> <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /> <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /> <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>اللوحة الرئيسية</a>
+            <a class="side-link is-active" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></svg>المهام<span class="side-count num">37</span></a>
+            <a class="side-link" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></svg>التقارير</a>
+            <a class="side-link" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>الفريق</a>
+            <a class="side-link" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /></svg>التقويم</a>
+            <a class="side-link" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>الإعدادات</a>
+          </nav>
+          <div class="side-user">
+            <span class="avatar"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg></span>
+            <span><strong>مدير النظام</strong>صلاحية كاملة</span>
+          </div>
+        </aside>
+
+        <section class="list">
+          <div class="list-head">
+            <div class="list-title">
+              <h2>مهام الربع الرابع</h2>
+              <button class="btn btn-secondary"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></svg>إضافة مهمة</button>
+            </div>
+            <div class="search"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></svg>ابحث في المهام</div>
+            <div class="chips">
+              <span class="chip is-on">الكل</span><span class="chip">متأخر</span><span class="chip">قيد التنفيذ</span><span class="chip">لم تبدأ</span><span class="chip">مكتمل</span>
+            </div>
+          </div>
+          <div class="rows">
+            <a class="row is-selected" href="#"><div class="row-top"><span class="row-title">مراجعة بيانات <bdi>SAP</bdi> للربع الثالث</span><span class="badge badge-late">متأخر</span></div><div class="row-meta num"><span>محلل بيانات</span><span>3 أكتوبر</span><span>أولوية عالية</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">مطابقة أعداد الجهات مع السجل</span><span class="badge badge-late">متأخر</span></div><div class="row-meta num"><span>محلل أول</span><span>5 أكتوبر</span><span>أولوية عالية</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">تحديث تقرير التوطين</span><span class="badge badge-progress">قيد التنفيذ</span></div><div class="row-meta num"><span>محلل أول</span><span>12 أكتوبر</span><span>أولوية عالية</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">تحليل الدوران الوظيفي</span><span class="badge badge-progress">قيد التنفيذ</span></div><div class="row-meta num"><span>محلل بيانات</span><span>15 أكتوبر</span><span>أولوية متوسطة</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">لوحة الوظائف الحرجة</span><span class="badge badge-progress">قيد التنفيذ</span></div><div class="row-meta num"><span>مطوّر تقارير</span><span>18 أكتوبر</span><span>أولوية متوسطة</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">إعداد عرض اللجنة</span><span class="badge badge-new">لم تبدأ</span></div><div class="row-meta num"><span>مدير الفريق</span><span>20 أكتوبر</span><span>أولوية عالية</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">توثيق منهجية الاحتساب</span><span class="badge badge-new">لم تبدأ</span></div><div class="row-meta num"><span>محلل أول</span><span>25 أكتوبر</span><span>أولوية منخفضة</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">تدقيق الوظائف الحرجة</span><span class="badge badge-done">مكتمل</span></div><div class="row-meta num"><span>محلل أول</span><span>28 سبتمبر</span><span>أولوية عالية</span></div></a>
+            <a class="row" href="#"><div class="row-top"><span class="row-title">تنظيف ملف المسميات الوظيفية</span><span class="badge badge-done">مكتمل</span></div><div class="row-meta num"><span>محلل بيانات</span><span>24 سبتمبر</span><span>أولوية متوسطة</span></div></a>
+            <a class="row is-off" href="#"><div class="row-top"><span class="row-title">خطة التعاقب الوظيفي</span><span class="badge badge-hold">موقوف</span></div><div class="row-meta num"><span>غير مسند</span><span>بلا تاريخ</span></div></a>
+          </div>
+        </section>
+
+        <section class="detail">
+          <nav class="crumbs" aria-label="المسار"><span>المهام</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6" /></svg><span>الربع الرابع</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6" /></svg><span>مراجعة البيانات</span></nav>
+
+          <div class="detail-head">
+            <div>
+              <h2>مراجعة بيانات <bdi>SAP</bdi> للربع الثالث</h2>
+              <span class="badge badge-late">متأخر</span>
+            </div>
+            <div class="detail-actions">
+              <button class="btn btn-secondary"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" /> <path d="M16 5l3 3" /></svg>تعديل المهمة</button>
+              <button class="btn btn-primary is-hover"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg>إغلاق المهمة</button>
+              <svg class="cursor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l14 8-6 2-2 6z"/></svg>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div><p class="meta-key">المسؤول</p><p class="meta-val">محلل بيانات</p></div>
+            <div><p class="meta-key">المدير</p><p class="meta-val">مدير الفريق</p></div>
+            <div><p class="meta-key">الاستحقاق</p><p class="meta-val late-text num">3 أكتوبر، متأخر 9 أيام</p></div>
+            <div><p class="meta-key">الأولوية</p><p class="meta-val">عالية</p></div>
+          </div>
+
+          <div class="block">
+            <h3>الوصف</h3>
+            <p>مطابقة أعداد الموظفين في ملف التصدير <span class="code">ZHR_EXPORT_Q3.xlsx</span> مع السجل المعتمد، وتوثيق كل فرق مع سببه قبل تحديث تقرير التوطين.</p>
+          </div>
+
+          <div class="block">
+            <h3>نسبة الإنجاز</h3>
+            <div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="progress-val num">60%</span></div>
+          </div>
+
+          <div class="block">
+            <h3>الخطوات</h3>
+            <ul class="checks">
+              <li class="check is-done"><span class="box is-on"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span><span>استلام ملف التصدير من النظام</span></li>
+              <li class="check is-done"><span class="box is-on"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span><span>إزالة السجلات المكررة</span></li>
+              <li class="check is-done"><span class="box is-on"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span><span>مطابقة أعداد الجهات الخمس الكبرى</span></li>
+              <li class="check"><span class="box"></span><span>مطابقة بقية الجهات</span></li>
+              <li class="check"><span class="box"></span><span>توثيق الفروقات واعتمادها</span></li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <h3>النشاط</h3>
+            <div class="feed">
+              <div class="feed-item"><span class="feed-time num">اليوم 09:40</span><span><strong>محلل بيانات</strong> أنهى مطابقة الجهات الخمس الكبرى</span></div>
+              <div class="feed-item"><span class="feed-time num">أمس 14:15</span><span><strong>مدير الفريق</strong> رفع الأولوية إلى عالية</span></div>
+              <div class="feed-item"><span class="feed-time num">4 أكتوبر</span><span><strong>النظام</strong> غيّر الحالة إلى «متأخر»</span></div>
+              <div class="feed-item"><span class="feed-time num">22 سبتمبر</span><span><strong>مدير الفريق</strong> أسند المهمة إلى محلل بيانات</span></div>
+            </div>
+          </div>
+
+          <div class="compose">
+            <div class="input">اكتب تحديثًا للفريق</div>
+            <button class="btn btn-secondary"><svg class="ico flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>إرسال التحديث</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="floating-bar" dir="rtl">
+    <button class="mode-btn" data-mode="light" aria-label="الوضع الفاتح"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>فاتح</button>
+    <button class="mode-btn" data-mode="dark" aria-label="الوضع الداكن"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>داكن</button>
+  </div>
+  <script>
+    document.querySelectorAll('.mode-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.documentElement.dataset.theme = btn.dataset.mode;
+        document.querySelectorAll('.mode-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+    var current = document.querySelector('.mode-btn[data-mode="' + document.documentElement.dataset.theme + '"]');
+    if (current) current.classList.add('active');
+    document.querySelectorAll('a').forEach(function (a) {
+      if (!a.classList.contains('cl-toc-sub')) a.addEventListener('click', function (e) { e.preventDefault(); });
+    });
+  </script>
+</body>
+</html>

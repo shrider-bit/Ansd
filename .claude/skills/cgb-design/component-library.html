@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>CGB Design Components</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root, [data-theme="light"] {
+      --background: #FFFFFF; --bg: var(--background);
+      --surface1: #F8F5F6; --surface2: #EFE8EA; --surface3: #E6DDE0;
+      --border: #E6DDE0; --border-visible: #D3C6CA;
+      --text1: #1F1F1F; --text2: #6B6B6B; --text3: #7A6B70; --text4: #A8999E;
+      --accent: #8E1837; --accent-fill: #8E1837; --accent-fill-hover: #7B1436;
+      --on-accent: #FFFFFF; --on-accent-soft: #FFFFFFB8; --on-accent-line: #FFFFFF38; --on-accent-wash: #FFFFFF1F;
+      --accent-subtle: #FBF0F3;
+      --info: #002C77; --info-bg: #EAF0FA; --highlight: #DF456D;
+      --success: #00B050; --success-text: #0A7A3D; --success-bg: #E6F7EE;
+      --warning: #E9C56B; --warning-text: #8A6A14; --warning-bg: #FCF6E4;
+      --error: #C00000; --error-text: #C00000; --error-bg: #FBEAEA;
+      --status-hold: #A6A6A6;
+      --chart-qatari: #8E1837; --chart-non-qatari: #E9C56B;
+      --sidebar: #8E1837; --hero-field: #7B1436; --hero-ink: #8E1837;
+      --shadow-2: 0 8px 24px -12px rgba(31, 31, 31, 0.18);
+      --shadow-3: 0 24px 48px -20px rgba(31, 31, 31, 0.28);
+      --font-display: "Lusail+", "Tajawal", "Cairo", Arial, sans-serif;
+      --font-body: "Lusail+", "Tajawal", "Cairo", Arial, sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+      --text-display: 40px; --text-heading: 28px; --text-subheading: 20px; --text-body: 16px;
+      --text-body-sm: 14px; --text-caption: 13px; --text-label: 12px;
+      --space-2xs: 2px; --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+      --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+      --radius-element: 6px; --radius-control: 10px; --radius-component: 14px; --radius-container: 16px; --radius-pill: 999px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1); --duration-fast: 150ms; --duration-medium: 200ms; --duration-slow: 250ms;
+    }
+    [data-theme="dark"] {
+      --background: #1A1014;
+      --surface1: #2A1A1F; --surface2: #3A2830; --surface3: #4A3840;
+      --border: #3A2830; --border-visible: #4A3840;
+      --text1: #F5F0F2; --text2: #D3C6CA; --text3: #A8999E; --text4: #7A6B70;
+      --accent: #DF456D; --accent-fill: #B4345A; --accent-fill-hover: #8E1837;
+      --accent-subtle: #360A16;
+      --info: #8FAEE6; --info-bg: #001A47;
+      --success-text: #00B050; --success-bg: #0B3D22;
+      --warning-text: #E9C56B; --warning-bg: #4A3A0C;
+      --error-text: #F08A8A; --error-bg: #4A0E0E;
+      --chart-qatari: #B4345A;
+      --sidebar: #4A0E1E;
+      --shadow-2: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+      --shadow-3: 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+    }
+    html { font-family: var(--font-body); font-size: var(--text-body); line-height: 1.75; }
+    body { background: var(--background); color: var(--text1); -webkit-font-smoothing: antialiased; transition: background var(--duration-slow) var(--ease), color var(--duration-slow) var(--ease); }
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.35; letter-spacing: 0; }
+    button { font: inherit; background: transparent; border: none; color: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    bdi { unicode-bidi: isolate; }
+    ::selection { background: var(--accent-fill); color: var(--on-accent); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .ico { width: 18px; height: 18px; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .sample { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; line-height: 1; border-radius: var(--radius-pill); background: var(--surface2); color: var(--text2); font-size: var(--text-label); font-weight: 500; white-space: nowrap; }
+    .floating-bar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: var(--radius-pill); background: var(--background); box-shadow: var(--shadow-3); }
+    .mode-btn { height: 36px; border-radius: var(--radius-pill); display: flex; align-items: center; gap: 6px; padding: 0 14px; font-size: var(--text-caption); font-weight: 500; color: var(--text2); transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease); }
+    .mode-btn:hover { color: var(--text1); }
+    .mode-btn.active { background: var(--surface2); color: var(--text1); }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    .num { font-variant-numeric: tabular-nums; }
+    .cl-shell { display: flex; min-height: 100vh; }
+    .cl-toc { width: 248px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: var(--space-xl) var(--space-lg); border-inline-end: 1px solid var(--border); }
+    .cl-toc h1 { font-size: var(--text-subheading); margin-bottom: var(--space-sm); }
+    .cl-toc nav { display: flex; flex-direction: column; gap: var(--space-2xs); margin-top: var(--space-md); }
+    .cl-toc-category { font-size: var(--text-body-sm); font-weight: 700; color: var(--text3); padding: 10px 0 2px; text-align: start; }
+    .cl-toc-category.active { color: var(--text1); }
+    .cl-toc-sub { font-size: var(--text-caption); color: var(--text2); padding: 3px 12px; display: none; border-radius: var(--radius-element); }
+    .cl-toc-sub.show { display: block; }
+    .cl-toc-sub:hover { color: var(--text1); }
+    .cl-toc-sub.active { color: var(--accent); font-weight: 500; }
+    .cl-main { flex: 1; min-width: 0; padding: var(--space-2xl) var(--space-2xl) 128px; max-width: 1000px; }
+    .cl-category-panel { display: none; }
+    .cl-category-panel.active { display: block; }
+    .cl-category-panel > h2 { font-size: var(--text-heading); margin-bottom: var(--space-xl); }
+    .cl-component-group { margin-bottom: var(--space-3xl); scroll-margin-top: var(--space-lg); }
+    .cl-component-group h3 { font-size: var(--text-subheading); margin-bottom: var(--space-xs); }
+    .cl-component-group > p { font-size: var(--text-body-sm); color: var(--text2); margin-bottom: var(--space-md); }
+    .cl-canvas { background: var(--surface1); border: 1px solid var(--border); border-radius: var(--radius-component); padding: var(--space-xl); margin-bottom: var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-lg) var(--space-xl); align-items: flex-start; }
+    .cl-canvas.on-page { background: var(--background); }
+    .cl-canvas.stack { flex-direction: column; align-items: stretch; }
+    .cl-variant { display: flex; flex-direction: column; gap: var(--space-sm); align-items: flex-start; min-width: 0; }
+    .cl-variant.wide { flex: 1 1 260px; align-items: stretch; }
+    .cl-canvas.stack .cl-variant.wide { flex: none; }
+    .cl-label { font-size: 11px; font-weight: 500; color: var(--text3); line-height: 1.4; }
+    .cl-spec { width: 100%; border-collapse: collapse; font-size: var(--text-caption); }
+    .cl-spec th { text-align: start; font-weight: 500; color: var(--text2); padding: 8px 0; border-bottom: 1px solid var(--border-visible); }
+    .cl-spec td { padding: 8px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .cl-spec td:first-child { width: 34%; color: var(--text2); padding-inline-end: var(--space-md); }
+    .cl-spec code, .cl-code { font-family: var(--font-mono); font-size: var(--text-label); direction: ltr; unicode-bidi: isolate; background: var(--surface1); padding: 1px 6px; border-radius: var(--radius-element); }
+    .cl-spec-wrap { overflow-x: auto; }
+
+    /* Foundations */
+    .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: var(--space-md); width: 100%; }
+    .sw { display: flex; flex-direction: column; gap: var(--space-xs); font-size: var(--text-label); color: var(--text2); line-height: 1.5; }
+    .sw-chip { height: 56px; border-radius: var(--radius-control); border: 1px solid var(--border); }
+    .ramp { display: flex; width: 100%; border-radius: var(--radius-control); overflow: hidden; border: 1px solid var(--border); }
+    .ramp span { flex: 1; height: 48px; }
+    .type-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--space-md); align-items: baseline; padding-block: var(--space-sm); border-bottom: 1px solid var(--border); }
+    .type-row:last-child { border-bottom: none; }
+    .t-display { font-family: var(--font-display); font-size: var(--text-display); font-weight: 700; line-height: 1.3; }
+    .t-heading { font-family: var(--font-display); font-size: var(--text-heading); font-weight: 700; line-height: 1.35; }
+    .t-subheading { font-family: var(--font-display); font-size: var(--text-subheading); font-weight: 700; line-height: 1.4; }
+    .t-body { font-size: var(--text-body); line-height: 1.75; }
+    .t-body-sm { font-size: var(--text-body-sm); line-height: 1.7; }
+    .t-caption { font-size: var(--text-caption); line-height: 1.6; color: var(--text2); }
+    .t-label { font-size: var(--text-label); line-height: 1.5; font-weight: 500; color: var(--text2); }
+    .shape { width: 88px; height: 64px; background: var(--background); border: 1px solid var(--border-visible); }
+    .r-element { border-radius: var(--radius-element); }
+    .r-control { border-radius: var(--radius-control); }
+    .r-component { border-radius: var(--radius-component); }
+    .r-container { border-radius: var(--radius-container); }
+    .r-pill { border-radius: var(--radius-pill); }
+    .elev { width: 150px; height: 88px; border-radius: var(--radius-component); background: var(--background); display: flex; align-items: center; justify-content: center; font-size: var(--text-caption); color: var(--text2); }
+    .elev-1 { border: 1px solid var(--border); }
+    .elev-2 { box-shadow: var(--shadow-2); }
+    .elev-3 { box-shadow: var(--shadow-3); }
+    .space-row { display: flex; align-items: center; gap: var(--space-md); font-size: var(--text-caption); color: var(--text2); }
+    .space-bar { height: 12px; background: var(--accent-fill); border-radius: var(--space-2xs); }
+    .icon-row { display: flex; flex-wrap: wrap; gap: var(--space-lg); color: var(--text1); }
+    .icon-row .ico { width: 22px; height: 22px; }
+
+    /* Buttons */
+    .btn { height: 44px; padding-inline: 20px; border-radius: var(--radius-control); font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm); white-space: nowrap; transition: background var(--duration-fast) var(--ease); }
+    .btn-sm { height: 36px; padding-inline: 14px; font-size: var(--text-body-sm); }
+    .btn-lg { height: 52px; padding-inline: 28px; }
+    .btn-primary { background: var(--accent-fill); color: var(--on-accent); }
+    .btn-primary:hover, .btn-primary.is-hover { background: var(--accent-fill-hover); }
+    .btn-secondary { border: 1px solid var(--border-visible); color: var(--text1); background: var(--background); }
+    .btn-secondary:hover, .btn-secondary.is-hover { background: var(--surface2); }
+    .btn-ghost { color: var(--accent); }
+    .btn-ghost:hover { background: var(--surface2); }
+    .btn-danger { background: var(--error); color: #FFFFFF; }
+    .btn.is-focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .btn.is-disabled { background: var(--surface3); color: var(--text4); border: none; cursor: not-allowed; }
+    .spin { width: 16px; height: 16px; border-radius: var(--radius-pill); border: 2px solid var(--on-accent-line); border-top-color: var(--on-accent); animation: spin 800ms linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .icon-btn { width: 40px; height: 40px; border-radius: var(--radius-control); display: inline-flex; align-items: center; justify-content: center; color: var(--text2); }
+    .icon-btn:hover, .icon-btn.is-hover { background: var(--surface2); color: var(--text1); }
+    .icon-btn.is-solid { background: var(--accent-fill); color: var(--on-accent); }
+    .maroon-ground { background: var(--hero-field); border-radius: var(--radius-control); padding: var(--space-md); display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .btn-on-maroon { background: var(--on-accent); color: var(--hero-ink); }
+    .btn-on-maroon-ghost { border: 1px solid var(--on-accent-line); color: var(--on-accent); }
+    .segmented { display: inline-flex; padding: var(--space-xs); background: var(--surface2); border-radius: var(--radius-pill); }
+    .seg { height: 32px; padding-inline: 16px; border-radius: var(--radius-pill); font-size: var(--text-caption); font-weight: 500; color: var(--text2); line-height: 1; }
+    .seg.is-on { background: var(--background); color: var(--text1); }
+    .menu { width: 220px; background: var(--background); border-radius: var(--radius-component); box-shadow: var(--shadow-2); padding: 6px; display: flex; flex-direction: column; }
+    .menu-item { height: 40px; padding-inline: 12px; border-radius: var(--radius-element); display: flex; align-items: center; gap: var(--space-sm); font-size: var(--text-body-sm); text-align: start; }
+    .menu-item.is-hover { background: var(--surface1); }
+    .menu-item.is-danger { color: var(--error-text); }
+    .menu-item.is-disabled { color: var(--text4); cursor: not-allowed; }
+    .menu-rule { height: 1px; background: var(--border); margin: 6px 0; }
+
+    /* Inputs */
+    .field { display: flex; flex-direction: column; gap: 6px; width: 220px; }
+    .field-label { font-size: var(--text-body-sm); font-weight: 500; }
+    .input { height: 44px; border: 1px solid var(--border-visible); border-radius: var(--radius-control); padding-inline: 14px; background: var(--background); display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); font-size: var(--text-body-sm); color: var(--text1); }
+    .input.is-placeholder { color: var(--text3); }
+    .grow { flex: 1; }
+    .input.is-hover { border-color: var(--text3); }
+    .input.is-focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); }
+    .input.is-error { border-color: var(--error); }
+    .input.is-disabled { background: var(--surface2); color: var(--text4); border-color: var(--border); }
+    .input .ico { color: var(--text3); }
+    .input.area { height: 96px; align-items: flex-start; padding-block: 10px; }
+    .help { font-size: var(--text-caption); color: var(--text2); }
+    .help.is-error { color: var(--error-text); }
+    .ltr-value { direction: ltr; unicode-bidi: isolate; font-family: var(--font-mono); font-size: var(--text-caption); }
+    .opt { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--text-body-sm); }
+    .opt.is-disabled { color: var(--text4); }
+    .box { width: 20px; height: 20px; border-radius: var(--radius-element); border: 1px solid var(--border-visible); background: var(--background); position: relative; flex-shrink: 0; }
+    .box.is-on, .box.is-mixed { background: var(--accent-fill); border-color: transparent; }
+    .box.is-on::after { content: ""; position: absolute; inset-inline-start: 4px; top: 5px; width: 10px; height: 5px; border-left: 2px solid var(--on-accent); border-bottom: 2px solid var(--on-accent); transform: rotate(-45deg); }
+    .box.is-mixed::after { content: ""; position: absolute; left: 5px; top: 8px; width: 8px; height: 2px; background: var(--on-accent); }
+    .box.is-focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .radio { width: 20px; height: 20px; border-radius: var(--radius-pill); border: 1px solid var(--border-visible); background: var(--background); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .radio.is-on { border: 2px solid var(--accent-fill); }
+    .radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--accent-fill); }
+    .switch { width: 44px; height: 24px; border-radius: var(--radius-pill); background: var(--surface3); padding: 3px; display: flex; flex-shrink: 0; }
+    .switch::after { content: ""; width: 18px; height: 18px; border-radius: var(--radius-pill); background: #FFFFFF; }
+    .switch.is-on { background: var(--accent-fill); justify-content: flex-end; }
+    .switch.is-disabled { opacity: 0.5; }
+
+    /* Data display */
+    .card { width: 260px; border: 1px solid var(--border); border-radius: var(--radius-component); background: var(--background); padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-sm); }
+    .card.is-hover { border-color: var(--border-visible); }
+    .card h4 { font-size: var(--text-subheading); }
+    .card p { font-size: var(--text-body-sm); color: var(--text2); }
+    .source { font-size: var(--text-caption); color: var(--text2); }
+    .kpi-value { font-family: var(--font-display); font-size: var(--text-heading); font-weight: 700; line-height: 1.3; color: var(--text1); }
+    .kpi-delta { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-caption); color: var(--success-text); }
+    .banner { flex: 1 1 320px; background: var(--accent-fill); color: var(--on-accent); border-radius: var(--radius-component); padding: var(--space-lg); }
+    .banner-scope { color: var(--on-accent-soft); font-size: var(--text-body-sm); }
+    .banner-total { font-family: var(--font-display); font-size: var(--text-display); font-weight: 700; line-height: 1.3; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; line-height: 1; border-radius: var(--radius-pill); font-size: var(--text-label); font-weight: 500; white-space: nowrap; }
+    .badge::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); }
+    .badge-new { background: var(--info-bg); color: var(--info); }
+    .badge-new::before { background: var(--info); }
+    .badge-progress { background: var(--warning-bg); color: var(--warning-text); }
+    .badge-progress::before { background: var(--warning); }
+    .badge-done { background: var(--success-bg); color: var(--success-text); }
+    .badge-done::before { background: var(--success); }
+    .badge-late { background: var(--error-bg); color: var(--error-text); }
+    .badge-late::before { background: var(--error); }
+    .badge-hold { background: var(--surface3); color: var(--text2); }
+    .badge-hold::before { background: var(--status-hold); }
+    .table-wrap { width: 100%; border: 1px solid var(--border); border-radius: var(--radius-component); overflow-x: auto; background: var(--background); }
+    .dt { width: 100%; border-collapse: collapse; font-size: var(--text-body-sm); }
+    .dt th { background: var(--surface1); color: var(--text2); font-size: var(--text-label); font-weight: 500; text-align: start; padding: 12px var(--space-md); white-space: nowrap; }
+    .dt td { padding: 12px var(--space-md); border-top: 1px solid var(--border); text-align: start; }
+    .dt .n { text-align: end; }
+    .dt tr.is-hover td { background: var(--surface1); }
+    .dt tr.is-selected td { background: var(--surface2); }
+    .dash { color: var(--text4); }
+    .chart { width: 100%; background: var(--background); border: 1px solid var(--border); border-radius: var(--radius-component); padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md); }
+    .chart h4 { font-size: var(--text-subheading); }
+    .split { display: flex; height: 44px; border-radius: var(--radius-control); overflow: hidden; }
+    .split-q, .split-n { display: flex; align-items: center; padding-inline: var(--space-md); font-weight: 700; min-width: 0; }
+    .split-q { background: var(--chart-qatari); color: var(--on-accent); }
+    .split-n { background: var(--chart-non-qatari); color: #1F1F1F; }
+    .legend { display: flex; gap: var(--space-lg); font-size: var(--text-body-sm); color: var(--text2); }
+    .legend-key { display: inline-flex; align-items: center; gap: var(--space-sm); }
+    .dot { width: 10px; height: 10px; border-radius: var(--radius-pill); }
+    .dot-q { background: var(--chart-qatari); }
+    .dot-n { background: var(--chart-non-qatari); }
+    .bar-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 48px; gap: var(--space-sm); align-items: center; font-size: var(--text-body-sm); }
+    .bar-track { height: 12px; background: var(--surface3); border-radius: var(--radius-pill); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: var(--radius-pill); background: var(--chart-qatari); }
+    .bar-val { text-align: end; font-weight: 500; font-size: var(--text-caption); }
+    .skel { background: var(--surface3); border-radius: var(--radius-element); animation: pulse 1200ms ease-in-out infinite; }
+    .skel-line { height: 12px; width: 100%; }
+    .skel-short { width: 60%; }
+    .skel-title { height: 20px; width: 45%; }
+    @keyframes pulse { 50% { opacity: 0.5; } }
+
+    /* Navigation */
+    .tabs { display: flex; gap: var(--space-lg); border-bottom: 1px solid var(--border); width: 100%; }
+    .tab { height: 44px; font-size: var(--text-body-sm); font-weight: 500; color: var(--text2); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab.is-on { color: var(--text1); border-bottom-color: var(--accent); }
+    .tab.is-disabled { color: var(--text4); cursor: not-allowed; }
+    .crumbs { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-body-sm); color: var(--text2); }
+    .crumbs .ico { width: 14px; height: 14px; color: var(--text4); }
+    .crumbs .is-current { color: var(--text1); font-weight: 500; }
+    .pager { display: flex; gap: var(--space-xs); }
+    .page { width: 36px; height: 36px; border-radius: var(--radius-control); display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-body-sm); color: var(--text1); }
+    .page.is-on { background: var(--accent-fill); color: var(--on-accent); }
+    .page.is-hover { background: var(--surface2); }
+    .page.is-disabled { color: var(--text4); cursor: not-allowed; }
+    .side-demo { width: 232px; background: var(--sidebar); border-radius: var(--radius-component); padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); color: var(--on-accent-soft); }
+    .side-link { height: 40px; display: flex; align-items: center; gap: var(--space-sm); padding-inline: 12px; border-radius: var(--radius-control); font-size: var(--text-body-sm); }
+    .side-link.is-on { background: var(--on-accent-wash); color: var(--on-accent); font-weight: 500; }
+
+    /* Feedback and overlays */
+    .alert { flex: 1 1 280px; display: flex; gap: 12px; padding: var(--space-md); border-radius: var(--radius-component); font-size: var(--text-body-sm); }
+    .alert strong { display: block; font-weight: 700; }
+    .alert .ico { margin-top: 4px; }
+    .alert-info { background: var(--info-bg); }
+    .alert-info .ico, .alert-info strong { color: var(--info); }
+    .alert-success { background: var(--success-bg); }
+    .alert-success .ico, .alert-success strong { color: var(--success-text); }
+    .alert-warning { background: var(--warning-bg); }
+    .alert-warning .ico, .alert-warning strong { color: var(--warning-text); }
+    .alert-error { background: var(--error-bg); }
+    .alert-error .ico, .alert-error strong { color: var(--error-text); }
+    .toast { display: flex; align-items: center; gap: 12px; padding: 12px var(--space-md); background: var(--background); border-radius: var(--radius-component); box-shadow: var(--shadow-2); font-size: var(--text-body-sm); }
+    .toast .ico { color: var(--success-text); }
+    .toast-action { color: var(--accent); font-weight: 500; }
+    .progress { display: flex; align-items: center; gap: 12px; width: 100%; }
+    .progress-track { flex: 1; height: 8px; border-radius: var(--radius-pill); background: var(--surface3); overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: var(--radius-pill); background: var(--accent-fill); }
+    .progress-fill.is-done { background: var(--success); }
+    .progress-val { font-size: var(--text-body-sm); font-weight: 700; width: 44px; text-align: end; }
+    .empty { flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); padding: var(--space-xl); text-align: center; background: var(--background); border: 1px dashed var(--border-visible); border-radius: var(--radius-component); }
+    .empty .ico { width: 32px; height: 32px; color: var(--text3); }
+    .empty p { font-size: var(--text-body-sm); color: var(--text2); max-width: 30em; }
+    .backdrop { flex: 1; background: rgba(0, 0, 0, 0.5); border-radius: var(--radius-component); padding: var(--space-xl); display: flex; justify-content: center; }
+    .modal { width: 100%; max-width: 460px; background: var(--background); border-radius: var(--radius-container); box-shadow: var(--shadow-3); padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md); }
+    .modal h4 { font-size: var(--text-subheading); }
+    .modal p { font-size: var(--text-body-sm); color: var(--text2); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: var(--space-sm); }
+    .tooltip { background: var(--text1); color: var(--background); font-size: var(--text-caption); padding: 6px 10px; border-radius: var(--radius-element); line-height: 1.5; }
+    .popover { width: 260px; background: var(--background); border-radius: var(--radius-component); box-shadow: var(--shadow-2); padding: var(--space-md); font-size: var(--text-body-sm); }
+    .popover strong { display: block; margin-bottom: var(--space-xs); }
+
+    @media (max-width: 820px) {
+      .cl-shell { flex-direction: column; }
+      .cl-toc { position: static; width: 100%; height: auto; border-inline-end: none; border-bottom: 1px solid var(--border); padding: var(--space-md); }
+      .cl-toc nav { flex-direction: row; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); margin-top: var(--space-sm); }
+      .cl-toc-category { padding: 4px 0; }
+      .cl-toc-sub.show { display: none; }
+      .cl-main { padding: var(--space-lg) var(--space-md) 128px; }
+      .cl-canvas { padding: var(--space-md); }
+      .type-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+      .t-display { font-size: var(--text-heading); }
+    }
+  </style>
+</head>
+<body>
+  <div class="cl-shell">
+    <aside class="cl-toc">
+      <h1>مكتبة مكوّنات هوية الديوان</h1>
+      <span class="sample"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 9h.01" /> <path d="M11 12h1v4h1" /></svg>بيانات توضيحية</span>
+      <nav id="toc" aria-label="فهرس المكوّنات"></nav>
+    </aside>
+
+    <main class="cl-main">
+      <section class="cl-category-panel active" data-cat="الأساسيات">
+        <h2>الأساسيات</h2>
+
+        <div class="cl-component-group" id="colors" data-name="الألوان">
+          <h3>الألوان</h3>
+          <p>العنابي صوت الهوية الوحيد. لكل لون آخر وظيفة واحدة محددة.</p>
+          <div class="cl-canvas on-page stack">
+            <div class="sw-grid">
+              <div class="sw"><span class="sw-chip" style="background:#8E1837"></span>عنابي <code class="cl-code">#8E1837</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#7B1436"></span>عنابي داكن <code class="cl-code">#7B1436</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#DF456D"></span>وردي <code class="cl-code">#DF456D</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#002C77"></span>كحلي <code class="cl-code">#002C77</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#E9C56B"></span>ذهبي <code class="cl-code">#E9C56B</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#00B050"></span>مكتمل <code class="cl-code">#00B050</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#C00000"></span>متأخر <code class="cl-code">#C00000</code></div>
+              <div class="sw"><span class="sw-chip" style="background:#A6A6A6"></span>موقوف <code class="cl-code">#A6A6A6</code></div>
+            </div>
+            <div class="cl-variant wide"><span class="cl-label">تدرّج العنابي من 50 إلى 950</span>
+              <div class="ramp"><span style="background:#FBF0F3"></span><span style="background:#F5D9E1"></span><span style="background:#E8A9BC"></span><span style="background:#D4708E"></span><span style="background:#B4345A"></span><span style="background:#8E1837"></span><span style="background:#7B1436"></span><span style="background:#651029"></span><span style="background:#4A0E1E"></span><span style="background:#360A16"></span><span style="background:#22060E"></span></div>
+            </div>
+            <div class="cl-variant wide"><span class="cl-label">تدرّج المحايد من 0 إلى 950</span>
+              <div class="ramp"><span style="background:#FFFFFF"></span><span style="background:#F8F5F6"></span><span style="background:#F5F0F2"></span><span style="background:#EFE8EA"></span><span style="background:#E6DDE0"></span><span style="background:#D3C6CA"></span><span style="background:#A8999E"></span><span style="background:#7A6B70"></span><span style="background:#6B6B6B"></span><span style="background:#4A3840"></span><span style="background:#3A2830"></span><span style="background:#2A1A1F"></span><span style="background:#1F1F1F"></span><span style="background:#1A1014"></span></div>
+            </div>
+            <div class="sw-grid">
+              <div class="sw"><span class="sw-chip" style="background:var(--background)"></span><code class="cl-code">--background</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--surface1)"></span><code class="cl-code">--surface1</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--surface2)"></span><code class="cl-code">--surface2</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--surface3)"></span><code class="cl-code">--surface3</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--text1)"></span><code class="cl-code">--text1</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--text2)"></span><code class="cl-code">--text2</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--accent)"></span><code class="cl-code">--accent</code></div>
+              <div class="sw"><span class="sw-chip" style="background:var(--accent-fill)"></span><code class="cl-code">--accent-fill</code></div>
+            </div>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الدور</th><th>القيمة</th></tr>
+            <tr><td>قطري في الرسوم</td><td><code>--chart-qatari</code> عنابي، دائمًا</td></tr>
+            <tr><td>غير قطري في الرسوم</td><td><code>--chart-non-qatari</code> ذهبي، دائمًا</td></tr>
+            <tr><td>الإجراء الأساسي</td><td><code>--accent-fill</code> مع نص <code>--on-accent</code></td></tr>
+            <tr><td>الروابط والتحديد</td><td><code>--accent</code> (وردي في الوضع الداكن ليبقى مقروءًا)</td></tr>
+          </table></div>
+        </div>
+
+        <div class="cl-component-group" id="type" data-name="الخطوط">
+          <h3>الخطوط</h3>
+          <p>خط واحد للعناوين والنص والبيانات: <bdi>Lusail+</bdi>، وبديله على الويب <bdi>Tajawal</bdi>. بلا تباعد بين الحروف.</p>
+          <div class="cl-canvas on-page stack">
+            <div>
+              <div class="type-row"><code class="cl-code">--display</code><span class="t-display">تقرير القوى العاملة</span></div>
+              <div class="type-row"><code class="cl-code">--heading</code><span class="t-heading">نظرة عامة على الجهات</span></div>
+              <div class="type-row"><code class="cl-code">--subheading</code><span class="t-subheading">عنوان لوحة أو بطاقة</span></div>
+              <div class="type-row"><code class="cl-code">--body</code><span class="t-body">نص أساسي للقراءة المريحة في التقارير والصفحات.</span></div>
+              <div class="type-row"><code class="cl-code">--body-sm</code><span class="t-body-sm">نص ثانوي للأوصاف والملاحظات وخلايا الجداول.</span></div>
+              <div class="type-row"><code class="cl-code">--caption</code><span class="t-caption">سطر المصدر وتاريخ البيانات</span></div>
+              <div class="type-row"><code class="cl-code">--label</code><span class="t-label">عنوان عمود أو شارة</span></div>
+            </div>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الرمز</th><th>الحجم، ارتفاع السطر، الوزن</th></tr>
+            <tr><td><code>--display</code></td><td class="num">40px، 1.3، 700</td></tr>
+            <tr><td><code>--heading</code></td><td class="num">28px، 1.35، 700</td></tr>
+            <tr><td><code>--subheading</code></td><td class="num">20px، 1.4، 700</td></tr>
+            <tr><td><code>--body</code></td><td class="num">16px، 1.75، 400</td></tr>
+            <tr><td><code>--body-sm</code></td><td class="num">14px، 1.7، 400</td></tr>
+            <tr><td><code>--caption</code></td><td class="num">13px، 1.6، 400</td></tr>
+            <tr><td><code>--label</code></td><td class="num">12px، 1.5، 500</td></tr>
+          </table></div>
+        </div>
+
+        <div class="cl-component-group" id="radii" data-name="الزوايا">
+          <h3>الزوايا</h3>
+          <p>زوايا ناعمة لا دائرية. الشكل الحبّي للشارات والعناصر الصغيرة فقط.</p>
+          <div class="cl-canvas">
+            <div class="cl-variant"><span class="cl-label num">عنصر 6</span><span class="shape r-element"></span></div>
+            <div class="cl-variant"><span class="cl-label num">تحكّم 10</span><span class="shape r-control"></span></div>
+            <div class="cl-variant"><span class="cl-label num">مكوّن 14</span><span class="shape r-component"></span></div>
+            <div class="cl-variant"><span class="cl-label num">حاوية 16</span><span class="shape r-container"></span></div>
+            <div class="cl-variant"><span class="cl-label num">حبّي 999</span><span class="shape r-pill"></span></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="elevation" data-name="الارتفاع">
+          <h3>الارتفاع</h3>
+          <p>البطاقة لها حدّ بلا ظل. الطبقة العائمة لها ظل بلا حدّ. لا يجتمعان.</p>
+          <div class="cl-canvas on-page">
+            <div class="cl-variant"><span class="cl-label">مستوى 1، بطاقة</span><span class="elev elev-1">حدّ 1px</span></div>
+            <div class="cl-variant"><span class="cl-label">مستوى 2، قائمة</span><span class="elev elev-2">ظل ناعم</span></div>
+            <div class="cl-variant"><span class="cl-label">مستوى 3، نافذة</span><span class="elev elev-3">ظل أعمق</span></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="spacing" data-name="التباعد">
+          <h3>التباعد</h3>
+          <p>شبكة 8 بكسل. متقارب داخل المجموعة، واسع بين المجموعات.</p>
+          <div class="cl-canvas on-page stack">
+            <div class="space-row num"><span class="space-bar" style="width:4px"></span>xs 4</div>
+            <div class="space-row num"><span class="space-bar" style="width:8px"></span>sm 8</div>
+            <div class="space-row num"><span class="space-bar" style="width:16px"></span>md 16</div>
+            <div class="space-row num"><span class="space-bar" style="width:24px"></span>lg 24</div>
+            <div class="space-row num"><span class="space-bar" style="width:32px"></span>xl 32</div>
+            <div class="space-row num"><span class="space-bar" style="width:48px"></span>2xl 48</div>
+            <div class="space-row num"><span class="space-bar" style="width:64px"></span>3xl 64</div>
+            <div class="space-row num"><span class="space-bar" style="width:96px"></span>4xl 96</div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="icons" data-name="الأيقونات">
+          <h3>الأيقونات</h3>
+          <p>مجموعة واحدة (<bdi>Tabler</bdi> المخطّطة) بسماكة واحدة. ليست أيقونات رسمية للديوان.</p>
+          <div class="cl-canvas on-page">
+            <div class="icon-row"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -6" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -10" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -14" /> <path d="M4 20h14" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" /> <path d="M3 10h18" /> <path d="M10 3v18" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg></div>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الخاصية</th><th>القيمة</th></tr>
+            <tr><td>اللون</td><td><code>currentColor</code></td></tr>
+            <tr><td>الحجم</td><td class="num">18 في النص والأزرار، 20 في التنقل</td></tr>
+            <tr><td>الاتجاه</td><td>تُعكس الأسهم فقط، ولا تُعكس أيقونة البحث أو الساعة أو علامة الصح</td></tr>
+          </table></div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="الإجراءات">
+        <h2>الإجراءات</h2>
+
+        <div class="cl-component-group" id="button" data-name="الزر">
+          <h3>الزر</h3>
+          <p>زر أساسي واحد في الشاشة. التسمية فعل ومفعول.</p>
+          <div class="cl-canvas">
+            <div class="cl-variant"><span class="cl-label">أساسي</span><button class="btn btn-primary"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></svg>تصدير التقرير</button></div>
+            <div class="cl-variant"><span class="cl-label">ثانوي</span><button class="btn btn-secondary">تصفية البيانات</button></div>
+            <div class="cl-variant"><span class="cl-label">شفاف</span><button class="btn btn-ghost">عرض المنهجية</button></div>
+            <div class="cl-variant"><span class="cl-label">حذف</span><button class="btn btn-danger"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>حذف المهمة</button></div>
+            <div class="cl-variant"><span class="cl-label">على أرضية عنابية</span><div class="maroon-ground"><button class="btn btn-on-maroon">استعرض التقرير</button><button class="btn btn-on-maroon-ghost">المنهجية</button></div></div>
+          </div>
+          <div class="cl-canvas">
+            <div class="cl-variant"><span class="cl-label">عادي</span><button class="btn btn-primary">حفظ التغييرات</button></div>
+            <div class="cl-variant"><span class="cl-label">مرور</span><button class="btn btn-primary is-hover">حفظ التغييرات</button></div>
+            <div class="cl-variant"><span class="cl-label">تركيز</span><button class="btn btn-primary is-focus">حفظ التغييرات</button></div>
+            <div class="cl-variant"><span class="cl-label">تحميل</span><button class="btn btn-primary"><span class="spin"></span>جارٍ الحفظ</button></div>
+            <div class="cl-variant"><span class="cl-label">معطّل</span><button class="btn is-disabled">حفظ التغييرات</button></div>
+            <div class="cl-variant"><span class="cl-label">صغير</span><button class="btn btn-sm btn-secondary">إضافة مهمة</button></div>
+            <div class="cl-variant"><span class="cl-label">كبير</span><button class="btn btn-lg btn-primary">افتح المنصة</button></div>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الخاصية</th><th>القيمة</th></tr>
+            <tr><td>الارتفاع</td><td class="num">36 صغير، 44 متوسط، 52 كبير</td></tr>
+            <tr><td>الزاوية</td><td><code>--radius-control</code></td></tr>
+            <tr><td>الأساسي</td><td><code>--accent-fill</code>، عند المرور <code>--accent-fill-hover</code></td></tr>
+            <tr><td>الثانوي</td><td>حدّ <code>--border-visible</code>، عند المرور <code>--surface2</code></td></tr>
+            <tr><td>المعطّل</td><td><code>--surface3</code> مع نص <code>--text4</code></td></tr>
+          </table></div>
+        </div>
+
+        <div class="cl-component-group" id="icon-button" data-name="زر الأيقونة">
+          <h3>زر الأيقونة</h3>
+          <p>للإجراءات المتكررة في الصفوف وأشرطة الأدوات. له دائمًا تسمية للقارئ الآلي.</p>
+          <div class="cl-canvas">
+            <div class="cl-variant"><span class="cl-label">عادي</span><button class="icon-btn" aria-label="تعديل"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" /> <path d="M16 5l3 3" /></svg></button></div>
+            <div class="cl-variant"><span class="cl-label">مرور</span><button class="icon-btn is-hover" aria-label="عرض"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button></div>
+            <div class="cl-variant"><span class="cl-label">أساسي</span><button class="icon-btn is-solid" aria-label="إضافة"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></svg></button></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="segmented" data-name="التحكم المقطعي">
+          <h3>التحكم المقطعي</h3>
+          <p>للتبديل بين عرضين إلى أربعة للبيانات نفسها.</p>
+          <div class="cl-canvas">
+            <div class="segmented"><button class="seg">شهري</button><button class="seg is-on">ربعي</button><button class="seg">سنوي</button></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="menu" data-name="القائمة المنسدلة">
+          <h3>القائمة المنسدلة</h3>
+          <p>طبقة عائمة: ظل بلا حدّ.</p>
+          <div class="cl-canvas">
+            <div class="menu">
+              <button class="menu-item"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>عرض التفاصيل</button>
+              <button class="menu-item is-hover"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" /> <path d="M16 5l3 3" /></svg>تعديل المهمة</button>
+              <button class="menu-item is-disabled"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>إعادة الإسناد</button>
+              <span class="menu-rule"></span>
+              <button class="menu-item is-danger"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>حذف المهمة</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="الإدخال">
+        <h2>الإدخال</h2>
+
+        <div class="cl-component-group" id="input" data-name="حقل النص">
+          <h3>حقل النص</h3>
+          <p>التسمية فوق الحقل. رسالة الخطأ تذكر المشكلة وحلّها.</p>
+          <div class="cl-canvas">
+            <div class="field"><span class="field-label">اسم المهمة</span><div class="input is-placeholder">مثال: تحديث تقرير التوطين</div><span class="cl-label">عادي</span></div>
+            <div class="field"><span class="field-label">اسم المهمة</span><div class="input is-hover">تحديث التقرير</div><span class="cl-label">مرور</span></div>
+            <div class="field"><span class="field-label">اسم المهمة</span><div class="input is-focus">تحديث التقرير</div><span class="cl-label">تركيز</span></div>
+            <div class="field"><span class="field-label">البريد الإلكتروني</span><div class="input is-error"><span class="ltr-value">name@example</span></div><span class="help is-error">أكمل العنوان، مثل <bdi>name@example.qa</bdi></span></div>
+            <div class="field"><span class="field-label">رمز الجهة</span><div class="input is-disabled"><span class="ltr-value">ENT-014</span></div><span class="help">يُعبّأ من النظام</span></div>
+            <div class="field"><span class="field-label">بحث</span><div class="input is-placeholder"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></svg><span class="grow">ابحث في المهام</span></div><span class="cl-label">مع أيقونة</span></div>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الخاصية</th><th>القيمة</th></tr>
+            <tr><td>الارتفاع</td><td class="num">44</td></tr>
+            <tr><td>الحدّ</td><td><code>--border-visible</code></td></tr>
+            <tr><td>التركيز</td><td>حدّ <code>--accent</code> وحلقة 3px من <code>--accent-subtle</code></td></tr>
+            <tr><td>الخطأ</td><td>حدّ <code>--error</code> ورسالة بلون <code>--error-text</code></td></tr>
+            <tr><td>البيانات اللاتينية</td><td>تُعزل باتجاه <code>ltr</code></td></tr>
+          </table></div>
+        </div>
+
+        <div class="cl-component-group" id="select" data-name="القائمة والنص الطويل">
+          <h3>القائمة والنص الطويل</h3>
+          <p>القائمة بنفس صندوق الحقل مع سهم في نهايته.</p>
+          <div class="cl-canvas">
+            <div class="field"><span class="field-label">الجهة</span><div class="input"><span>جهة أ</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6l6 -6" /></svg></div></div>
+            <div class="field"><span class="field-label">ملاحظات</span><div class="input area is-placeholder">اكتب ملاحظة للفريق</div></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="checks" data-name="الاختيار والتبديل">
+          <h3>الاختيار والتبديل</h3>
+          <p>علامة الصح مرسومة بالحدود لا بحرف.</p>
+          <div class="cl-canvas">
+            <div class="cl-variant"><span class="cl-label">مربع الاختيار</span>
+              <span class="opt"><span class="box"></span>غير محدد</span>
+              <span class="opt"><span class="box is-on"></span>محدد</span>
+              <span class="opt"><span class="box is-mixed"></span>جزئي</span>
+              <span class="opt"><span class="box is-focus"></span>تركيز</span>
+              <span class="opt is-disabled"><span class="box"></span>معطّل</span>
+            </div>
+            <div class="cl-variant"><span class="cl-label">زر الاختيار</span>
+              <span class="opt"><span class="radio is-on"></span>جميع الجهات</span>
+              <span class="opt"><span class="radio"></span>جهة واحدة</span>
+              <span class="opt is-disabled"><span class="radio"></span>غير متاح</span>
+            </div>
+            <div class="cl-variant"><span class="cl-label">المفتاح</span>
+              <span class="opt"><span class="switch is-on"></span>مفعّل</span>
+              <span class="opt"><span class="switch"></span>متوقف</span>
+              <span class="opt is-disabled"><span class="switch is-disabled"></span>معطّل</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="عرض البيانات">
+        <h2>عرض البيانات</h2>
+
+        <div class="cl-component-group" id="card" data-name="البطاقة والشريط">
+          <h3>البطاقة وشريط الإجمالي</h3>
+          <p>لا بطاقة داخل بطاقة. شريط الإجمالي هو المساحة العنابية الكبيرة الوحيدة في التقرير.</p>
+          <div class="cl-canvas">
+            <div class="banner"><p class="banner-scope">جهة أ، جميع القطاعات</p><p class="t-subheading">إجمالي الموظفين</p><p class="banner-total num">12,480</p></div>
+            <div class="card"><p>نسبة التوطين</p><span class="kpi-value num">38.4%</span><span class="kpi-delta"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7l-10 10" /> <path d="M8 7l9 0l0 9" /></svg><span class="num">+1.2</span> نقطة عن الربع السابق</span></div>
+            <div class="card is-hover"><h4>بطاقة تفاعلية</h4><p>عند المرور يتغيّر الحدّ فقط، ولا ترتفع البطاقة.</p><span class="source">المصدر: ملف توضيحي</span></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="badge" data-name="شارة الحالة">
+          <h3>شارة الحالة</h3>
+          <p>تسمية واحدة، لون واحد، في النظام كله.</p>
+          <div class="cl-canvas">
+            <span class="badge badge-new">لم تبدأ</span><span class="badge badge-progress">قيد التنفيذ</span><span class="badge badge-done">مكتمل</span><span class="badge badge-late">متأخر</span><span class="badge badge-hold">موقوف</span>
+          </div>
+          <div class="cl-spec-wrap"><table class="cl-spec">
+            <tr><th>الخاصية</th><th>القيمة</th></tr>
+            <tr><td>الحشو</td><td class="num">4px 10px، ارتفاع السطر 1</td></tr>
+            <tr><td>الزاوية</td><td><code>--radius-pill</code></td></tr>
+            <tr><td>النص</td><td><code>--label</code> بوزن 500، بلون النص الآمن للحالة</td></tr>
+          </table></div>
+        </div>
+
+        <div class="cl-component-group" id="table" data-name="جدول البيانات">
+          <h3>جدول البيانات</h3>
+          <p>العمود الأول على اليمين. الأعمدة الرقمية بمحاذاة واحدة في كل الجداول. القيمة المفقودة شرطة.</p>
+          <div class="cl-canvas on-page stack">
+            <div class="table-wrap"><table class="dt">
+              <thead><tr><th>الجهة</th><th>الحالة</th><th class="n">قطري</th><th class="n">غير قطري</th><th class="n">نسبة التوطين</th></tr></thead>
+              <tbody>
+                <tr><td>جهة أ</td><td><span class="badge badge-done">مكتمل</span></td><td class="n num">4,792</td><td class="n num">7,688</td><td class="n num">38.4%</td></tr>
+                <tr class="is-hover"><td>جهة ب</td><td><span class="badge badge-progress">قيد التنفيذ</span></td><td class="n num">2,105</td><td class="n num">3,340</td><td class="n num">38.7%</td></tr>
+                <tr class="is-selected"><td>جهة ج</td><td><span class="badge badge-late">متأخر</span></td><td class="n num">980</td><td class="n num">2,410</td><td class="n num">28.9%</td></tr>
+                <tr><td>جهة د</td><td><span class="badge badge-new">لم تبدأ</span></td><td class="n dash">-</td><td class="n dash">-</td><td class="n dash">-</td></tr>
+              </tbody>
+            </table></div>
+            <span class="source">المصدر: ملف توضيحي، الأرقام غير حقيقية</span>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="chart" data-name="الرسوم">
+          <h3>الرسوم</h3>
+          <p>عنوان الرسم يذكر النتيجة. الأعمدة تبدأ من الصفر وتنمو من اليمين، والقيم مكتوبة عليها.</p>
+          <div class="cl-canvas on-page">
+            <div class="chart">
+              <h4>القطريون يشكلون أكثر من ثلث القوى العاملة</h4>
+              <div class="split"><div class="split-q num" style="flex:38.4">38.4%</div><div class="split-n num" style="flex:61.6">61.6%</div></div>
+              <div class="legend"><span class="legend-key"><span class="dot dot-q"></span>قطري</span><span class="legend-key"><span class="dot dot-n"></span>غير قطري</span></div>
+              <div class="bar-row"><span>التخصصية</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val num">1,860</span></div>
+              <div class="bar-row"><span>الإدارية</span><div class="bar-track"><div class="bar-fill" style="width:77%"></div></div><span class="bar-val num">1,440</span></div>
+              <div class="bar-row"><span>الفنية</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="bar-val num">930</span></div>
+              <span class="source">المصدر: ملف توضيحي، الأرقام غير حقيقية</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="skeleton" data-name="هيكل التحميل">
+          <h3>هيكل التحميل</h3>
+          <p>يأخذ شكل المحتوى الذي سيحل محله. لا دوّارة وسط المحتوى.</p>
+          <div class="cl-canvas on-page">
+            <div class="card"><span class="skel skel-title"></span><span class="skel skel-line"></span><span class="skel skel-line"></span><span class="skel skel-line skel-short"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="التنقل">
+        <h2>التنقل</h2>
+
+        <div class="cl-component-group" id="sidebar" data-name="الشريط الجانبي">
+          <h3>الشريط الجانبي</h3>
+          <p>عنابي في بداية الصفحة (يمينًا). العنصر النشط بنص أبيض على طبقة بيضاء خفيفة.</p>
+          <div class="cl-canvas">
+            <div class="side-demo">
+              <span class="side-link"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /> <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /> <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /> <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>اللوحة الرئيسية</span>
+              <span class="side-link is-on"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></svg>المهام</span>
+              <span class="side-link"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></svg>التقارير</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="tabs" data-name="التبويبات">
+          <h3>التبويبات</h3>
+          <p>خط عنابي بسماكة 2px تحت التبويب النشط.</p>
+          <div class="cl-canvas on-page">
+            <div class="tabs"><button class="tab is-on">نظرة عامة</button><button class="tab">التوطين</button><button class="tab">الوظائف الحرجة</button><button class="tab is-disabled">الأرشيف</button></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="crumbs" data-name="مسار التنقل والصفحات">
+          <h3>مسار التنقل والصفحات</h3>
+          <p>الأسهم معكوسة لتوافق اتجاه القراءة.</p>
+          <div class="cl-canvas on-page">
+            <div class="crumbs"><span>التقارير</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6" /></svg><span>الربع الثالث</span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6" /></svg><span class="is-current">التوطين</span></div>
+            <div class="pager">
+              <button class="page is-disabled" aria-label="السابق"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6l-6 6" /></svg></button>
+              <button class="page is-on num">1</button><button class="page is-hover num">2</button><button class="page num">3</button>
+              <button class="page" aria-label="التالي"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6" /></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="التنبيهات">
+        <h2>التنبيهات</h2>
+
+        <div class="cl-component-group" id="alert" data-name="التنبيه">
+          <h3>التنبيه</h3>
+          <p>خلفية ملوّنة خفيفة وأيقونة. بلا شريط جانبي ملوّن.</p>
+          <div class="cl-canvas on-page">
+            <div class="alert alert-info"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 9h.01" /> <path d="M11 12h1v4h1" /></svg><div><strong>بيانات محدّثة</strong>آخر تحديث للملف كان أمس.</div></div>
+            <div class="alert alert-success"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></svg><div><strong>تم التصدير</strong>حُفظ التقرير في مجلد الفريق.</div></div>
+            <div class="alert alert-warning"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" /> <path d="M12 16h.01" /></svg><div><strong>ملف قديم</strong>تاريخ البيانات أقدم من 30 يومًا. ارفع أحدث ملف.</div></div>
+            <div class="alert alert-error"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" /> <path d="M12 16h.01" /></svg><div><strong>تعذّر قراءة الملف</strong>العمود «الجنسية» مفقود. أضفه ثم أعد الرفع.</div></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="toast" data-name="الإشعار العابر">
+          <h3>الإشعار العابر</h3>
+          <p>سطر واحد وإجراء واحد اختياري، ويختفي بعد خمس ثوانٍ.</p>
+          <div class="cl-canvas">
+            <div class="toast"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></svg><span>حُفظت التغييرات</span><button class="toast-action">تراجع</button></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="progress" data-name="شريط التقدم">
+          <h3>شريط التقدم</h3>
+          <p>لا يظهر الشريط دون رقمه.</p>
+          <div class="cl-canvas on-page stack">
+            <div class="progress"><div class="progress-track"><div class="progress-fill" style="width:60%"></div></div><span class="progress-val num">60%</span></div>
+            <div class="progress"><div class="progress-track"><div class="progress-fill is-done" style="width:100%"></div></div><span class="progress-val num">100%</span></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="empty" data-name="الحالة الفارغة">
+          <h3>الحالة الفارغة</h3>
+          <p>تشرح ما ينتمي إلى هذا المكان وتقدّم الخطوة التالية.</p>
+          <div class="cl-canvas">
+            <div class="empty"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /> <path d="M4 13h3l3 3h4l3 -3h3" /></svg><strong>لا مهام في هذا الربع بعد</strong><p>أضف أول مهمة لتظهر هنا مع حالتها وتاريخ استحقاقها.</p><button class="btn btn-sm btn-primary"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></svg>إضافة مهمة</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cl-category-panel" data-cat="الطبقات">
+        <h2>الطبقات</h2>
+
+        <div class="cl-component-group" id="modal" data-name="النافذة">
+          <h3>النافذة</h3>
+          <p>تُستخدم فقط حين يجب أن تقاطع المهمة المستخدم. الإجراء الأساسي في النهاية.</p>
+          <div class="cl-canvas">
+            <div class="backdrop"><div class="modal"><h4>حذف المهمة؟</h4><p>ستُحذف «مراجعة البيانات» مع سجل نشاطها. لا يمكن التراجع عن هذا الإجراء.</p><div class="modal-actions"><button class="btn btn-sm btn-secondary">إلغاء</button><button class="btn btn-sm btn-danger">حذف المهمة</button></div></div></div>
+          </div>
+        </div>
+
+        <div class="cl-component-group" id="tooltip" data-name="التلميح والنافذة الصغيرة">
+          <h3>التلميح والنافذة الصغيرة</h3>
+          <p>التلميح لشرح قصير. النافذة الصغيرة لمحتوى أطول دون مقاطعة.</p>
+          <div class="cl-canvas">
+            <span class="tooltip">آخر تحديث: 30 سبتمبر 2026</span>
+            <div class="popover"><strong>كيف تُحسب النسبة؟</strong>عدد القطريين مقسومًا على إجمالي الموظفين في تاريخ البيانات.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="floating-bar" dir="rtl">
+    <button class="mode-btn" data-mode="light" aria-label="الوضع الفاتح"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>فاتح</button>
+    <button class="mode-btn" data-mode="dark" aria-label="الوضع الداكن"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>داكن</button>
+  </div>
+  <script>
+    (function () {
+      var toc = document.getElementById('toc');
+      var panels = Array.prototype.slice.call(document.querySelectorAll('.cl-category-panel'));
+      function show(panel) {
+        panels.forEach(function (p) { p.classList.toggle('active', p === panel); });
+        toc.querySelectorAll('.cl-toc-category').forEach(function (b) { b.classList.toggle('active', b.dataset.cat === panel.dataset.cat); });
+        toc.querySelectorAll('.cl-toc-sub').forEach(function (a) { a.classList.toggle('show', a.dataset.cat === panel.dataset.cat); });
+      }
+      panels.forEach(function (panel) {
+        var head = document.createElement('button');
+        head.className = 'cl-toc-category';
+        head.dataset.cat = panel.dataset.cat;
+        head.textContent = panel.dataset.cat;
+        head.addEventListener('click', function () { show(panel); window.scrollTo(0, 0); });
+        toc.appendChild(head);
+        panel.querySelectorAll('.cl-component-group').forEach(function (g) {
+          var a = document.createElement('a');
+          a.className = 'cl-toc-sub';
+          a.href = '#' + g.id;
+          a.dataset.cat = panel.dataset.cat;
+          a.textContent = g.dataset.name;
+          a.addEventListener('click', function (e) { e.preventDefault(); show(panel); g.scrollIntoView(); });
+          toc.appendChild(a);
+        });
+      });
+      show(panels[0]);
+      window.addEventListener('scroll', function () {
+        var current = null;
+        document.querySelectorAll('.cl-category-panel.active .cl-component-group').forEach(function (g) {
+          if (g.getBoundingClientRect().top < 140) current = g.id;
+        });
+        toc.querySelectorAll('.cl-toc-sub').forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+      }, { passive: true });
+    })();
+    document.querySelectorAll('.mode-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.documentElement.dataset.theme = btn.dataset.mode;
+        document.querySelectorAll('.mode-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+    var current = document.querySelector('.mode-btn[data-mode="' + document.documentElement.dataset.theme + '"]');
+    if (current) current.classList.add('active');
+    document.querySelectorAll('a').forEach(function (a) {
+      if (!a.classList.contains('cl-toc-sub')) a.addEventListener('click', function (e) { e.preventDefault(); });
+    });
+  </script>
+</body>
+</html>

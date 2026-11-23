@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أُفُق</title>
+<meta name="description" content="أُفُق — نفق اختبار سياسات القوى العاملة: محاكاة تتقدّم بقوة عاملة حكومية افتراضية حتى 2040 لاختبار القرار قبل أن يصدر.">
+<style>
+@@include(../_fonts/alexandria.css)@@
+</style>
+<style>
+@@include(style-base.css)@@
+@@include(style-views.css)@@
+</style>
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+
+<header class="top" id="top">
+  <div class="top-row">
+    <a class="lab-link" href="index.html" title="العودة إلى معرض مختبر الابتكار">
+      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>مختبر الابتكار</span>
+    </a>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" width="30" height="30" aria-hidden="true">
+        <path d="M3 27a17 17 0 0 1 34 0" fill="none" stroke="#F2B46B" stroke-width="1.6"/>
+        <path d="M9 27a11 11 0 0 1 22 0" fill="none" stroke="#B8254F" stroke-width="1.6"/>
+        <path d="M1 27h38" stroke="#F3ECE4" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="20" cy="27" r="2.6" fill="#F2B46B"/>
+      </svg>
+      <div class="brand-txt"><b>أُفُق</b><span>نفق اختبار سياسات القوى العاملة</span></div>
+    </div>
+    <div class="top-actions">
+      <span class="syn" title="كل الأرقام في هذا النموذج مولَّدة آلياً لأغراض العرض ولا تمثّل أي جهة حقيقية"><i></i>بيانات تجريبية افتراضية</span>
+      <button class="btn quiet" id="btnMethod" type="button">المنهجية</button>
+      <button class="btn line" id="btnTour" type="button">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+        <span>جولة العرض</span>
+      </button>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="أقسام المنصة">
+    <button role="tab" type="button" data-view="scene" aria-selected="true"><em>1</em>المشهد</button>
+    <button role="tab" type="button" data-view="lab" aria-selected="false"><em>2</em>منصة السياسات</button>
+    <button role="tab" type="button" data-view="inverse" aria-selected="false"><em>3</em>المسار العكسي</button>
+    <button role="tab" type="button" data-view="brief" aria-selected="false"><em>4</em>موجز القرار</button>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="view" id="view-scene" role="tabpanel" aria-label="المشهد"></section>
+  <section class="view" id="view-lab" role="tabpanel" aria-label="منصة السياسات" hidden></section>
+  <section class="view" id="view-inverse" role="tabpanel" aria-label="المسار العكسي" hidden></section>
+  <section class="view" id="view-brief" role="tabpanel" aria-label="موجز القرار" hidden></section>
+</main>
+
+<footer class="foot">
+  <p><b>أُفُق</b> نموذج أولي ضمن مختبر الابتكار. جميع الأعداد والجهات والمعدلات افتراضية مولَّدة آلياً لأغراض العرض، ولا تمثّل إحصاءات حكومية. النتائج محاكاة عددية بقواعد معلنة، وليست تنبؤاً ولا ذكاءً اصطناعياً.</p>
+</footer>
+
+<!-- lab view only: live results strip pinned to the bottom on small screens -->
+<div class="livebar" id="livebar" hidden></div>
+
+<!-- methodology drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="منهجية النموذج" hidden>
+  <header><h2>كيف يعمل النموذج</h2><button class="x" type="button" data-close="drawer" aria-label="إغلاق">×</button></header>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<!-- export modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal-card">
+    <header><h2 id="modalTitle">تصدير</h2><button class="x" type="button" data-close="modal" aria-label="إغلاق">×</button></header>
+    <p class="modal-note" id="modalNote"></p>
+    <textarea id="modalText" readonly spellcheck="false" dir="auto"></textarea>
+    <footer>
+      <button class="btn primary" id="modalDownload" type="button">تنزيل الملف</button>
+      <button class="btn line" id="modalCopy" type="button">نسخ</button>
+      <span class="modal-status" id="modalStatus" role="status"></span>
+    </footer>
+  </div>
+</div>
+
+<!-- guided tour -->
+<div class="tour" id="tour" hidden>
+  <div class="tour-spot" id="tourSpot"></div>
+  <div class="tour-card" id="tourCard" role="dialog" aria-live="polite">
+    <div class="tour-step" id="tourStep"></div>
+    <h3 id="tourTitle"></h3>
+    <p id="tourText"></p>
+    <div class="tour-nav">
+      <button class="btn quiet" id="tourEnd" type="button">إنهاء</button>
+      <span class="grow"></span>
+      <button class="btn line" id="tourPrev" type="button">السابق</button>
+      <button class="btn primary" id="tourNext" type="button">التالي</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+@@include(../_shared/roster.js)@@
+</script>
+<script>
+@@include(engine.js)@@
+</script>
+<script>
+@@include(charts.js)@@
+</script>
+<script>
+@@include(ui-core.js)@@
+@@include(ui-scene.js)@@
+@@include(ui-lab.js)@@
+@@include(ui-inverse.js)@@
+@@include(ui-brief.js)@@
+@@include(ui-tour.js)@@
+</script>
+</body>
+</html>

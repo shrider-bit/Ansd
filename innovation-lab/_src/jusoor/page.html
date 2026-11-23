@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>جسور</title>
+<style>
+@@include(../_fonts/readex.css)@@
+@@include(style.css)@@
+@@include(style-views.css)@@
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <a class="lab-link" href="index.html" title="العودة إلى مختبر الابتكار"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>مختبر الابتكار</span></a>
+      <div class="brand">
+        <svg viewBox="0 0 44 30" aria-hidden="true"><path d="M3 26 A19 19 0 0 1 41 26" fill="none" stroke="#0F4C5C" stroke-width="3" stroke-linecap="round"/><path d="M11 26 A11 11 0 0 1 33 26" fill="none" stroke="#DF6248" stroke-width="3" stroke-linecap="round"/><circle cx="3" cy="26" r="2.6" fill="#0F4C5C"/><circle cx="41" cy="26" r="2.6" fill="#0F4C5C"/></svg>
+        <div><b>جسور</b><span>منصة التدوير الذكي للكفاءات الحكومية</span></div>
+      </div>
+      <span class="synth" title="جميع الأرقام والجهات والرموز في هذه الصفحة مولّدة آلياً لأغراض العرض"><i></i>بيانات تجريبية افتراضية</span>
+      <button class="btn ghost" id="btnMethod" type="button">المنهجية</button>
+      <button class="btn primary" id="btnTour" type="button">جولة العرض</button>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="مراحل العمل">
+      <button class="tab" role="tab" data-view="map" aria-selected="true"><span class="n">1</span>الخريطة</button>
+      <button class="tab" role="tab" data-view="lab" aria-selected="false"><span class="n">2</span>مختبر التخصيص<span class="dot" id="dirtyDot" hidden></span></button>
+      <button class="tab" role="tab" data-view="bridges" aria-selected="false"><span class="n">3</span>الجسور</button>
+      <button class="tab" role="tab" data-view="moves" aria-selected="false"><span class="n">4</span>قائمة التحركات</button>
+      <button class="tab" role="tab" data-view="plan" aria-selected="false"><span class="n">5</span>خطة التدوير</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <!-- 1 ─ map -->
+  <section class="view on" id="v-map">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">الحكومة جهة عمل واحدة</p>
+        <h1>قبل أن نوظّف من الخارج… <b>لننظر إلى الداخل</b></h1>
+        <p class="lede">يبحث «جسور» في جميع الجهات عن كفاءات تملك المهارات المطلوبة وتعمل حيث يوجد فائض، ثم يقترح أفضل مجموعة تحركات تسدّ الاحتياجات الحرجة، وتحمي الجهات المانحة، وتراعي رغبة الموظف.</p>
+        <div class="hero-actions">
+          <button class="btn primary big" type="button" data-go="lab">افتح مختبر التخصيص</button>
+          <button class="btn big" type="button" id="heroTour">جولة العرض في دقيقتين</button>
+        </div>
+      </div>
+      <div class="facts" id="facts"></div>
+    </div>
+    <div class="split">
+      <div class="panel" id="heatPanel">
+        <div class="panel-head">
+          <h3>خريطة الفائض والعجز بحسب الجهة والمجموعة الوظيفية</h3>
+          <div class="seg" role="group" aria-label="طريقة العرض">
+            <button type="button" data-heat="count" aria-pressed="true">الأعداد</button>
+            <button type="button" data-heat="cov" aria-pressed="false">نسبة التغطية</button>
+          </div>
+        </div>
+        <p class="hint">الرصيد = الموظفون الحاليون − الحاجة المحسوبة من عبء العمل. اضغط أي خانة لعرض تفاصيلها.</p>
+        <div class="scroll-x"><table class="heat" id="heat"></table></div>
+        <div class="heat-legend"><span>عجز</span><span class="ramp"></span><span>فائض</span><span>· تُقرأ كل خانة: جهة × مجموعة وظيفية</span></div>
+      </div>
+      <div class="aside">
+        <div class="panel cell-detail" id="cellDetail"></div>
+        <div class="addr" id="addr"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 ─ lab -->
+  <section class="view" id="v-lab">
+    <div class="view-head">
+      <h2>مختبر <b>التخصيص</b></h2>
+      <p>اضبط أولويات السياسة وضوابط حماية الجهات، ثم شغّل خوارزمية التخصيص الأمثل. تُقارن النتيجة آلياً بأسلوب «الأسبقية» المعتاد لتظهر قيمة التحسين بالأرقام.</p>
+    </div>
+    <div class="lab">
+      <form class="panel controls" id="controls" onsubmit="return false"></form>
+      <div class="results" id="results">
+        <div class="runbar" id="runbar">
+          <svg class="run-arc" viewBox="0 0 800 120" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 130 A420 150 0 0 1 820 130" fill="none" stroke="#fff" stroke-width="2"/><path d="M120 130 A280 110 0 0 1 680 130" fill="none" stroke="#fff" stroke-width="2"/></svg>
+          <button class="btn big" id="btnRun" type="button">شغّل التخصيص</button>
+          <ol class="stages" id="stages"></ol>
+          <p class="run-note" id="runNote"></p>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="two">
+          <div class="panel" id="cmp"></div>
+          <div class="panel" id="resid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 ─ bridges -->
+  <section class="view" id="v-bridges">
+    <div class="view-head">
+      <h2><b>الجسور</b> بين الجهات</h2>
+      <p>كل قوس جسرٌ من جهة مانحة إلى جهة مستقبلة؛ سماكته عدد التحركات ولونه المجموعة الوظيفية للاحتياج، ويشتدّ لونه عند الجهة المستقبلة. اختر جهة لعرض ما يصدر عنها وما يرد إليها.</p>
+    </div>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="نوع التحرك" id="arcType">
+        <button type="button" data-t="all" aria-pressed="true">الكل</button>
+        <button type="button" data-t="direct" aria-pressed="false">مباشر</button>
+        <button type="button" data-t="bridge" aria-pressed="false">جسر تأهيلي</button>
+      </div>
+      <button class="btn sm ghost" type="button" id="arcClear" hidden>إلغاء التحديد</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="bridge-grid">
+      <div>
+        <div class="arc-stage"><svg id="arcs" viewBox="0 0 1200 500" role="img" aria-label="مخطط الجسور بين الجهات"></svg></div>
+        <div class="ent-list" id="entList"></div>
+      </div>
+      <div class="panel ent-panel" id="entPanel"></div>
+    </div>
+    <div class="arc-rule"></div>
+    <div class="panel-head"><h3>أكثر الجسور ازدحاماً</h3><span class="hint">من جهة مانحة إلى جهة مستقبلة — اضغط لعرض التحركات</span></div>
+    <div class="corr" id="corr"></div>
+  </section>
+
+  <!-- 4 ─ moves -->
+  <section class="view" id="v-moves">
+    <div class="view-head">
+      <h2>قائمة <b>التحركات</b> المقترحة</h2>
+      <p>كل بطاقة مقترح واحد: كفاءة برمز مجهول، ومن أين تنتقل وإلى أين، ولماذا تناسب. اعتمد أو ثبّت أو ارفض، ثم أعد التخصيص ليُبنى الحل حول قراراتك.</p>
+    </div>
+    <div class="consent"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5z" fill="none" stroke="#0F4C5C" stroke-width="1.6"/><path d="M7 10l2.2 2.2L13.5 8" fill="none" stroke="#DF6248" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>الملفات معروضة برموز لا بأسماء. كل تحرك <b>مقترح</b> لا يُنفَّذ إلا بموافقة الموظف والجهة المانحة والجهة المستقبلة.</span></div>
+    <div class="notice" id="mvNotice" hidden></div>
+    <div class="toolbar" id="mvTools"></div>
+    <div class="count-line" id="mvCount"></div>
+    <div class="cards" id="cards"></div>
+    <div class="more"><button class="btn" id="mvMore" type="button">عرض المزيد</button></div>
+    <div class="arc-rule"></div>
+    <div id="programmes"></div>
+  </section>
+
+  <!-- 5 ─ plan -->
+  <section class="view" id="v-plan">
+    <div class="view-head">
+      <h2>خطة <b>التدوير</b></h2>
+      <p>ورقة قرار جاهزة للطباعة والتصدير: التحركات المعتمدة أو المقترحة، والاحتياجات التي تبقى للتوظيف الخارجي.</p>
+    </div>
+    <div class="plan-bar" id="planBar"></div>
+    <div class="sheet-doc" id="planDoc"></div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>جسور — نموذج أولي ضمن مختبر الابتكار. جميع البيانات تجريبية افتراضية ولا تمثل أي جهة أو موظف.</span><span>التخصيص بخوارزمية Kuhn–Munkres وقواعد معلنة، دون أي نموذج تعلّم آلي.</span></div></footer>
+
+<!-- methodology drawer -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="shade" data-close></div>
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="إغلاق">×</button>
+    <p class="eyebrow">كيف يعمل «جسور»؟</p>
+    <h2 id="mTitle">المنهجية والافتراضات</h2>
+    <p>هذه الصفحة نموذج أولي يعمل كاملاً داخل المتصفح. لا يُرسَل أي شيء إلى أي خادم.</p>
+    <h3>البيانات</h3>
+    <ul>
+      <li>24 جهة افتراضية بأسماء محايدة و12 مجموعة وظيفية. الأعداد مولّدة آلياً ببذرة ثابتة، فتظهر الأرقام نفسها في كل مرة.</li>
+      <li id="mData"></li>
+      <li>الرغبة في التنقل مُفترض أنها تأتي من خدمة ذاتية يحدّث فيها الموظف تفضيلاته.</li>
+    </ul>
+    <h3>الملاءمة المهنية (0–100%)</h3>
+    <p><code>55% المهارات + 15% الدرجة + 15% القرب الوظيفي + 15% الخبرة</code></p>
+    <ul>
+      <li><b>المهارات:</b> تغطية مهارات الاحتياج، والمهارة الأساسية بوزن مضاعف. المستوى «متمكن» فأعلى يُحتسب كاملاً تقريباً، و«أساسي» جزئياً.</li>
+      <li><b>الدرجة:</b> ضمن نطاق الفئة المطلوبة = 100%، وفئة واحدة أعلى أو أدنى = 55%، وما زاد مستبعد.</li>
+      <li><b>القرب الوظيفي:</b> مصفوفة معلنة بين المجموعات (مثلاً: المالية ↔ الرقابة 0.8). ما دون 0.3 مستبعد.</li>
+    </ul>
+    <h3>شروط لا تُتجاوز</h3>
+    <ul>
+      <li>لا تحرك داخل الجهة نفسها، ولكل موظف تحرك واحد، ولكل احتياج شاغل واحد.</li>
+      <li>تغطية المهارات الأساسية والملاءمة فوق الحدّين المضبوطين في المختبر.</li>
+      <li><b>حماية الجهة المانحة:</b> لا تنخفض تغطية أي خانة عن الحدّ الأدنى المحدد، ولا يتجاوز الصادر من أي جهة السقف المحدد.</li>
+    </ul>
+    <h3>قيمة المطابقة والتخصيص</h3>
+    <p>قيمة كل زوج (موظف، احتياج) متوسط موزون بأشرطة المختبر السبعة: المهارات، الدرجة، القرب، الخبرة، أهمية الاحتياج، أولوية التقطير، رغبة الموظف.</p>
+    <ul>
+      <li><b>الحل الأمثل:</b> خوارزمية التخصيص Kuhn–Munkres (الهنغارية) تعظّم مجموع القيم على جميع الأزواج معاً، وهي تعطي الحل الأمثل رياضياً لمسألة التخصيص.</li>
+      <li><b>معالجة السقوف:</b> إن تجاوز الحل سقف جهة، يُحتفظ بأعلى التحركات قيمة ويُعاد الحل لبقية الاحتياجات. هذه الخطوة تقريبية (بلغت 99.5% من الأمثل وسطياً في اختباراتنا على حالات صغيرة)، ولا تُعاد نتيجة أدنى من أسلوب الأسبقية.</li>
+      <li><b>الجسور التأهيلية:</b> مرحلة ثانية على ما تبقّى: أزواج تقلّ ملاءمتها عن الحدّ بما لا يزيد على 15 نقطة، مع برنامج قصير (4–16 أسبوعاً بحسب المهارات الناقصة).</li>
+      <li><b>أسلوب الأسبقية (للمقارنة):</b> تُخدَم الاحتياجات بترتيب ورودها ويأخذ كلٌّ منها أفضل مرشح متاح لحظتها، بالشروط نفسها.</li>
+    </ul>
+    <h3>آلية التحرك (قاعدة)</h3>
+    <p>احتياج دائم ← نقل. مؤقت حتى 12 شهراً ← ندب. مشروع 18–36 شهراً ← إعارة.</p>
+    <h3>تقدير الأثر</h3>
+    <p>الأيام الموفّرة = (مدة التوظيف الخارجي − مدة التحرك الداخلي) لكل تحرك، مع طرح أسابيع التأهيل للجسور. التكلفة المتجنَّبة = عدد التحركات × تكلفة التوظيف الخارجي. القيم الثلاث افتراضات قابلة للتعديل في المختبر، ولا تشمل تكلفة برامج التأهيل.</p>
+    <h3>ما ليس في هذا النموذج</h3>
+    <ul>
+      <li>ليس ذكاءً اصطناعياً ولا نموذجاً تنبؤياً: خوارزمية تخصيص وقواعد معلنة.</li>
+      <li>لا يقرأ بيانات حقيقية. التطبيق الفعلي يتطلب سجلاً موحداً للمهارات وبيانات الملاك والشواغر من أنظمة الموارد البشرية الحكومية.</li>
+      <li>المقترحات لا تغني عن موافقة الموظف والجهتين ولا عن التحقق من الشروط النظامية للنقل والندب والإعارة.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="xTitle">
+  <div class="shade" data-close></div>
+  <div class="box">
+    <button class="x" type="button" data-close aria-label="إغلاق">×</button>
+    <h3 id="xTitle">تصدير</h3>
+    <p class="hint" id="xHint"></p>
+    <textarea id="xText" readonly aria-label="محتوى التصدير"></textarea>
+    <div class="row"><button class="btn primary" id="xDown" type="button">تنزيل</button><button class="btn" id="xCopy" type="button">نسخ</button><span class="hint" id="xInfo"></span></div>
+  </div>
+</div>
+
+<div class="tour" id="tour" aria-live="polite"><div class="hole" id="tourHole"></div><div class="card" id="tourCard" role="dialog" aria-label="جولة العرض"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="arc-tip" id="tip" hidden></div>
+
+<script>
+@@include(../_shared/roster.js)@@
+@@include(data.js)@@
+@@include(optimizer.js)@@
+@@include(ui-core.js)@@
+@@include(ui-map-lab.js)@@
+@@include(ui-bridges.js)@@
+@@include(ui-moves.js)@@
+@@include(ui-boot.js)@@
+</script>
+</body>
+</html>

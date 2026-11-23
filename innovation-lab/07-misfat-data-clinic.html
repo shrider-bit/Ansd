@@ -605,7 +605,7 @@ MF.decode = buf => {
   if (b[0] === 0xFE && b[1] === 0xFF) return { text: new TextDecoder('utf-16be').decode(b.subarray(2)), encoding: 'UTF-16BE' };
   const hasBom = b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF;
   const utf8 = new TextDecoder('utf-8').decode(hasBom ? b.subarray(3) : b);
-  if (utf8.indexOf('�') === -1) return { text: utf8, encoding: hasBom ? 'UTF-8 (BOM)' : 'UTF-8' };
+  if (utf8.indexOf('\uFFFD') === -1) return { text: utf8, encoding: hasBom ? 'UTF-8 (BOM)' : 'UTF-8' };
   try { return { text: new TextDecoder('windows-1256').decode(b), encoding: 'Windows-1256' }; }
   catch (e) { return { text: utf8, encoding: 'UTF-8 (أحرف تالفة)' }; }
 };

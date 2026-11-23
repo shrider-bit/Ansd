@@ -16,7 +16,7 @@ R.intake = () => {
         </div>
       </div>
       <div class="panel incard" id="card-file">
-        <header><h3>ملف CSV أو TSV</h3><span class="spec">.CSV .TSV .TXT</span></header>
+        <header><h3>ملف CSV أو TSV</h3><span class="spec ltr">.CSV .TSV .TXT</span></header>
         <div class="body">
           <label class="drop" id="drop" for="file"><b>اسحب الملف إلى هنا أو اختره</b><span>يُكتشف الفاصل (فاصلة، فاصلة منقوطة، جدولة) والترميز (UTF-8 أو Windows-1256) تلقائياً.</span></label>
           <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv,text/plain" data-chg="file">
@@ -72,7 +72,7 @@ function confText(f) {
   const c = App.conf[f.id] || 0, how = App.how[f.id];
   if (how === 'manual') return ['اختيارك', 1, 'ok'];
   if (how === 'values') return ['استدلال من القيم', c, 'warn'];
-  return [c >= 0.95 ? 'العنوان مطابق' : 'العنوان مشابه', c, c >= 0.8 ? 'ok' : 'warn'];
+  return [c >= 0.99 ? 'العنوان مطابق' : 'العنوان مشابه', c, c >= 0.8 ? 'ok' : 'warn'];
 }
 function renderMapping() {
   const used = new Set(Object.values(App.map));

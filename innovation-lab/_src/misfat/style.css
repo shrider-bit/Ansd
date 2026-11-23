@@ -52,7 +52,7 @@ a { color: var(--clean-deep); }
 
 /* ---------- masthead: thesis + specimen label ---------- */
 .mast { background-color: var(--ground); background-image: radial-gradient(circle, #B9C6CA 1px, transparent 1.2px); background-size: 11px 11px; border-bottom: 1px solid var(--line); }
-.mast .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px 36px; padding-block: 26px; align-items: stretch; }
+.mast .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px 36px; padding-block: 26px; align-items: center; }
 .thesis { background: var(--ground); padding: 4px 0; align-self: center; box-shadow: 0 0 0 10px var(--ground); }
 .thesis .kick { font-size: 12.5px; color: var(--clean-deep); font-weight: 600; margin-bottom: 6px; }
 .thesis h1 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 700; }

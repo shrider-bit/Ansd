@@ -172,11 +172,19 @@ table.mini td.n, table.mini th.n { text-align: end; direction: ltr; }
 @media print {
   @page { size: A4; margin: 16mm 15mm; }
   :root { color-scheme: light; }
-  html, body { background: #fff !important; color: #1b1420 !important; font-size: 11pt; }
+  html, body { background: #fff !important; color: #1b1420 !important; }
   .top, .foot, .livebar, .scrim, .drawer, .modal, .tour, .toast, .tip, .view:not(#view-brief), .brief-tools, .brief-side, .no-print { display: none !important; }
   #view-brief[hidden] { display: block !important; }
   .brief-grid { display: block !important; }
-  .paper { box-shadow: none !important; border: 0 !important; padding: 0 !important; max-width: none !important; background: #fff !important; }
+  .wrap { padding-inline: 0 !important; max-width: none !important; }
+  .paper { box-shadow: none !important; border: 0 !important; padding: 0 !important; max-width: none !important; background: #fff !important; font-size: 9.5pt !important; line-height: 1.7 !important; }
+  .paper section { margin-top: 12pt !important; }
+  .paper h1 { font-size: 18pt !important; }
+  .paper table.p-t { font-size: 9pt !important; } .paper table.p-t th, .paper table.p-t td { padding-block: 3pt !important; }
+  .minis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10pt !important; }
+  .p-head { flex-wrap: nowrap !important; }
+  .tbl-scroll { overflow: visible !important; }
   .paper * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .paper section, .paper table, .paper .risk { break-inside: avoid; }
+  .paper .minis, .paper .risk, .paper tr, .paper .p-head { break-inside: avoid; }
+  .paper h2 { break-after: avoid; }
 }

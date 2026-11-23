@@ -87,7 +87,7 @@ MF.autoMap = (headers, rows) => {
   headers.forEach((h, c) => MF.FIELDS.forEach(f => {
     const hs = MF.headerScore(h, f), ss = MF.sniffScore(profiles[c], f, ctx);
     let conf = 0, how = 'header';
-    if (hs >= 0.5) { conf = Math.min(1, hs * 0.75 + ss * 0.25 + (hs === 1 ? 0.1 : 0)); }
+    if (hs >= 0.5) { conf = hs === 1 ? 1 : Math.min(0.94, hs * 0.8 + ss * 0.2); }
     else if (ss >= 0.75) { conf = 0.4 + ss * 0.2; how = 'values'; }
     if (conf >= 0.45) cands.push({ f: f.id, c, conf, how });
   }));

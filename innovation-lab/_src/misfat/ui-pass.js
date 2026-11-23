@@ -27,7 +27,7 @@ R.pass = () => {
       <div><dt>تاريخ المرجع</dt><dd class="mono">${MF.fmtDate(S.ref, 'dmy')}</dd></div><div><dt>سن التقاعد · السلّم</dt><dd class="mono">${S.retAge} · ${S.gradeMin}–${S.gradeMax}</dd></div></dl>
     <section class="pscore"><div class="pbig"><span class="cap">درجة الجودة الكلية</span><div><b class="mono">${s1(sc.overall)}</b><small class="mono">/ 100</small></div><span class="band ${sc.band.k}">${sc.band.ar}</span>
         ${App.ops.length ? `<span class="was">قبل المعالجة <b class="mono">${s1(s0.overall)}</b></span>` : '<span class="was">لم تُطبَّق معالجات</span>'}</div>
-      <table class="pdims"><thead><tr><th>البُعد</th><th>قبل</th><th>بعد</th><th></th><th>سجلات عليها ملاحظة</th></tr></thead><tbody>${MF.DIMS.map(dimRow).join('')}</tbody></table></section>
+      <table class="pdims"><thead><tr><th>البُعد</th><th>قبل</th><th>بعد</th><th class="g"></th><th>سجلات بملاحظة</th></tr></thead><tbody>${MF.DIMS.map(dimRow).join('')}</tbody></table></section>
     <section class="ptwo"><div><h3>المعالجات المطبّقة</h3>
         ${App.ops.length ? `<ol>${App.ops.map(o => `<li><span>${esc(o.label)}</span><b class="mono">${n0(App.counts[o.id] || 0)}</b></li>`).join('')}</ol><p class="sum">المجموع: <b class="mono">${n0(App.log.length)}</b> خلية تغيّرت، ولم يُحذف أو يُضف أي سجل.</p>` : '<p class="sum">لم تُطبَّق أي معالجة. البيانات كما وردت.</p>'}</div>
       <div><h3>ملاحظات قائمة</h3>

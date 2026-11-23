@@ -40,7 +40,7 @@ R.treat = () => {
     <div class="jnums"><div><span class="cap">قبل المعالجة</span><b class="mono">${s1(s0)}</b><span class="band ${MF.band(s0).k}">${MF.band(s0).ar}</span></div>
       <span class="jarrow" aria-hidden="true">←</span>
       <div class="now"><span class="cap">الآن</span><b class="mono" id="jump-now" data-v="${App.lastJump == null ? sN : App.lastJump}">${s1(App.lastJump == null ? sN : App.lastJump)}</b><span class="band ${c.score.band.k}">${c.score.band.ar}</span></div>
-      <div class="delta ${d > 0.05 ? 'up' : ''}"><b class="mono">${d > 0.05 ? '+' + s1(d) : '0.0'}</b><span>نقطة</span></div></div>
+      <div class="delta ${d > 0.05 ? 'up' : ''}"><b class="mono ltr">${d > 0.05 ? '+' + s1(d) : '0.0'}</b><span>نقطة</span></div></div>
     <div class="jcta">${safe.length ? `<button class="btn primary lg" data-act="apply-safe" id="btn-apply-safe">طبّق كل المعالجات الآمنة <span class="k">${safe.length}</span></button>
         <p>ستتغيّر <b class="mono">${n0(safeCells)}</b> خلية في ${n0(new Set(safe.flatMap(x => x.ch.map(y => y.r))).size)} سجلاً. لا يُحذف أي سجل، وكل تغيير يُدوَّن ويمكن التراجع عنه.</p>`
       : `<div class="done"><b>لا معالجات آمنة متبقية.</b><p>${App.ops.length ? `طُبّقت ${App.ops.length} معالجة غيّرت ${n0(App.log.length)} خلية.` : 'البيانات لا تحتاج توحيداً شكلياً.'} ${review.length ? `بقيت ${review.length} ملاحظة تحتاج مراجعة بشرية.` : ''}</p></div>`}</div>

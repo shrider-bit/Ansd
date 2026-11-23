@@ -120,6 +120,13 @@ BY.generate = function () {
       reqs.push(q);
     }
   });
+  // حالة العرض الرئيسية للجولة: طلب واحد تُضبط مدخلاته ليمرّ بكل مصادر التغطية (إحلال، شواغر، تدوير، أتمتة).
+  // تُضبط المدخلات فقط؛ التوصية نفسها يحسبها المحرك كأي طلب آخر.
+  const hero = reqs.filter(q => q.arche === 'digital' && q.workload).sort((a, b) => b.staff - a.staff)[0];
+  if (hero) { const w = hero.workload, v = w.volume, g = ((v[2] / v[1] - 1) + (v[1] / v[0] - 1)) / 2, need = Math.ceil(v[2] * (1 + g) / w.std);
+    hero.hero = true; hero.bench.peers = [.93, .97, .99, 1, 1.01, 1.03, 1.06, 1.09].map(k => +(w.std * k).toPrecision(4));
+    hero.vacancies = { vacant: 4, months: 14 }; hero.redeploy = { suitable: 7, fit: .82 }; hero.digital.readiness = .85; hero.docs = hero.docs.map(() => true);
+    hero.justType = 'overtime'; hero.requested = Math.round((need - hero.staff + hero.departures.ret[0] + hero.departures.attrExp) * 1.6); hero.justText = BY.JUST.overtime.text(hero); }
   reqs.sort((a, b) => a.submitted - b.submitted);
   reqs.forEach((q, i) => { q.id = i; q.no = String(i + 1).padStart(3, '0'); q.ref = `خ/2027/${q.no}`; q.memoRef = `ب/2027/${q.no}`; });
   return { reqs, track };

@@ -151,7 +151,7 @@ a { color: var(--clean-deep); }
 
 /* ---------- masthead: thesis + specimen label ---------- */
 .mast { background-color: var(--ground); background-image: radial-gradient(circle, #B9C6CA 1px, transparent 1.2px); background-size: 11px 11px; border-bottom: 1px solid var(--line); }
-.mast .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px 36px; padding-block: 26px; align-items: stretch; }
+.mast .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px 36px; padding-block: 26px; align-items: center; }
 .thesis { background: var(--ground); padding: 4px 0; align-self: center; box-shadow: 0 0 0 10px var(--ground); }
 .thesis .kick { font-size: 12.5px; color: var(--clean-deep); font-weight: 600; margin-bottom: 6px; }
 .thesis h1 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 700; }
@@ -377,7 +377,7 @@ td.b .ws, .var .ws { background: repeating-linear-gradient(45deg, #D9A441 0 2px,
 .pspec { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
 .pspec div { padding: 6px 10px; border-inline-end: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); min-width: 0; } .pspec dt { font-size: 11.5px; color: var(--mute); } .pspec dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
 .pscore { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; }
-.pbig { display: grid; justify-items: center; gap: 2px; padding: 10px 18px; border: 1px solid var(--ink); text-align: center; } .pbig b { font-size: 46px; font-weight: 600; line-height: 1.1; } .pbig small { font-size: 12px; color: var(--mute); margin-inline-start: 4px; } .pbig .was { font-size: 12px; color: var(--mute); }
+.pbig { display: grid; justify-items: center; gap: 2px; padding: 10px 18px; border: 1px solid var(--ink); text-align: center; } .pbig > div b { font-size: 46px; font-weight: 600; line-height: 1.1; } .pbig small { font-size: 12px; color: var(--mute); margin-inline-start: 4px; } .pbig .was { font-size: 12px; color: var(--mute); }
 .pdims th, .pdims td { padding: 4px 8px; font-size: 13px; } .pdims thead th { background: none; font-size: 11.5px; } .pdims td.g { width: 38%; min-width: 90px; } .pdims td.now { font-weight: 600; }
 .ptwo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
 .ptwo h3 { font-size: 13.5px; font-weight: 700; border-bottom: 1px solid var(--ink); padding-bottom: 3px; margin-bottom: 4px; }
@@ -389,8 +389,8 @@ td.b .ws, .var .ws { background: repeating-linear-gradient(45deg, #D9A441 0 2px,
 .stmt { font-size: 12px; color: var(--ink-2); display: grid; gap: 10px; align-content: space-between; } .sign { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink); }
 
 /* ----- 5 disclosure ----- */
-.safectl { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; } .safectl label { min-width: 150px; flex: 1 1 150px; } .safectl label:has(#safe-k) { flex: 0 1 110px; min-width: 100px; }
-.seg { display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); flex: 2 1 320px; } .seg > div { display: flex; flex-wrap: wrap; border: 1px solid var(--ink); border-radius: var(--r); overflow: hidden; }
+.safectl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 120px; gap: 12px 16px; align-items: end; }
+.seg { display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); grid-column: span 2; } .seg > div { display: flex; flex-wrap: wrap; border: 1px solid var(--ink); border-radius: var(--r); overflow: hidden; }
 .seg button { flex: 1 1 auto; border: 0; background: var(--paper); padding: 7px 12px; cursor: pointer; font-size: 13.5px; border-inline-end: 1px solid var(--line); white-space: nowrap; }
 .seg button:last-child { border-inline-end: 0; } .seg button.on { background: var(--ink); color: #fff; } .seg button:hover:not(.on) { background: var(--ground); }
 .sstrip { display: grid; grid-template-columns: repeat(3, minmax(0, 150px)) minmax(0, 1fr); border: 1px solid var(--line); background: var(--paper); border-radius: var(--r); }
@@ -408,6 +408,7 @@ td.b .ws, .var .ws { background: repeating-linear-gradient(45deg, #D9A441 0 2px,
 #tour { position: fixed; inset: 0; z-index: 50; pointer-events: none; }
 #tour .spot { position: fixed; border: 2px solid var(--clean); border-radius: 4px; box-shadow: 0 0 0 200vmax rgba(21, 32, 36, .5); transition: top .2s, left .2s, width .2s, height .2s; }
 .tcardw { position: fixed; inset-inline: 0; bottom: 0; display: grid; place-items: center; padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)); pointer-events: none; }
+.tcardw.solo { inset: 0; background: rgba(21, 32, 36, .5); pointer-events: auto; }
 .tc { pointer-events: auto; width: min(620px, 100%); background: var(--paper); border: 1px solid var(--ink); border-top: 4px solid var(--clean); border-radius: var(--r); padding: 12px 16px; display: grid; gap: 6px; box-shadow: 0 8px 28px rgba(21, 32, 36, .28); }
 .tch { display: flex; justify-content: space-between; align-items: center; } .tc h3 { font-size: 17px; } .tc p { font-size: 14px; color: var(--ink-2); }
 .tc .x { border: 0; background: none; font-size: 20px; cursor: pointer; line-height: 1; color: var(--ink-2); padding: 2px 6px; }
@@ -426,6 +427,8 @@ td.b .ws, .var .ws { background: repeating-linear-gradient(45deg, #D9A441 0 2px,
   .iss .row { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 12px; } .iss .ttl { grid-column: 1 / -1; grid-row: 2; } .iss .tags { grid-column: 1 / -1; grid-row: 3; justify-content: flex-start; } .iss .cnt { grid-row: 1; grid-column: 2; }
   .clusters li { grid-template-columns: auto minmax(0, 1fr); } .clusters .to { grid-column: 1 / -1; justify-content: start; }
   .pscore, .ptwo, .pfoot { grid-template-columns: minmax(0, 1fr); } .pspec { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pid { justify-items: start; }
+  .maptable th:nth-child(4), .maptable td.ex { display: none; } .conf { min-width: 104px; } .maptable select { min-width: 118px; } .thesis p { display: none; }
+  .pdims .g { display: none; } .safectl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .safectl > label:last-child { grid-column: 1 / -1; }
   .jnums b.mono { font-size: 32px; } .delta { margin-inline-start: 0; } .vhead .acts { width: 100%; } .next { justify-content: space-between; }
   .sstrip b.mono { font-size: 22px; } .sstrip > div { padding: 8px 10px; }
 }
@@ -438,8 +441,8 @@ td.b .ws, .var .ws { background: repeating-linear-gradient(45deg, #D9A441 0 2px,
   main { padding: 0; max-width: none; } .wrap { padding: 0; }
   #v-pass .vhead { display: none; } .passwrap { background: none; border: 0; padding: 0; }
   .passport { width: 100%; border: 0; padding: 4mm 0 0; gap: 4.5mm; font-size: 11px; break-inside: avoid; }
-  .phead h2 { font-size: 20px; } .pbig b { font-size: 34px; } .ptwo li { font-size: 10.5px; padding: 1.5px 0; } .pdims th, .pdims td { font-size: 10.5px; padding: 2px 6px; }
-  .pscore, .ptwo { grid-template-columns: auto minmax(0, 1fr); } .ptwo { grid-template-columns: 1fr 1fr; } .pfoot { grid-template-columns: 200px 1fr; } .pspec { grid-template-columns: repeat(3, 1fr); }
+  .phead h2 { font-size: 20px; } .ptwo li { font-size: 10.5px; padding: 1.5px 0; } .pdims th, .pdims td { font-size: 10.5px; padding: 2px 6px; }
+  .pbig > div b { font-size: 34px; } .pscore { grid-template-columns: auto minmax(0, 1fr); } .ptwo { grid-template-columns: 1fr 1fr; } .pfoot { grid-template-columns: 200px 1fr; } .pspec { grid-template-columns: repeat(3, 1fr); }
   .isslist { max-height: none; overflow: visible; } .scroll { overflow: visible; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
@@ -882,7 +885,7 @@ MF.autoMap = (headers, rows) => {
   headers.forEach((h, c) => MF.FIELDS.forEach(f => {
     const hs = MF.headerScore(h, f), ss = MF.sniffScore(profiles[c], f, ctx);
     let conf = 0, how = 'header';
-    if (hs >= 0.5) { conf = Math.min(1, hs * 0.75 + ss * 0.25 + (hs === 1 ? 0.1 : 0)); }
+    if (hs >= 0.5) { conf = hs === 1 ? 1 : Math.min(0.94, hs * 0.8 + ss * 0.2); }
     else if (ss >= 0.75) { conf = 0.4 + ss * 0.2; how = 'values'; }
     if (conf >= 0.45) cands.push({ f: f.id, c, conf, how });
   }));
@@ -1096,7 +1099,7 @@ MF.analyzeSteps = (table, map, settings) => {
       else { const nonnum = [], out = [];
         for (let i = 0; i < N; i++) { const g = P.grade[i]; if (!g) continue; if (!g.ok) nonnum.push([i, c]); else if (g.n < S.gradeMin || g.n > S.gradeMax) out.push([i, c]); }
         add({ id: 'V11a', rule: 'V11', dim: 'valid', sev: 'med', field: 'grade', cells: nonnum, title: 'درجة غير رقمية', explain: 'قيمة لا يمكن قراءتها كدرجة على السلّم.' });
-        add({ id: 'V11b', rule: 'V11', dim: 'valid', sev: 'high', field: 'grade', cells: out, title: `درجة خارج السلّم (${S.gradeMin}–${S.gradeMax})`, explain: 'رقم درجة غير موجود في سلّم الدرجات المعتمد في الإعدادات. يمكن تعديل حدود السلّم من «إعدادات القواعد».' });
+        add({ id: 'V11b', rule: 'V11', dim: 'valid', sev: 'high', field: 'grade', cells: out, title: `درجة خارج السلّم (من ${S.gradeMin} إلى ${S.gradeMax})`, explain: 'رقم درجة غير موجود في سلّم الدرجات المعتمد في الإعدادات. يمكن تعديل حدود السلّم من «إعدادات القواعد».' });
       }
     }
     if (has('salary')) {
@@ -1114,8 +1117,8 @@ MF.analyzeSteps = (table, map, settings) => {
       if (MF.cleanSpaces(v) !== v) sp.push([i, c]); if (MF.hasEasternDigits(v)) dg.push([i, c]); if (MF.isPlaceholder(v)) ph.push([i, c]); }
     add({ id: 'S1', rule: 'S1', dim: 'cons', sev: 'low', field: null, cells: sp, title: 'مسافات زائدة أو محارف خفية', explain: 'مسافة في أول القيمة أو آخرها أو مسافات مزدوجة تجعل «قطري» و« قطري» قيمتين مختلفتين في أي جدول محوري.',
       fix: { key: 'trim', kind: 'trim', cols: mappedCols, safe: true, label: 'حذف المسافات الزائدة والمحارف الخفية' } });
-    add({ id: 'S2', rule: 'S2', dim: 'cons', sev: 'low', field: null, cells: dg, title: 'أرقام هندية (٠–٩) مختلطة بالأرقام 0–9', explain: 'الأرقام ٠١٢٣ تُقرأ نصاً في Excel فلا تُجمع ولا تُرتّب. تُحوَّل إلى 0–9 دون تغيير القيمة.',
-      fix: { key: 'digits', kind: 'digits', cols: mappedCols, safe: true, label: 'توحيد الأرقام إلى 0–9' } });
+    add({ id: 'S2', rule: 'S2', dim: 'cons', sev: 'low', field: null, cells: dg, title: 'أرقام هندية (٠١٢) مختلطة بالأرقام (012)', explain: 'الأرقام ٠١٢٣ تُقرأ نصاً في Excel فلا تُجمع ولا تُرتّب. تُحوَّل إلى (012) دون تغيير القيمة.',
+      fix: { key: 'digits', kind: 'digits', cols: mappedCols, safe: true, label: 'تحويل الأرقام الهندية (٠١٢) إلى (012)' } });
     add({ id: 'S6', rule: 'S6', dim: 'cons', sev: 'low', field: null, cells: ph, title: 'رموز متعددة للقيمة المفقودة', explain: 'القيمة المفقودة مكتوبة بأشكال مختلفة (—، N/A، 0000، غير محدد). توحيدها إلى خانة فارغة يمنع عدّها فئةً مستقلة. تبقى مفقودة في بُعد الاكتمال.',
       fix: { key: 'placeholder', kind: 'placeholder', cols: mappedCols, safe: true, label: 'توحيد رموز القيم المفقودة إلى خانة فارغة' } });
     if (has('salary')) { const c = col('salary'), cells = []; for (let i = 0; i < N; i++) { const s = P.salary[i]; if (s && s.ok && s.canon !== MF.cleanSpaces(rows[i][c])) cells.push([i, c]); }
@@ -1298,7 +1301,8 @@ MF.assess = (tab, k) => { let unsafe = 0, people = 0, cells = 0;
 MF.suppress = (tab, k, complementary) => {
   const R = tab.rowKeys.length, C = tab.colKeys.length;
   const mask = tab.counts.map(row => row.map(n => (n > 0 && n < k) ? 1 : 0));
-  const rowSup = new Array(R).fill(false), colSup = new Array(C).fill(false);
+  // a marginal total under k is itself a small cell
+  const rowSup = tab.rowTot.map(n => !tab.oneD && n > 0 && n < k), colSup = tab.colTot.map(n => !tab.oneD && n > 0 && n < k);
   if (complementary) {
     let changed = true, guard = 0;
     while (changed && guard++ < 200) {
@@ -1517,7 +1521,7 @@ function renderLabel() {
         <dt>المعالجات</dt><dd>${App.ops.length ? `${App.ops.length} <span style="font-family:var(--sans);color:var(--mute)">(${n0(App.log.length)} خلية تغيّرت)</span>` : '<span style="font-family:var(--sans);color:var(--mute)">لم تُطبَّق بعد</span>'}</dd></dl>
     </div>
     <div class="score" id="score-box"><span class="cap">درجة الجودة</span><span class="num" id="score-num" data-v="${prev == null ? sc.overall : prev}">${s1(prev == null ? sc.overall : prev)}</span><span class="of">/ 100</span>
-      <span class="band ${b.k}">${b.ar}</span>${App.ops.length ? `<span class="was">كانت ${s1(App.score0.overall)} <b>${sc.overall >= App.score0.overall ? '+' : '−'}${s1(Math.abs(sc.overall - App.score0.overall))}</b></span>` : ''}</div>`;
+      <span class="band ${b.k}">${b.ar}</span>${App.ops.length ? `<span class="was">كانت ${s1(App.score0.overall)} <b class="ltr">${sc.overall >= App.score0.overall ? '+' : '−'}${s1(Math.abs(sc.overall - App.score0.overall))}</b></span>` : ''}</div>`;
   animateNum($('#score-num'), +s1(sc.overall)); App.lastShown = +s1(sc.overall);
 }
 function renderStepper() {
@@ -1533,7 +1537,7 @@ function go(view, scroll = true) {
   const cur = $('#step-' + view); if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 ACT.go = el => go(el.dataset.view);
-function toast(msg, err) { const t = $('#toast'); t.innerHTML = `<div class="${err ? 'err' : ''}">${esc(msg)}</div>`; clearTimeout(toast.t); toast.t = setTimeout(() => t.innerHTML = '', err ? 6500 : 4200); }
+function toast(msg, err) { if (tourI >= 0 && !err) return; const t = $('#toast'); t.innerHTML = `<div class="${err ? 'err' : ''}">${esc(msg)}</div>`; clearTimeout(toast.t); toast.t = setTimeout(() => t.innerHTML = '', err ? 6500 : 4200); }
 
 /* ---------- export modal: preview + download (UTF-8 BOM for Excel) + copy ---------- */
 let EXP = null;
@@ -1582,7 +1586,7 @@ R.intake = () => {
         </div>
       </div>
       <div class="panel incard" id="card-file">
-        <header><h3>ملف CSV أو TSV</h3><span class="spec">.CSV .TSV .TXT</span></header>
+        <header><h3>ملف CSV أو TSV</h3><span class="spec ltr">.CSV .TSV .TXT</span></header>
         <div class="body">
           <label class="drop" id="drop" for="file"><b>اسحب الملف إلى هنا أو اختره</b><span>يُكتشف الفاصل (فاصلة، فاصلة منقوطة، جدولة) والترميز (UTF-8 أو Windows-1256) تلقائياً.</span></label>
           <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv,text/plain" data-chg="file">
@@ -1638,7 +1642,7 @@ function confText(f) {
   const c = App.conf[f.id] || 0, how = App.how[f.id];
   if (how === 'manual') return ['اختيارك', 1, 'ok'];
   if (how === 'values') return ['استدلال من القيم', c, 'warn'];
-  return [c >= 0.95 ? 'العنوان مطابق' : 'العنوان مشابه', c, c >= 0.8 ? 'ok' : 'warn'];
+  return [c >= 0.99 ? 'العنوان مطابق' : 'العنوان مشابه', c, c >= 0.8 ? 'ok' : 'warn'];
 }
 function renderMapping() {
   const used = new Set(Object.values(App.map));
@@ -1755,7 +1759,7 @@ function renderTable() {
   const idx = []; for (let k = App.page * PAGE; k < Math.min(total, (App.page + 1) * PAGE); k++) idx.push(is ? is.rows[k] : k);
   const hit = new Set(); if (is) for (const [r, cc] of is.cells) hit.add(r * 4096 + cc);
   const fieldOf = {}; for (const f in App.map) fieldOf[App.map[f]] = MF.field(f).ar;
-  const head = `<tr><th class="rn" title="رقم الصف كما يظهر في Excel (الصف 1 للعناوين)">صف</th>${App.headers.map((h, i) => `<th>${esc(h)}<small class="${fieldOf[i] ? '' : 'un'}">${fieldOf[i] || 'غير مطابَق'}</small></th>`).join('')}</tr>`;
+  const head = `<tr><th class="rn" title="رقم الصف كما يظهر في Excel (الصف 1 للعناوين)">صف</th>${App.headers.map((h, i) => `<th>${esc(h)}${fieldOf[i] === h ? '' : `<small class="${fieldOf[i] ? '' : 'un'}">${fieldOf[i] ? '← ' + fieldOf[i] : 'غير مطابَق'}</small>`}</th>`).join('')}</tr>`;
   const body = idx.map(r => `<tr><td class="rn d">${r + 2}</td>${App.rows[r].map((v, cc) => { const key = r * 4096 + cc, m = c.marks.get(key);
     const tip = m ? c.cellIss.get(key).map(k => c.issues[k].title).join(' · ') : '';
     return `<td class="d${m ? ' m-' + m : ''}${hit.has(key) ? ' hit' : ''}${v === '' ? ' blank' : ''}"${tip ? ` title="${esc(tip)}"` : ''}>${cellHTML(v)}</td>`; }).join('')}</tr>`).join('');
@@ -1809,7 +1813,7 @@ R.treat = () => {
     <div class="jnums"><div><span class="cap">قبل المعالجة</span><b class="mono">${s1(s0)}</b><span class="band ${MF.band(s0).k}">${MF.band(s0).ar}</span></div>
       <span class="jarrow" aria-hidden="true">←</span>
       <div class="now"><span class="cap">الآن</span><b class="mono" id="jump-now" data-v="${App.lastJump == null ? sN : App.lastJump}">${s1(App.lastJump == null ? sN : App.lastJump)}</b><span class="band ${c.score.band.k}">${c.score.band.ar}</span></div>
-      <div class="delta ${d > 0.05 ? 'up' : ''}"><b class="mono">${d > 0.05 ? '+' + s1(d) : '0.0'}</b><span>نقطة</span></div></div>
+      <div class="delta ${d > 0.05 ? 'up' : ''}"><b class="mono ltr">${d > 0.05 ? '+' + s1(d) : '0.0'}</b><span>نقطة</span></div></div>
     <div class="jcta">${safe.length ? `<button class="btn primary lg" data-act="apply-safe" id="btn-apply-safe">طبّق كل المعالجات الآمنة <span class="k">${safe.length}</span></button>
         <p>ستتغيّر <b class="mono">${n0(safeCells)}</b> خلية في ${n0(new Set(safe.flatMap(x => x.ch.map(y => y.r))).size)} سجلاً. لا يُحذف أي سجل، وكل تغيير يُدوَّن ويمكن التراجع عنه.</p>`
       : `<div class="done"><b>لا معالجات آمنة متبقية.</b><p>${App.ops.length ? `طُبّقت ${App.ops.length} معالجة غيّرت ${n0(App.log.length)} خلية.` : 'البيانات لا تحتاج توحيداً شكلياً.'} ${review.length ? `بقيت ${review.length} ملاحظة تحتاج مراجعة بشرية.` : ''}</p></div>`}</div>
@@ -1896,7 +1900,7 @@ R.pass = () => {
       <div><dt>تاريخ المرجع</dt><dd class="mono">${MF.fmtDate(S.ref, 'dmy')}</dd></div><div><dt>سن التقاعد · السلّم</dt><dd class="mono">${S.retAge} · ${S.gradeMin}–${S.gradeMax}</dd></div></dl>
     <section class="pscore"><div class="pbig"><span class="cap">درجة الجودة الكلية</span><div><b class="mono">${s1(sc.overall)}</b><small class="mono">/ 100</small></div><span class="band ${sc.band.k}">${sc.band.ar}</span>
         ${App.ops.length ? `<span class="was">قبل المعالجة <b class="mono">${s1(s0.overall)}</b></span>` : '<span class="was">لم تُطبَّق معالجات</span>'}</div>
-      <table class="pdims"><thead><tr><th>البُعد</th><th>قبل</th><th>بعد</th><th></th><th>سجلات عليها ملاحظة</th></tr></thead><tbody>${MF.DIMS.map(dimRow).join('')}</tbody></table></section>
+      <table class="pdims"><thead><tr><th>البُعد</th><th>قبل</th><th>بعد</th><th class="g"></th><th>سجلات بملاحظة</th></tr></thead><tbody>${MF.DIMS.map(dimRow).join('')}</tbody></table></section>
     <section class="ptwo"><div><h3>المعالجات المطبّقة</h3>
         ${App.ops.length ? `<ol>${App.ops.map(o => `<li><span>${esc(o.label)}</span><b class="mono">${n0(App.counts[o.id] || 0)}</b></li>`).join('')}</ol><p class="sum">المجموع: <b class="mono">${n0(App.log.length)}</b> خلية تغيّرت، ولم يُحذف أو يُضف أي سجل.</p>` : '<p class="sum">لم تُطبَّق أي معالجة. البيانات كما وردت.</p>'}</div>
       <div><h3>ملاحظات قائمة</h3>
@@ -1933,18 +1937,19 @@ R.safe = () => {
   const modes = [['show', 'اعرض المخاطر'], ['prim', 'احجب الخلايا الصغيرة'], ['comp', 'حجب + حجب تكميلي']];
   let vk, vt, vd;
   if (as.unsafe === 0) { vk = 'ok'; vt = 'آمن للنشر'; vd = `لا خلية يقلّ عددها عن ${S.k}.`; }
-  else if (S.mode === 'comp') { vk = 'ok'; vt = 'آمن بعد الحجب'; vd = `حُجبت ${sup.primary} خلية صغيرة و${sup.comp} خلية تكميلية${sup.rowSup.concat(sup.colSup).some(Boolean) ? ' وبعض المجاميع' : ''}.`; }
+  else if (S.mode === 'comp') { vk = 'ok'; vt = 'آمن بعد الحجب'; vd = `حُجبت ${sup.primary} خلية صغيرة${sup.comp ? `، وأُضيف حجب تكميلي لـ${sup.comp} خلية` : '، ولم يلزم حجب تكميلي'}${sup.rowSup.concat(sup.colSup).some(Boolean) ? '، مع المجاميع التي تقلّ عن الحد' : ''}.`; }
   else if (S.mode === 'prim') { vk = X.lone ? 'warn' : 'ok'; vt = X.lone ? 'حجب غير كافٍ' : 'آمن بعد الحجب'; vd = X.lone ? `${X.lone} صفاً أو عموداً فيه خلية محجوبة واحدة يمكن استرجاعها بطرح الباقي من المجموع. فعّل الحجب التكميلي.` : `حُجبت ${sup.primary} خلية، ولا يمكن استرجاع أي منها من المجاميع.`; }
   else { vk = 'bad'; vt = 'غير آمن للنشر'; vd = `${as.unsafe} خلية تكشف ${n0(as.people)} شخصاً.`; }
   const MAXR = 40, MAXC = 14, rk = tab.rowKeys.slice(0, MAXR), ck = tab.colKeys.slice(0, MAXC), cut = tab.rowKeys.length > MAXR || tab.colKeys.length > MAXC;
-  const cell = (n, r, c) => { const m = sup ? sup.mask[r][c] : 0; if (m) return `<td class="mono sup${m}" title="${m === 1 ? 'محجوبة: أقل من ' + S.k : 'حجب تكميلي يمنع استنتاج خلية مجاورة'}">&lt;${S.k}</td>`; return `<td class="mono ${n > 0 && n < S.k ? 'risk' : n === 0 ? 'zero' : ''}">${n0(n)}</td>`; };
+  const LT = `<span class="ltr">&lt;${S.k}</span>`;
+  const cell = (n, r, c) => { const m = sup ? sup.mask[r][c] : 0; if (m) return `<td class="mono sup${m}" title="${m === 1 ? 'محجوبة: أقل من ' + S.k : 'حجب تكميلي يمنع استنتاج خلية مجاورة'}">${LT}</td>`; return `<td class="mono ${n > 0 && n < S.k ? 'risk' : n === 0 ? 'zero' : ''}">${n0(n)}</td>`; };
   $('#v-safe').innerHTML = `
   <div class="vhead"><div><span class="spec">05 / أمان النشر</span><h2>هل يكشف جدولك عن فرد بعينه؟</h2>
     <p>خلية فيها شخص واحد ليست إحصاءً، بل معلومة عن ذلك الشخص يعرفها كل من يعرف جهته ودرجته. القاعدة المتّبعة في النشر الإحصائي: لا تُنشر خلية يقلّ عددها عن حدٍّ أدنى k.</p></div>
     <div class="acts"><button class="btn primary" data-act="exp-safe" id="btn-exp-safe">صدّر الجدول</button></div></div>
   <div class="panel" id="safe-ctl"><div class="body safectl">
     ${sel(0, false)}${sel(1, true)}${sel(2, true)}
-    <label>الحد الأدنى k<input type="number" id="safe-k" min="2" max="50" value="${S.k}" data-chg="safe-k" inputmode="numeric"></label>
+    <label class="kf">الحد الأدنى k<input type="number" id="safe-k" min="2" max="50" value="${S.k}" data-chg="safe-k" inputmode="numeric"></label>
     <div class="seg" role="group" aria-label="طريقة المعالجة"><span>المعالجة</span><div>${modes.map(m => `<button class="${S.mode === m[0] ? 'on' : ''}" data-act="safe-mode" data-mode="${m[0]}" aria-pressed="${S.mode === m[0]}">${m[1]}</button>`).join('')}</div></div>
     <label>دمج الفئات الصغيرة<select id="safe-merge" data-chg="safe-merge"><option value="-1">لا دمج</option>${dims.map((d, i) => `<option value="${i}" ${S.merge === i ? 'selected' : ''}>في «${esc(d.label)}»</option>`).join('')}</select></label>
   </div></div>
@@ -1958,8 +1963,8 @@ R.safe = () => {
   <div class="panel" id="safe-table"><header><h3>${esc(tab.rowLabel)}${tab.colLabel ? ' × ' + esc(tab.colLabel) : ''}</h3>
       <div class="legend"><span><i class="risk"></i>أقل من ${S.k}</span><span><i class="sup1"></i>محجوبة</span><span><i class="sup2"></i>حجب تكميلي</span></div></header>
     <div class="scroll"><table class="xtab"><thead><tr><th>${esc(tab.rowLabel)}</th>${ck.map(k => `<th>${esc(k)}</th>`).join('')}${tab.oneD ? '' : '<th class="tot">المجموع</th>'}</tr></thead>
-      <tbody>${rk.map((k, r) => `<tr><th scope="row">${esc(k)}</th>${ck.map((_, c) => cell(tab.counts[r][c], r, c)).join('')}${tab.oneD ? '' : `<td class="mono tot">${sup && sup.rowSup[r] ? '&lt;' + S.k : n0(tab.rowTot[r])}</td>`}</tr>`).join('')}</tbody>
-      <tfoot><tr><th scope="row">المجموع</th>${tab.oneD ? `<td class="mono tot">${n0(tab.total)}</td>` : ck.map((_, c) => `<td class="mono tot">${sup && sup.colSup[c] ? '&lt;' + S.k : n0(tab.colTot[c])}</td>`).join('') + `<td class="mono tot">${n0(tab.total)}</td>`}</tr></tfoot></table></div>
+      <tbody>${rk.map((k, r) => `<tr><th scope="row">${esc(k)}</th>${ck.map((_, c) => cell(tab.counts[r][c], r, c)).join('')}${tab.oneD ? '' : `<td class="mono tot">${sup && sup.rowSup[r] ? LT : n0(tab.rowTot[r])}</td>`}</tr>`).join('')}</tbody>
+      <tfoot><tr><th scope="row">المجموع</th>${tab.oneD ? `<td class="mono tot">${n0(tab.total)}</td>` : ck.map((_, c) => `<td class="mono tot ${!sup && tab.colTot[c] > 0 && tab.colTot[c] < S.k ? 'risk' : ''}">${sup && sup.colSup[c] ? LT : n0(tab.colTot[c])}</td>`).join('') + `<td class="mono tot">${n0(tab.total)}</td>`}</tr></tfoot></table></div>
     ${cut ? `<div class="body"><div class="note">الجدول كبير (${n0(tab.rowKeys.length)} صفاً × ${n0(tab.colKeys.length)} عموداً)؛ يُعرض أوله هنا، والإحصاءات والتصدير يشملانه كاملاً. حقل بهذا العدد من القيم لا يصلح غالباً للنشر.</div></div>` : ''}
     <div class="body fine">الحجب التكميلي هنا تقريبي: يضمن ألّا يبقى صف أو عمود بخلية محجوبة واحدة. راجع الجدول قبل النشر الرسمي، خصوصاً إن نُشرت جداول أخرى تتقاطع معه.</div></div>`;
 };
@@ -2001,7 +2006,7 @@ async function tourShow(i) {
   if (st.before) await st.before();
   const el = $(st.sel), t = $('#tour'); t.hidden = false;
   t.innerHTML = `<div class="spot"></div><div class="tcardw" role="dialog" aria-label="جولة العرض"><div class="tc">
-    <div class="tch"><span class="spec">جولة العرض · <span class="mono">${i + 1} / ${TOUR.length}</span></span><button class="x" data-act="tour-end" aria-label="إنهاء الجولة">×</button></div>
+    <div class="tch"><span class="spec">جولة العرض · <span class="mono ltr">${i + 1} / ${TOUR.length}</span></span><button class="x" data-act="tour-end" aria-label="إنهاء الجولة">×</button></div>
     <h3>${st.title}</h3><p>${esc(typeof st.text === 'function' ? st.text() : st.text)}</p>
     <div class="tcf"><div class="dots">${TOUR.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
       <div><button class="btn sm ghost" data-act="tour-prev" ${i === 0 ? 'disabled' : ''}>السابق</button> <button class="btn sm primary" data-act="tour-next" id="tour-next">${i === TOUR.length - 1 ? 'أنهِ الجولة' : 'التالي'}</button></div></div></div></div>`;
@@ -2009,8 +2014,15 @@ async function tourShow(i) {
     const y = window.scrollY + r.top - (r.height < room ? Math.max(70, (room - r.height) / 2) : 70); window.scrollTo({ top: Math.max(0, y), behavior: 'auto' }); }
   placeSpot(); $('#tour-next').focus({ preventScroll: true });
 }
-ACT.tour = async () => {
-  if (App.src !== 'sample' || App.ops.length) { await loadSample(); if (App.src !== 'sample') return; }
+ACT.tour = async el => {
+  if (App.src === 'user' && !(el && el.dataset.ok)) {            // never replace the user's data without saying so
+    const t = $('#tour'); t.hidden = false;
+    t.innerHTML = `<div class="tcardw solo" role="dialog" aria-label="جولة العرض"><div class="tc"><div class="tch"><span class="spec">جولة العرض</span><button class="x" data-act="tour-end" aria-label="إلغاء">×</button></div>
+      <h3>الجولة تعمل على العيّنة الافتراضية</h3><p>ستُستبدل البيانات المحمّلة حالياً بالعيّنة التجريبية. بياناتك لم تُحفظ في أي مكان؛ أعد لصقها أو تحميلها بعد الجولة.</p>
+      <div class="tcf"><span></span><div><button class="btn sm ghost" data-act="tour-end">إلغاء</button> <button class="btn sm primary" data-act="tour" data-ok="1" id="tour-ok">ابدأ الجولة بالعيّنة</button></div></div></div></div>`;
+    return;
+  }
+  if (App.src !== 'sample' || App.ops.length) await loadSample();
   App.issueFilter = null; App.openIssue = null; App.sevFilter = 'all'; App.dimFilter = 'all';
   tourShow(0);
 };

@@ -11,7 +11,7 @@
       text: () => { const t = E.totals(S.base.R, -1); return `خط الأساس يكشف ثلاث حقائق قبل أن تقع: موجة تقاعد تتصاعد، ونسبة تقطير تتراجع من ${p1(t.q[0])} إلى ${p1(t.q[L])}، وعجز يتّسع إلى ${n0(t.short[L])} وظيفة. السؤال: أي سياسة تغيّر هذا المسار؟`; } },
     { view: 'lab', target: '.kpis', before: () => { UF.setLevers(preset('qat'), true); UF.setMetric('q'); UF.setYear(L); }, title: 'اختبر سياسة: تسريع التقطير',
       text: () => { const t = E.totals(S.cur.R, -1), b = E.totals(S.base.R, -1); return `رفعنا حصة القطريين من التعيينات إلى 90% ووسّعنا الابتعاث 60%. النتيجة فورية: التقطير ${p1(t.q[L])} سنة 2040 بدل ${p1(b.q[L])}، والجاهزية ${S.cur.rd.score.toFixed(0)} بدل ${S.base.rd.score.toFixed(0)}. وكتلة الأجور ترتفع، فلا شيء بلا ثمن.`; } },
-    { view: 'lab', target: '.chartcard', before: () => { UF.setMetric('q'); UF.setYear(0); setTimeout(() => UF.play(), 500); }, title: 'الزمن يتحرّك أمامك',
+    { view: 'lab', target: '#view-lab .chartcard', before: () => { UF.setMetric('q'); UF.setYear(0); setTimeout(() => UF.play(), 500); }, title: 'الزمن يتحرّك أمامك',
       text: () => 'الخط الكهرماني مسار السياسة المختبرة، والمنقّط خط الأساس، والمساحة المظلّلة نطاق عدم اليقين من 200 مسار محتمل. لاحظ أن الأثر لا يظهر قبل 2030: الخريجون يحتاجون وقتاً ليصلوا.' },
     { view: 'inverse', target: '.inv-grid', before: () => { UF.stop(); UF.setLevers(Object.assign({}, D), true); if (!S.inv.running) S.inv.out = null; }, title: 'أو ابدأ من الهدف',
       text: () => 'حدّد الغاية (مثلاً: تقطير 52% بحلول 2035 مع سقف لنمو الأجور وللعجز)، فيحاكي النموذج 1,400 حزمة سياسات ويعرض ما يحققها. وإن استحال الهدف، يسمّي القيد الذي يمنعه.' },

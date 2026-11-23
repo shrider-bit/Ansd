@@ -24,7 +24,7 @@
       <section class="pf-two"><div class="pf-rank"><div class="sec-h"><h2>ترتيب الطلبات</h2><span class="hint">${n(rows.length)} طلباً فيها استحداث</span></div>
           <div class="tbl-wrap tall"><table class="tbl"><thead><tr><th>الطلب</th><th>الجهة والوحدة</th><th>الأولوية</th><th>ضمن السقف</th><th>الموقع</th></tr></thead><tbody>
           ${rows.map(r => `<tr class="${r.got === 0 ? 'below' : r.got < r.want ? 'partial' : ''}" data-act="open" data-id="${r.q.id}" tabindex="0" role="button"><td>${r.q.ref}${r.dec ? ' <span class="dot" title="بُتَّ فيه"></span>' : ''}</td><td>${r.q.entity.ar}<small>${esc(r.q.unit)}</small></td><td>${n(r.q.a.priority)}</td>
-            <td><span class="fund"><i style="width:${r.got / r.want * 100}%"></i></span> ${L(`${r.got} / ${r.want}`)}</td><td>${r.got === r.want ? 'فوق الخط' : r.got ? 'على الخط' : 'دون الخط'}</td></tr>`).join('')}</tbody></table></div></div>
+            <td class="nw"><span class="fund"><i style="width:${r.got / r.want * 100}%"></i></span> ${L(`${r.got} / ${r.want}`)}</td><td>${r.got === r.want ? 'فوق الخط' : r.got ? 'على الخط' : 'دون الخط'}</td></tr>`).join('')}</tbody></table></div></div>
         <div class="pf-sector"><div class="sec-h"><h2>التوزيع على القطاعات</h2></div><ul class="sect">${sect.map(x => `<li><span>${x.s.ar}</span><div class="sbar"><i class="sb-r" style="width:${x.R / smax * 100}%"></i><i class="sb-w" style="width:${x.want / smax * 100}%"></i><i class="sb-g" style="width:${x.got / smax * 100}%"></i></div><b>${n(x.got)}</b><small>من ${n(x.want)} · طُلب ${n(x.R)}</small></li>`).join('')}</ul>
           <p class="leg3"><i class="sb-g"></i>ضمن السقف <i class="sb-w"></i>موصى به أو معتمد <i class="sb-r"></i>مطلوب</p></div></section>`; };
 

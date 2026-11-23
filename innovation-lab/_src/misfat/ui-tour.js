@@ -28,7 +28,7 @@ async function tourShow(i) {
   if (st.before) await st.before();
   const el = $(st.sel), t = $('#tour'); t.hidden = false;
   t.innerHTML = `<div class="spot"></div><div class="tcardw" role="dialog" aria-label="جولة العرض"><div class="tc">
-    <div class="tch"><span class="spec">جولة العرض · <span class="mono">${i + 1} / ${TOUR.length}</span></span><button class="x" data-act="tour-end" aria-label="إنهاء الجولة">×</button></div>
+    <div class="tch"><span class="spec">جولة العرض · <span class="mono ltr">${i + 1} / ${TOUR.length}</span></span><button class="x" data-act="tour-end" aria-label="إنهاء الجولة">×</button></div>
     <h3>${st.title}</h3><p>${esc(typeof st.text === 'function' ? st.text() : st.text)}</p>
     <div class="tcf"><div class="dots">${TOUR.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
       <div><button class="btn sm ghost" data-act="tour-prev" ${i === 0 ? 'disabled' : ''}>السابق</button> <button class="btn sm primary" data-act="tour-next" id="tour-next">${i === TOUR.length - 1 ? 'أنهِ الجولة' : 'التالي'}</button></div></div></div></div>`;
@@ -36,8 +36,15 @@ async function tourShow(i) {
     const y = window.scrollY + r.top - (r.height < room ? Math.max(70, (room - r.height) / 2) : 70); window.scrollTo({ top: Math.max(0, y), behavior: 'auto' }); }
   placeSpot(); $('#tour-next').focus({ preventScroll: true });
 }
-ACT.tour = async () => {
-  if (App.src !== 'sample' || App.ops.length) { await loadSample(); if (App.src !== 'sample') return; }
+ACT.tour = async el => {
+  if (App.src === 'user' && !(el && el.dataset.ok)) {            // never replace the user's data without saying so
+    const t = $('#tour'); t.hidden = false;
+    t.innerHTML = `<div class="tcardw solo" role="dialog" aria-label="جولة العرض"><div class="tc"><div class="tch"><span class="spec">جولة العرض</span><button class="x" data-act="tour-end" aria-label="إلغاء">×</button></div>
+      <h3>الجولة تعمل على العيّنة الافتراضية</h3><p>ستُستبدل البيانات المحمّلة حالياً بالعيّنة التجريبية. بياناتك لم تُحفظ في أي مكان؛ أعد لصقها أو تحميلها بعد الجولة.</p>
+      <div class="tcf"><span></span><div><button class="btn sm ghost" data-act="tour-end">إلغاء</button> <button class="btn sm primary" data-act="tour" data-ok="1" id="tour-ok">ابدأ الجولة بالعيّنة</button></div></div></div></div>`;
+    return;
+  }
+  if (App.src !== 'sample' || App.ops.length) await loadSample();
   App.issueFilter = null; App.openIssue = null; App.sevFilter = 'all'; App.dimFilter = 'all';
   tourShow(0);
 };

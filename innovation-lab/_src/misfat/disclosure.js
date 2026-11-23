@@ -45,7 +45,8 @@ MF.assess = (tab, k) => { let unsafe = 0, people = 0, cells = 0;
 MF.suppress = (tab, k, complementary) => {
   const R = tab.rowKeys.length, C = tab.colKeys.length;
   const mask = tab.counts.map(row => row.map(n => (n > 0 && n < k) ? 1 : 0));
-  const rowSup = new Array(R).fill(false), colSup = new Array(C).fill(false);
+  // a marginal total under k is itself a small cell
+  const rowSup = tab.rowTot.map(n => !tab.oneD && n > 0 && n < k), colSup = tab.colTot.map(n => !tab.oneD && n > 0 && n < k);
   if (complementary) {
     let changed = true, guard = 0;
     while (changed && guard++ < 200) {

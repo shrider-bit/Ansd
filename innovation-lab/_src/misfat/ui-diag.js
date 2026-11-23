@@ -68,7 +68,7 @@ function renderTable() {
   const idx = []; for (let k = App.page * PAGE; k < Math.min(total, (App.page + 1) * PAGE); k++) idx.push(is ? is.rows[k] : k);
   const hit = new Set(); if (is) for (const [r, cc] of is.cells) hit.add(r * 4096 + cc);
   const fieldOf = {}; for (const f in App.map) fieldOf[App.map[f]] = MF.field(f).ar;
-  const head = `<tr><th class="rn" title="رقم الصف كما يظهر في Excel (الصف 1 للعناوين)">صف</th>${App.headers.map((h, i) => `<th>${esc(h)}<small class="${fieldOf[i] ? '' : 'un'}">${fieldOf[i] || 'غير مطابَق'}</small></th>`).join('')}</tr>`;
+  const head = `<tr><th class="rn" title="رقم الصف كما يظهر في Excel (الصف 1 للعناوين)">صف</th>${App.headers.map((h, i) => `<th>${esc(h)}${fieldOf[i] === h ? '' : `<small class="${fieldOf[i] ? '' : 'un'}">${fieldOf[i] ? '← ' + fieldOf[i] : 'غير مطابَق'}</small>`}</th>`).join('')}</tr>`;
   const body = idx.map(r => `<tr><td class="rn d">${r + 2}</td>${App.rows[r].map((v, cc) => { const key = r * 4096 + cc, m = c.marks.get(key);
     const tip = m ? c.cellIss.get(key).map(k => c.issues[k].title).join(' · ') : '';
     return `<td class="d${m ? ' m-' + m : ''}${hit.has(key) ? ' hit' : ''}${v === '' ? ' blank' : ''}"${tip ? ` title="${esc(tip)}"` : ''}>${cellHTML(v)}</td>`; }).join('')}</tr>`).join('');

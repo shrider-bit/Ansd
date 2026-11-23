@@ -133,7 +133,7 @@ MF.analyzeSteps = (table, map, settings) => {
       else { const nonnum = [], out = [];
         for (let i = 0; i < N; i++) { const g = P.grade[i]; if (!g) continue; if (!g.ok) nonnum.push([i, c]); else if (g.n < S.gradeMin || g.n > S.gradeMax) out.push([i, c]); }
         add({ id: 'V11a', rule: 'V11', dim: 'valid', sev: 'med', field: 'grade', cells: nonnum, title: 'درجة غير رقمية', explain: 'قيمة لا يمكن قراءتها كدرجة على السلّم.' });
-        add({ id: 'V11b', rule: 'V11', dim: 'valid', sev: 'high', field: 'grade', cells: out, title: `درجة خارج السلّم (${S.gradeMin}–${S.gradeMax})`, explain: 'رقم درجة غير موجود في سلّم الدرجات المعتمد في الإعدادات. يمكن تعديل حدود السلّم من «إعدادات القواعد».' });
+        add({ id: 'V11b', rule: 'V11', dim: 'valid', sev: 'high', field: 'grade', cells: out, title: `درجة خارج السلّم (من ${S.gradeMin} إلى ${S.gradeMax})`, explain: 'رقم درجة غير موجود في سلّم الدرجات المعتمد في الإعدادات. يمكن تعديل حدود السلّم من «إعدادات القواعد».' });
       }
     }
     if (has('salary')) {
@@ -151,8 +151,8 @@ MF.analyzeSteps = (table, map, settings) => {
       if (MF.cleanSpaces(v) !== v) sp.push([i, c]); if (MF.hasEasternDigits(v)) dg.push([i, c]); if (MF.isPlaceholder(v)) ph.push([i, c]); }
     add({ id: 'S1', rule: 'S1', dim: 'cons', sev: 'low', field: null, cells: sp, title: 'مسافات زائدة أو محارف خفية', explain: 'مسافة في أول القيمة أو آخرها أو مسافات مزدوجة تجعل «قطري» و« قطري» قيمتين مختلفتين في أي جدول محوري.',
       fix: { key: 'trim', kind: 'trim', cols: mappedCols, safe: true, label: 'حذف المسافات الزائدة والمحارف الخفية' } });
-    add({ id: 'S2', rule: 'S2', dim: 'cons', sev: 'low', field: null, cells: dg, title: 'أرقام هندية (٠–٩) مختلطة بالأرقام 0–9', explain: 'الأرقام ٠١٢٣ تُقرأ نصاً في Excel فلا تُجمع ولا تُرتّب. تُحوَّل إلى 0–9 دون تغيير القيمة.',
-      fix: { key: 'digits', kind: 'digits', cols: mappedCols, safe: true, label: 'توحيد الأرقام إلى 0–9' } });
+    add({ id: 'S2', rule: 'S2', dim: 'cons', sev: 'low', field: null, cells: dg, title: 'أرقام هندية (٠١٢) مختلطة بالأرقام (012)', explain: 'الأرقام ٠١٢٣ تُقرأ نصاً في Excel فلا تُجمع ولا تُرتّب. تُحوَّل إلى (012) دون تغيير القيمة.',
+      fix: { key: 'digits', kind: 'digits', cols: mappedCols, safe: true, label: 'تحويل الأرقام الهندية (٠١٢) إلى (012)' } });
     add({ id: 'S6', rule: 'S6', dim: 'cons', sev: 'low', field: null, cells: ph, title: 'رموز متعددة للقيمة المفقودة', explain: 'القيمة المفقودة مكتوبة بأشكال مختلفة (—، N/A، 0000، غير محدد). توحيدها إلى خانة فارغة يمنع عدّها فئةً مستقلة. تبقى مفقودة في بُعد الاكتمال.',
       fix: { key: 'placeholder', kind: 'placeholder', cols: mappedCols, safe: true, label: 'توحيد رموز القيم المفقودة إلى خانة فارغة' } });
     if (has('salary')) { const c = col('salary'), cells = []; for (let i = 0; i < N; i++) { const s = P.salary[i]; if (s && s.ok && s.canon !== MF.cleanSpaces(rows[i][c])) cells.push([i, c]); }

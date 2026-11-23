@@ -4,7 +4,7 @@
 
   /* ---------- جولة العرض: ست محطات تروي القصة وتقود الواجهة ---------- */
   const sc = q => q.a.steps.filter(s => s.delta < 0).length * 100 + (q.a.grade === 'strong' ? 150 : 0) + Math.min(q.a.R, 60);
-  const showcase = () => { const pick = D.reqs.filter(q => BY.status(q) === 'open' && q.a.lane === 'deep' && q.a.hasW && q.a.R >= 18 && q.a.N >= 3)
+  const showcase = () => { const hero = D.reqs.find(q => q.hero && BY.status(q) === 'open'); if (hero) return hero; const pick = D.reqs.filter(q => BY.status(q) === 'open' && q.a.lane === 'deep' && q.a.hasW && q.a.R >= 18 && q.a.N >= 3)
       .sort((x, y) => sc(y) - sc(x))[0]; return pick || D.reqs.find(q => BY.status(q) === 'open'); };
   BY.showcaseId = () => showcase().id;
   const STEPS = [

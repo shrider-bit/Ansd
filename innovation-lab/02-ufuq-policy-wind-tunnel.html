@@ -200,13 +200,21 @@ table.mini td.n, table.mini th.n { text-align: end; direction: ltr; }
 @media print {
   @page { size: A4; margin: 16mm 15mm; }
   :root { color-scheme: light; }
-  html, body { background: #fff !important; color: #1b1420 !important; font-size: 11pt; }
+  html, body { background: #fff !important; color: #1b1420 !important; }
   .top, .foot, .livebar, .scrim, .drawer, .modal, .tour, .toast, .tip, .view:not(#view-brief), .brief-tools, .brief-side, .no-print { display: none !important; }
   #view-brief[hidden] { display: block !important; }
   .brief-grid { display: block !important; }
-  .paper { box-shadow: none !important; border: 0 !important; padding: 0 !important; max-width: none !important; background: #fff !important; }
+  .wrap { padding-inline: 0 !important; max-width: none !important; }
+  .paper { box-shadow: none !important; border: 0 !important; padding: 0 !important; max-width: none !important; background: #fff !important; font-size: 9.5pt !important; line-height: 1.7 !important; }
+  .paper section { margin-top: 12pt !important; }
+  .paper h1 { font-size: 18pt !important; }
+  .paper table.p-t { font-size: 9pt !important; } .paper table.p-t th, .paper table.p-t td { padding-block: 3pt !important; }
+  .minis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10pt !important; }
+  .p-head { flex-wrap: nowrap !important; }
+  .tbl-scroll { overflow: visible !important; }
   .paper * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .paper section, .paper table, .paper .risk { break-inside: avoid; }
+  .paper .minis, .paper .risk, .paper tr, .paper .p-head { break-inside: avoid; }
+  .paper h2 { break-after: avoid; }
 }
 
 /* ---------- hero: the horizon ---------- */
@@ -1866,7 +1874,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
       const p = out.bundles[0].p;
       const why = {
         pipeline: `القيد الحاكم هو خط إمداد الخريجين القطريين. أقصى ما تبلغه الروافع المتاحة ${pc(p.m.qAt)} سنة ${tg.year}. لو رُفع هذا القيد لبلغت النسبة ${pc(out.freeQ)}، أي أن المشكلة في أعداد الخريجين وتخصصاتهم، لا في قرار التعيين.`,
-        q: `هدف التقطير يتجاوز ما تتيحه الروافع في هذا الأفق الزمني: أقصى ما يُبلَغ ${pc(p.m.qAt)} سنة ${tg.year}.`,
+        q: `القيد الحاكم هو الزمن. أقصى ما تبلغه الروافع المتاحة ${pc(p.m.qAt)} سنة ${tg.year}${p.m.reach ? '، وتبلغ الحزمة نفسها الهدف سنة ' + p.m.reach : '، ولا يُبلَغ الهدف قبل 2040 حتى بأقصى الروافع'}. أثر الابتعاث لا يبدأ قبل 2030، وتركيبة القوة العاملة تتغيّر ببطء.`,
         cagr: `القيد الحاكم هو سقف نمو الأجور. رفع نسبة القطريين وتمديد الخدمة يرفعان متوسط تكلفة الموظف، فيتجاوز النمو السقف المحدد (${pc(p.m.cagr, 2)}).`,
         peak: `القيد الحاكم هو سقف العجز. بلوغ نسبة التقطير بهذه السرعة يتطلب كبح تعيين غير القطريين، فيرتفع العجز إلى ${pc(p.m.peak)}.`,
       }[out.binding];
@@ -2109,7 +2117,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
       text: () => { const t = E.totals(S.base.R, -1); return `خط الأساس يكشف ثلاث حقائق قبل أن تقع: موجة تقاعد تتصاعد، ونسبة تقطير تتراجع من ${p1(t.q[0])} إلى ${p1(t.q[L])}، وعجز يتّسع إلى ${n0(t.short[L])} وظيفة. السؤال: أي سياسة تغيّر هذا المسار؟`; } },
     { view: 'lab', target: '.kpis', before: () => { UF.setLevers(preset('qat'), true); UF.setMetric('q'); UF.setYear(L); }, title: 'اختبر سياسة: تسريع التقطير',
       text: () => { const t = E.totals(S.cur.R, -1), b = E.totals(S.base.R, -1); return `رفعنا حصة القطريين من التعيينات إلى 90% ووسّعنا الابتعاث 60%. النتيجة فورية: التقطير ${p1(t.q[L])} سنة 2040 بدل ${p1(b.q[L])}، والجاهزية ${S.cur.rd.score.toFixed(0)} بدل ${S.base.rd.score.toFixed(0)}. وكتلة الأجور ترتفع، فلا شيء بلا ثمن.`; } },
-    { view: 'lab', target: '.chartcard', before: () => { UF.setMetric('q'); UF.setYear(0); setTimeout(() => UF.play(), 500); }, title: 'الزمن يتحرّك أمامك',
+    { view: 'lab', target: '#view-lab .chartcard', before: () => { UF.setMetric('q'); UF.setYear(0); setTimeout(() => UF.play(), 500); }, title: 'الزمن يتحرّك أمامك',
       text: () => 'الخط الكهرماني مسار السياسة المختبرة، والمنقّط خط الأساس، والمساحة المظلّلة نطاق عدم اليقين من 200 مسار محتمل. لاحظ أن الأثر لا يظهر قبل 2030: الخريجون يحتاجون وقتاً ليصلوا.' },
     { view: 'inverse', target: '.inv-grid', before: () => { UF.stop(); UF.setLevers(Object.assign({}, D), true); if (!S.inv.running) S.inv.out = null; }, title: 'أو ابدأ من الهدف',
       text: () => 'حدّد الغاية (مثلاً: تقطير 52% بحلول 2035 مع سقف لنمو الأجور وللعجز)، فيحاكي النموذج 1,400 حزمة سياسات ويعرض ما يحققها. وإن استحال الهدف، يسمّي القيد الذي يمنعه.' },

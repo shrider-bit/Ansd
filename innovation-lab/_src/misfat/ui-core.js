@@ -71,7 +71,7 @@ function renderLabel() {
         <dt>المعالجات</dt><dd>${App.ops.length ? `${App.ops.length} <span style="font-family:var(--sans);color:var(--mute)">(${n0(App.log.length)} خلية تغيّرت)</span>` : '<span style="font-family:var(--sans);color:var(--mute)">لم تُطبَّق بعد</span>'}</dd></dl>
     </div>
     <div class="score" id="score-box"><span class="cap">درجة الجودة</span><span class="num" id="score-num" data-v="${prev == null ? sc.overall : prev}">${s1(prev == null ? sc.overall : prev)}</span><span class="of">/ 100</span>
-      <span class="band ${b.k}">${b.ar}</span>${App.ops.length ? `<span class="was">كانت ${s1(App.score0.overall)} <b>${sc.overall >= App.score0.overall ? '+' : '−'}${s1(Math.abs(sc.overall - App.score0.overall))}</b></span>` : ''}</div>`;
+      <span class="band ${b.k}">${b.ar}</span>${App.ops.length ? `<span class="was">كانت ${s1(App.score0.overall)} <b class="ltr">${sc.overall >= App.score0.overall ? '+' : '−'}${s1(Math.abs(sc.overall - App.score0.overall))}</b></span>` : ''}</div>`;
   animateNum($('#score-num'), +s1(sc.overall)); App.lastShown = +s1(sc.overall);
 }
 function renderStepper() {
@@ -87,7 +87,7 @@ function go(view, scroll = true) {
   const cur = $('#step-' + view); if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 ACT.go = el => go(el.dataset.view);
-function toast(msg, err) { const t = $('#toast'); t.innerHTML = `<div class="${err ? 'err' : ''}">${esc(msg)}</div>`; clearTimeout(toast.t); toast.t = setTimeout(() => t.innerHTML = '', err ? 6500 : 4200); }
+function toast(msg, err) { if (tourI >= 0 && !err) return; const t = $('#toast'); t.innerHTML = `<div class="${err ? 'err' : ''}">${esc(msg)}</div>`; clearTimeout(toast.t); toast.t = setTimeout(() => t.innerHTML = '', err ? 6500 : 4200); }
 
 /* ---------- export modal: preview + download (UTF-8 BOM for Excel) + copy ---------- */
 let EXP = null;

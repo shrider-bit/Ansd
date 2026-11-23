@@ -14,7 +14,7 @@
   BY.effective = function (q, dec) {
     const a = q.a, type = dec ? dec.type : 'approve';
     const approved = type === 'approve' ? a.N : type === 'amend' ? Math.max(0, +dec.approved || 0) : 0;
-    return { type, approved, reason: dec && dec.reason ? dec.reason.trim() : '', items: dec && dec.items ? dec.items : a.missing,
+    return { type, approved, reason: dec && dec.reason ? dec.reason.trim().replace(/[.،؛:\s]+$/, '') : '', items: dec && dec.items ? dec.items : a.missing,
       fill: type === 'defer' || type === 'return' ? 0 : a.fill, redeploy: type === 'defer' || type === 'return' ? 0 : a.useRd,
       digital: type === 'defer' || type === 'return' ? 0 : a.useAu };
   };
@@ -30,7 +30,7 @@
     if (a.useRd) out.push(['التدوير الداخلي', `يتوافر في جهات حكومية أخرى مرشحون بدرجة ملاءمة لا تقل عن 70% عددهم (${n(q.redeploy.suitable)})، ويُعوَّل على نقل أو ندب (${n(a.useRd)}) منهم.`]);
     if (a.useAu) out.push(['البديل الرقمي', `مشروع الأتمتة المعتمد لدى الجهة يغطي ما يعادل ${posts(a.useAu)} من الاحتياج المتبقي.`]);
     out.push(['سجل الاستغلال', `شغلت الجهة ${CGB.pct(q.track.util)} من الوظائف المعتمدة لها في الدورتين السابقتين (${n(q.track.filled)} من ${n(q.track.approved)}).`]);
-    if (e.type === 'amend' && e.approved !== a.N) out.push(['تعديل التوصية', `رُئي اعتماد ${n(e.approved)} بدلاً من ${n(a.N)} الموصى بها للاعتبار الآتي: «${esc(e.reason || '…')}».`]);
+    if (e.type === 'amend' && e.approved !== a.N) out.push(['تعديل التوصية', `رُئي اعتماد (${n(e.approved)}) بدلاً من (${n(a.N)}) الموصى بها، للاعتبار الآتي: «${esc(e.reason || '…')}».`]);
     return out;
   };
 
@@ -51,13 +51,13 @@
 
   BY.memo = function (q, dec, decided) {
     const a = q.a, e = BY.effective(q, dec), today = decided && dec.t ? dec.t : new Date();
-    const intro = `بالإشارة إلى كتابكم المؤرخ ${CGB.gdate(q.submitted)}م بشأن طلب استحداث ${posts(a.R)} في ${esc(q.unit)} ضمن خطة القوى العاملة لعام ${BY.CYCLE}، نفيدكم بأن الطلب دُرس في ضوء بيانات عبء العمل والمقارنات المرجعية ووضع الملاك الوظيفي للجهة، `;
+    const intro = `بالإشارة إلى كتابكم المؤرخ ${CGB.gdate(q.submitted)}م بشأن طلب استحداث ${posts(a.R)} في ${esc(q.unit)} ضمن خطة القوى العاملة لعام ${BY.CYCLE}، `, studied = `نفيدكم بأن الطلب دُرس في ضوء ${a.hasW ? 'بيانات عبء العمل' : 'البيانات المتاحة لدينا'} والمقارنات المرجعية ووضع الملاك الوظيفي للجهة، `;
     let body = '';
     if (e.type === 'return') {
-      body = `<p>${intro}وتبيَّن أن البتّ فيه يتوقف على استكمال الآتي:</p><ol class="memo-dec">${(e.items.length ? e.items : ['—']).map(x => `<li>${esc(x)}.</li>`).join('')}</ol>
+      body = `<p>${intro}نفيدكم بأن البتّ في الطلب يتوقف على استكمال الآتي:</p><ol class="memo-dec">${(e.items.length ? e.items : ['—']).map(x => `<li>${esc(x)}.</li>`).join('')}</ol>
         <p>وعليه يُعاد الطلب إليكم لاستكماله خلال (15) يوم عمل من تاريخه، وسيُنظر فيه فور ورود المطلوب دون حاجة إلى تقديمه من جديد.</p>`;
     } else if (e.type === 'defer') {
-      body = `<p>${intro}وانتهت الدراسة إلى إرجاء البتّ فيه إلى الدورة التخطيطية التالية${e.reason ? `، للاعتبار الآتي: «${esc(e.reason)}»` : ''}.</p>
+      body = `<p>${intro}${studied}وانتهت الدراسة إلى إرجاء البتّ فيه إلى الدورة التخطيطية التالية${e.reason ? `، للاعتبار الآتي: «${esc(e.reason)}»` : ''}.</p>
         <p>ويبقى الطلب مقيَّداً لدينا برقمه المرجعي، ويُعاد عرضه تلقائياً مع بياناته المحدَّثة.</p>`;
     } else {
       const d = [];
@@ -66,8 +66,8 @@
       if (e.fill) d.push(`شغل ${posts(e.fill)} من الملاك القائم للجهة${a.useDep && a.useVac ? ` (${n(a.useVac)} من الشواغر المعتمدة و${n(a.useDep)} على الدرجات التي ستشغر خلال العام)` : a.useDep ? ' على الدرجات التي ستشغر خلال العام' : ' من الشواغر المعتمدة'}.`);
       if (e.redeploy) d.push(`تغطية ${posts(e.redeploy)} بالنقل أو الندب من الكفاءات المتاحة في جهات حكومية أخرى.`);
       if (e.digital) d.push(`معالجة ما يعادل ${posts(e.digital)} بأتمتة الإجراءات ضمن مشروع الجهة الرقمي.`);
-      body = `<p>${intro}وانتهت الدراسة إلى الآتي:</p><ol class="memo-dec">${d.map((x, i) => `<li><b>${ORD[i]}:</b> ${x}</li>`).join('')}</ol>
-        <table class="memo-table"><thead><tr><th>المطلوب</th><th>استحداث جديد</th><th>شغل وظائف قائمة</th><th>تدوير داخلي</th><th>بديل رقمي</th><th>غير مؤيَّد بالأدلة</th></tr></thead>
+      body = `<p>${intro}${studied}وانتهت الدراسة إلى الآتي:</p><ol class="memo-dec">${d.map((x, i) => `<li><b>${ORD[i]}:</b> ${x}</li>`).join('')}</ol>
+        <table class="memo-table"><thead><tr><th>المطلوب</th><th>استحداث جديد</th><th>شغل وظائف قائمة</th><th>تدوير داخلي</th><th>بديل رقمي</th><th>غير معتمد</th></tr></thead>
         <tbody><tr><td>${n(a.R)}</td><td><b>${n(e.approved)}</b></td><td>${n(e.fill)}</td><td>${n(e.redeploy)}</td><td>${n(e.digital)}</td><td>${n(Math.max(0, a.R - e.approved - e.fill - e.redeploy - e.digital))}</td></tr></tbody></table>
         <h4>أسانيد القرار</h4><ul class="memo-why">${BY.reasons(q, e).map(r => `<li><b>${r[0]}:</b> ${r[1]}</li>`).join('')}</ul>
         <h4>المطلوب من الجهة</h4><ol class="memo-follow">${BY.followups(q, e).map(x => `<li>${x}</li>`).join('')}</ol>`;

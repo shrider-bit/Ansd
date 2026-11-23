@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مِصفاة</title>
+<style>
+@@include(../_fonts/plex.css)@@
+@@include(../_fonts/plexmono.css)@@
+@@include(style.css)@@
+@@include(style2.css)@@
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="back" href="index.html" title="العودة إلى معرض مختبر الابتكار"><span aria-hidden="true">→</span> مختبر الابتكار</a>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><defs><pattern id="mesh" width="4.5" height="4.5" patternUnits="userSpaceOnUse"><circle cx="2.25" cy="2.25" r="1" fill="#0A7868"/></pattern></defs><circle cx="16" cy="16" r="14" fill="#fff" stroke="#152024" stroke-width="2"/><circle cx="16" cy="16" r="11" fill="url(#mesh)"/></svg>
+      <div><b>مِصفاة</b><br><span>عيادة بيانات القوى العاملة</span></div>
+    </div>
+    <span class="sp"></span>
+    <span class="badge" id="badge"><i></i><span>عيّنة تجريبية افتراضية</span></span>
+    <button class="btn ghost" data-act="tour" id="btn-tour">جولة العرض</button>
+  </div>
+</header>
+
+<section class="mast">
+  <div class="wrap">
+    <div class="thesis">
+      <div class="kick">قبل أن يُوثَق بأي تقرير، يجب أن تُوثَق بياناته</div>
+      <h1>نظّف مرة… وثِق كل مرة</h1>
+      <p>الصق خلايا Excel أو اسحب ملف CSV، واحصل خلال ثوانٍ على تشخيص، ومعالجات آمنة بنقرة مع سجل كامل لكل تغيير، وجواز جودة قابل للطباعة، وفحص يضمن ألّا تكشف جداولك المنشورة عن فرد بعينه.</p>
+      <div class="priv" id="priv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        <span><b>لا شيء يُرفع إلى أي مكان.</b> المعالجة كلها داخل هذا المتصفح؛ الملف لا يحتوي أي اتصال بالشبكة ويعمل والإنترنت مقطوع.</span>
+      </div>
+    </div>
+    <div class="label" id="label" aria-live="polite"></div>
+  </div>
+</section>
+
+<nav class="stepper" aria-label="مراحل العيادة"><div class="wrap" id="stepper"></div></nav>
+
+<main class="wrap" id="main">
+  <section class="view" id="v-intake" aria-labelledby="h-intake"></section>
+  <section class="view" id="v-diag" hidden></section>
+  <section class="view" id="v-treat" hidden></section>
+  <section class="view" id="v-pass" hidden></section>
+  <section class="view" id="v-safe" hidden></section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><b>كيف تعمل مِصفاة:</b> قواعد تحقّق ثابتة وإحصاءات وصفية (المدى الربيعي، مسافة التحرير بين الكلمات، تطبيع الحروف العربية). ليست نموذج ذكاء اصطناعي ولا تتنبأ بشيء؛ كل ملاحظة تُعرض مع القاعدة التي أنتجتها.</div>
+    <div>نموذج أولي ضمن مختبر الابتكار. العيّنة المضمّنة افتراضية بالكامل وأسماء الجهات فيها محايدة عمداً. الخطوط: IBM Plex (رخصة SIL OFL) مضمّنة داخل الملف.</div>
+  </div>
+</footer>
+
+<div class="ov" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="dlg">
+    <header><h3 id="modal-title"></h3><button class="x" data-act="modal-close" aria-label="إغلاق">×</button></header>
+    <div class="body"><div class="note" id="modal-note"></div><textarea id="modal-text" readonly spellcheck="false" aria-label="محتوى الملف"></textarea></div>
+    <footer><button class="btn primary" data-act="modal-download" id="modal-dl">تنزيل</button><button class="btn" data-act="modal-copy">نسخ</button><button class="btn ghost" data-act="modal-close">إغلاق</button></footer>
+  </div>
+</div>
+<div class="busy" id="busy" hidden><div class="box"><b id="busy-t">جارٍ التشخيص…</b><div class="gauge"><i id="busy-g" style="width:0"></i></div><span class="spec" id="busy-s"></span></div></div>
+<div id="tour" hidden></div>
+<div id="toast" aria-live="polite"></div>
+
+<script>
+@@include(../_shared/roster.js)@@
+@@include(core.js)@@
+@@include(values.js)@@
+@@include(schema.js)@@
+@@include(cluster.js)@@
+@@include(rules.js)@@
+@@include(fixes.js)@@
+@@include(disclosure.js)@@
+@@include(sample.js)@@
+@@include(ui-core.js)@@
+@@include(ui-intake.js)@@
+@@include(ui-diag.js)@@
+@@include(ui-treat.js)@@
+@@include(ui-pass.js)@@
+@@include(ui-safe.js)@@
+@@include(ui-tour.js)@@
+</script>
+</body>
+</html>

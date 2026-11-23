@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حافظة الابتكار</title>
+<style>
+@@include(../_fonts/zain.css)@@
+@@include(../_lab/lab.css)@@
+@@include(portfolio.css)@@
+</style>
+</head>
+<body>
+@@include(../_lab/topbar.html)@@
+<main>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow on-dark">01 · حافظة الابتكار</p>
+      <h1>أربعٌ وعشرون فكرة،<br>ثمانية معايير، ثلاثة اختيارات</h1>
+      <p class="lead">هذه الأفكار التي ولّدها المختبر لتخطيط القوى العاملة الحكومية، ومعها تقييم لجنة الابتكار لكل فكرة. الأوزان مفتوحة أمامك: غيّرها وشاهد كيف يتبدّل الترتيب.</p>
+      <dl class="hero-stats">
+        <div><dt>فكرة مشروع</dt><dd class="num" id="st-ideas">24</dd></div>
+        <div><dt>مجالات مختلفة</dt><dd class="num">5</dd></div>
+        <div><dt>معايير تقييم</dt><dd class="num">8</dd></div>
+        <div><dt>نماذج منفَّذة</dt><dd><span class="num">3</span> <small>+ نموذج إضافي</small></dd></div>
+      </dl>
+    </div>
+    <div class="zig" aria-hidden="true"></div>
+  </header>
+
+  <section id="lenses">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">كيف وُلدت الأفكار</p>
+        <h2>ستة أسئلة طُرحت على عمل التخطيط اليومي</h2>
+        <p class="lead">لم يبدأ المختبر من التقنية، بل من مواضع الاحتكاك في العمل. كل فكرة في الحافظة جواب عن واحد من هذه الأسئلة.</p>
+      </div>
+      <ol class="lenses">
+        <li><strong>أي قرار يُتخذ اليوم بالتفاوض لا بالدليل؟</strong><span>طلبات الاستحداث، مستهدفات التقطير، أولويات التوظيف.</span></li>
+        <li><strong>أي عمل يُعاد يدوياً في كل دورة؟</strong><span>تنظيف البيانات، كتابة الفقرات التحليلية، متابعة التسليمات.</span></li>
+        <li><strong>ما الذي يحدث عبر الجهات ولا يراه أحد كاملاً؟</strong><span>فائض هنا وعجز هناك، وازدواجية في الوظائف المساندة.</span></li>
+        <li><strong>أي أثر يتراكم ببطء فلا يظهر في تقرير سنوي؟</strong><span>موجات التقاعد، سلاسل الشواغر، أثر الأنظمة على الطاقة التشغيلية.</span></li>
+        <li><strong>ما الذي نخسره بصمت؟</strong><span>معرفة الخبراء عند مغادرتهم، وخصوصية فرد في جدول منشور.</span></li>
+        <li><strong>ماذا يمكن استعارته من علوم أخرى؟</strong><span>بحوث العمليات، اختبارات الضغط المصرفية، أنفاق الرياح في الهندسة.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="committee" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">لجنة التقييم</p>
+        <h2>الترتيب يتبع الأوزان التي تختارها</h2>
+        <p class="lead">قُيّمت كل فكرة من 10 على ثمانية معايير. الأوزان الافتراضية تمثل رأي اللجنة، ويمكنك تعديلها أو اختيار منظور جاهز.</p>
+      </div>
+      <div class="committee">
+        <div class="weights" aria-label="أوزان المعايير">
+          <div class="profiles" role="group" aria-label="منظورات جاهزة" id="profiles"></div>
+          <div id="sliders"></div>
+          <p class="small muted" id="wsum"></p>
+        </div>
+        <div class="ranking">
+          <ol id="rank" class="rank"></ol>
+          <button class="btn ghost small-btn" id="rank-more" type="button">عرض الترتيب كاملاً</button>
+        </div>
+      </div>
+
+      <div class="robust">
+        <div>
+          <h3>اختبار متانة الاختيار</h3>
+          <p id="robust-text" class="lead"></p>
+          <p class="small muted">الطريقة: توليد 2,000 توليفة أوزان عشوائية موزعة بانتظام على كل الاحتمالات الممكنة، ثم حساب عدد المرات التي تظهر فيها كل فكرة ضمن الثلاث الأولى. هذا حساب إحصائي بسيط يُجرى في متصفحك، وليس تقييماً آلياً للأفكار.</p>
+        </div>
+        <ol id="robust-bars" class="robust-bars"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="ideas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">الأفكار</p>
+        <h2>الحافظة كاملة</h2>
+        <p class="lead">افتح أي فكرة لقراءة المشكلة التي تعالجها، ومن يستخدمها، ووجه الابتكار فيها، وقيمتها، وتوافر بياناتها، وآفاق توسّعها.</p>
+      </div>
+      <div class="filters">
+        <div class="chips" id="cat-chips" role="group" aria-label="تصفية بحسب المجال"></div>
+        <div class="filters-row">
+          <label class="field"><span>بحث</span><input id="q" type="search" placeholder="كلمة في الاسم أو الوصف" autocomplete="off"></label>
+          <label class="field"><span>الحالة</span>
+            <select id="f-status"><option value="">كل الحالات</option><option value="built">المنفَّذة</option><option value="merged">المدمجة في نموذج</option><option value="backlog">قائمة الانتظار</option></select></label>
+          <label class="field"><span>الترتيب</span>
+            <select id="f-sort"><option value="score">التقييم الإجمالي</option><option value="orig">الأصالة</option><option value="strat">القيمة الاستراتيجية</option><option value="use">النفع العملي</option><option value="feas">قابلية التنفيذ</option></select></label>
+          <button class="btn ghost small-btn" id="toggle-all" type="button">فتح الكل</button>
+        </div>
+        <p class="small muted" id="count" aria-live="polite"></p>
+      </div>
+      <div id="grid" class="grid"></div>
+    </div>
+  </section>
+
+  <section id="decision" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">قرار اللجنة</p>
+        <h2>ثلاثة نماذج تختلف في الأفق والطريقة والمستخدم</h2>
+        <p class="lead">اشترطت اللجنة ألا يتشابه نموذجان. لذلك لم تُختر الأفكار الأسهل ولا الأعلى مجموعاً فحسب، بل ثلاث تغطي معاً القرار السنوي، والتحرك التشغيلي، والاستشراف البعيد.</p>
+      </div>
+      <div class="tablewrap">
+        <table class="diff">
+          <thead><tr><th>النموذج</th><th>السؤال الذي يجيب عنه</th><th>الأفق الزمني</th><th>الطريقة</th><th>المستخدم الأول</th></tr></thead>
+          <tbody>
+            <tr><th><a href="04-bayyina-evidence-desk.html">بيّنة</a></th><td>كم وظيفة من المطلوب مبرَّرة فعلاً؟</td><td>دورة التخطيط السنوية</td><td>قواعد أدلة شفافة قابلة للتدقيق</td><td>محلل تخطيط القوى العاملة</td></tr>
+            <tr><th><a href="03-jusoor-talent-bridges.html">جسور</a></th><td>من يملأ هذا الشاغر من داخل الحكومة؟</td><td>أسابيع إلى أشهر</td><td>أمثَلة رياضية (مسألة التخصيص)</td><td>جهة التخطيط وإدارات الموارد البشرية</td></tr>
+            <tr><th><a href="02-ufuq-policy-wind-tunnel.html">أُفُق</a></th><td>ماذا يحدث بعد عشر سنوات إن أصدرنا هذا القرار؟</td><td>حتى عام 2040</td><td>محاكاة احتمالية بالأفواج العمرية</td><td>القيادة ومحللو السياسات</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="decide-grid">
+        <div>
+          <h3>ما الذي أُدمج</h3>
+          <p>ست أفكار لم تُنفَّذ منفردة لأن منطقها صار جزءاً من نموذج أكبر:</p>
+          <ul id="merged-list" class="plain"></ul>
+        </div>
+        <div>
+          <h3>لماذا النموذج الإضافي</h3>
+          <p>جاءت «مِصفاة» رابعةً في الترتيب، وهي أقل الأربع إبهاراً. نُفّذت مع ذلك لسببين: النماذج الثلاثة لا قيمة لها فوق بيانات غير موثوقة، وهي الوحيدة التي تعمل على ملفاتك الحقيقية من اليوم الأول دون أي تكامل أو موافقات.</p>
+          <h3 style="margin-top:22px">ما الذي استُبعد عمداً</h3>
+          <p>«اسأل البيانات» جذابة في العرض، لكن نموذجاً أولياً لها دون نموذج لغوي معتمد داخل البيئة الحكومية كان سيعرض ذكاءً غير موجود. فضّل المختبر ألا يبني ما لا يستطيع أن يكون صادقاً في وصفه.</p>
+        </div>
+      </div>
+      <p class="cta-row"><a class="btn" href="index.html">افتح المعرض وجرّب النماذج <span class="arr" aria-hidden="true">←</span></a> <a class="btn ghost" href="06-recommendation.html">اقرأ التوصية</a></p>
+    </div>
+  </section>
+</main>
+@@include(../_lab/footer.html)@@
+<script>
+@@include(ideas.js)@@
+@@include(portfolio.js)@@
+</script>
+</body>
+</html>

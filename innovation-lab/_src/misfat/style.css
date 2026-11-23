@@ -3,7 +3,7 @@
 :root {
   color-scheme: light;
   --ground: #ECF0F0; --ground-2: #E3E9EA; --paper: #FFFFFF; --paper-2: #F7F9F9;
-  --ink: #152024; --ink-2: #3C4B52; --mute: #64747B; --line: #C9D3D6; --line-2: #DFE6E8;
+  --ink: #152024; --ink-2: #3C4B52; --mute: #586970; --line: #C9D3D6; --line-2: #DFE6E8;
   --clean: #0A7868; --clean-deep: #075A4E; --clean-tint: #DCEFEA; --clean-wash: #EEF7F5;
   --amber: #9A5B00; --amber-tint: #FAEDCF; --red: #B0261C; --red-tint: #FAE3DF;
   --low: #51626A; --low-tint: #E6ECEE; --maroon: #8A1538;

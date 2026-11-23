@@ -263,6 +263,8 @@ table.mini td.n, table.mini th.n { text-align: end; direction: ltr; }
 .results > .panel, .results > .chartcard { margin-bottom: 16px; }
 
 /* ---------- horizon chart card ---------- */
+.chartcard .seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.chartcard .seg button { white-space: nowrap; flex: none; }
 .chartcard .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding: 10px 18px 0; font-size: 12.5px; color: var(--pearl-2); min-height: 34px; }
 .lg { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .lg i { width: 18px; height: 0; border-top: 2px solid var(--cool); }
@@ -349,7 +351,7 @@ table.fam td.q i { font-style: normal; color: var(--pearl-3); margin-inline: 6px
 .lgrp summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 12px 0; font-weight: 500; font-size: 14px; }
 .lgrp summary::-webkit-details-marker { display: none; }
 .lgrp summary::after { content: ""; margin-inline-start: auto; width: 7px; height: 7px; border-inline-start: 1.5px solid var(--pearl-3); border-bottom: 1.5px solid var(--pearl-3); transform: rotate(-135deg) translate(-2px, -2px); transition: transform .2s; }
-.lgrp:not([open]) summary::after { transform: rotate(-45deg); }
+.lgrp:not([open]) summary::after { transform: rotate(45deg) translate(-2px, -2px); }
 .lgrp .cnt:not(:empty) { font-style: normal; font-size: 11px; font-weight: 500; background: var(--amber); color: #1F1405; border-radius: 99px; min-width: 18px; height: 18px; display: inline-grid; place-items: center; padding-inline: 5px; }
 .lgrp-b { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding-bottom: 16px; }
 .lv { min-width: 0; }
@@ -1742,6 +1744,8 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
       card = $('.chartcard', el); UF.cardBind(card);
       pyr = $('.pyr-host', el); pyrStats = $('.pyr-stats', el); heat = $('#heat', el);
       const lev = $('#levers', el);
+      // on narrow screens start with the lever groups folded so the results stay within reach
+      if (window.matchMedia('(max-width: 1040px)').matches) $$('.lgrp', el).forEach(g => g.removeAttribute('open'));
       lev.addEventListener('input', ev => {
         const k = ev.target.dataset.k; if (!k || ev.target.type !== 'range') return;
         UF.setLevers({ [k]: +ev.target.value }); this.sync();
@@ -1788,7 +1792,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
         $('#kGauge', el).innerHTML = `<div class="g-head"><h3>مؤشر الجاهزية</h3><button type="button" class="linkb" id="gMethod">كيف يُحسب؟</button></div>
           <div class="g-arc">${UFC.gauge(rd.score, b.rd.score)}<b class="num g-score">${rd.score.toFixed(0)}</b></div>
           <p class="g-delta">${Math.abs(d) < .05 ? '<span class="flat">مطابق لخط الأساس</span>' : `<span class="${d > 0 ? 'up' : 'down'}">${sgn(d, v => v.toFixed(1))} نقطة</span> عن خط الأساس (${num(b.rd.score.toFixed(0))})`}<small>لكامل الأفق حتى 2040 ولكل المجموعات</small></p>
-          <div class="g-parts">${PARTS.map(([k, name]) => `<div class="g-part"><span>${name}<small>${Math.round(E.WEIGHTS[k] * 100)}%</small></span><div class="g-bar"><i style="width:${(rd.parts[k] * 100).toFixed(1)}%"></i><u style="inset-inline-start:${(b.rd.parts[k] * 100).toFixed(1)}%"></u></div><b class="num">${Math.round(rd.parts[k] * 100)}</b></div>`).join('')}</div>`;
+          <div class="g-parts">${PARTS.map(([k, name]) => `<div class="g-part"><span>${name}<small dir="ltr">${Math.round(E.WEIGHTS[k] * 100)}%</small></span><div class="g-bar"><i style="width:${(rd.parts[k] * 100).toFixed(1)}%"></i><u style="inset-inline-start:${(b.rd.parts[k] * 100).toFixed(1)}%"></u></div><b class="num">${Math.round(rd.parts[k] * 100)}</b></div>`).join('')}</div>`;
         $('#gMethod', el).addEventListener('click', UF.openMethod);
         const ins = insights(sc);
         $('#insight', el).innerHTML = UF.isBase()
@@ -2120,9 +2124,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
     { view: 'lab', target: '#view-lab .chartcard', before: () => { UF.setMetric('q'); UF.setYear(0); setTimeout(() => UF.play(), 500); }, title: 'الزمن يتحرّك أمامك',
       text: () => 'الخط الكهرماني مسار السياسة المختبرة، والمنقّط خط الأساس، والمساحة المظلّلة نطاق عدم اليقين من 200 مسار محتمل. لاحظ أن الأثر لا يظهر قبل 2030: الخريجون يحتاجون وقتاً ليصلوا.' },
     { view: 'inverse', target: '.inv-grid', before: () => { UF.stop(); UF.setLevers(Object.assign({}, D), true); if (!S.inv.running) S.inv.out = null; }, title: 'أو ابدأ من الهدف',
-      text: () => 'حدّد الغاية (مثلاً: تقطير 52% بحلول 2035 مع سقف لنمو الأجور وللعجز)، فيحاكي النموذج 1,400 حزمة سياسات ويعرض ما يحققها. وإن استحال الهدف، يسمّي القيد الذي يمنعه.' },
-    { view: 'inverse', target: '#invResults', before: () => { if (!S.inv.out && !S.inv.running) S.inv.run(true); }, title: 'ثلاثة مسارات، ولكلٍّ منطقه',
-      text: () => S.inv.out && S.inv.out.feasible ? 'أقل تغيير، أقل تكلفة، أو الأسرع بلوغاً. كل بطاقة تسرد التغييرات المطلوبة على الروافع، ويمكن تطبيقها بضغطة للمراجعة والتعديل.' : 'عندما لا تتحقق الأهداف معاً يعرض النموذج أقرب حزمة ممكنة، ويسمّي القيد الحاكم.' },
+      text: () => 'حدّد الغاية (مثلاً: تقطير 52% بحلول 2035 مع سقف لنمو الأجور وللعجز)، فيحاكي النموذج 1,400 حزمة سياسات. تظهر أسفل الخريطة ثلاثة مسارات: أقل تغيير، أقل تكلفة، والأسرع بلوغاً، ويمكن تطبيق أيٍّ منها بضغطة. وإن استحال الهدف، يسمّي النموذج القيد الذي يمنعه.' },
     { view: 'brief', target: '#paper', before: () => { const b = S.inv.out && S.inv.out.feasible ? S.inv.out.bundles[0].p.L : preset('mix'); UF.setLevers(Object.assign({}, b), true); }, title: 'قرار موثّق في موجز واحد',
       text: () => 'موجز جاهز للطباعة: ما الذي تغيّر، النتائج مقابل خط الأساس، المخاطر، وسجل الافتراضات كاملاً. يمكن تثبيت سيناريوهين ومقارنتهما، وتصدير النتائج السنوية إلى Excel.' },
   ];

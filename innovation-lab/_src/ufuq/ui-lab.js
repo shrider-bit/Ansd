@@ -86,6 +86,8 @@
       card = $('.chartcard', el); UF.cardBind(card);
       pyr = $('.pyr-host', el); pyrStats = $('.pyr-stats', el); heat = $('#heat', el);
       const lev = $('#levers', el);
+      // on narrow screens start with the lever groups folded so the results stay within reach
+      if (window.matchMedia('(max-width: 1040px)').matches) $$('.lgrp', el).forEach(g => g.removeAttribute('open'));
       lev.addEventListener('input', ev => {
         const k = ev.target.dataset.k; if (!k || ev.target.type !== 'range') return;
         UF.setLevers({ [k]: +ev.target.value }); this.sync();
@@ -132,7 +134,7 @@
         $('#kGauge', el).innerHTML = `<div class="g-head"><h3>مؤشر الجاهزية</h3><button type="button" class="linkb" id="gMethod">كيف يُحسب؟</button></div>
           <div class="g-arc">${UFC.gauge(rd.score, b.rd.score)}<b class="num g-score">${rd.score.toFixed(0)}</b></div>
           <p class="g-delta">${Math.abs(d) < .05 ? '<span class="flat">مطابق لخط الأساس</span>' : `<span class="${d > 0 ? 'up' : 'down'}">${sgn(d, v => v.toFixed(1))} نقطة</span> عن خط الأساس (${num(b.rd.score.toFixed(0))})`}<small>لكامل الأفق حتى 2040 ولكل المجموعات</small></p>
-          <div class="g-parts">${PARTS.map(([k, name]) => `<div class="g-part"><span>${name}<small>${Math.round(E.WEIGHTS[k] * 100)}%</small></span><div class="g-bar"><i style="width:${(rd.parts[k] * 100).toFixed(1)}%"></i><u style="inset-inline-start:${(b.rd.parts[k] * 100).toFixed(1)}%"></u></div><b class="num">${Math.round(rd.parts[k] * 100)}</b></div>`).join('')}</div>`;
+          <div class="g-parts">${PARTS.map(([k, name]) => `<div class="g-part"><span>${name}<small dir="ltr">${Math.round(E.WEIGHTS[k] * 100)}%</small></span><div class="g-bar"><i style="width:${(rd.parts[k] * 100).toFixed(1)}%"></i><u style="inset-inline-start:${(b.rd.parts[k] * 100).toFixed(1)}%"></u></div><b class="num">${Math.round(rd.parts[k] * 100)}</b></div>`).join('')}</div>`;
         $('#gMethod', el).addEventListener('click', UF.openMethod);
         const ins = insights(sc);
         $('#insight', el).innerHTML = UF.isBase()

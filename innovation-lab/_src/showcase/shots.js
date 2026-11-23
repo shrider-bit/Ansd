@@ -6,7 +6,7 @@ const root = path.resolve(__dirname, '..', '..'); const pages = require('../page
   const b = await chromium.launch();
   for (const n of ['ufuq', 'jusoor', 'bayyina', 'misfat']) {
     const f = path.join(root, pages[n]); if (!fs.existsSync(f)) { console.log('missing', n); continue; }
-    const c = await b.newContext({ viewport: { width: 1360, height: 850 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+    const c = await b.newContext({ viewport: { width: 1180, height: 738 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
     const p = await c.newPage(); await p.goto('file://' + f); await p.waitForTimeout(1500);
     const hook = path.join(__dirname, 'shots', n + '.prep.js');           // optional per-page preparation
     if (fs.existsSync(hook)) { await require(hook)(p); await p.waitForTimeout(700); }

@@ -980,14 +980,14 @@ BY.reviewHours = function (list, h) {
   C.curve = (al, mode) => {
     const W = 760, H = 250, L = 46, Rr = 14, T = 16, B = 34, P = al.posts; if (!P.length) return '<div class="ch-empty">لا وظائف موصى بها</div>';
     const tot = mode === 'posts' ? P.length : al.totalCost, used = mode === 'posts' ? al.usedPosts : al.usedCost, ymax = P[0].density * 1.08;
-    const x = v => L + v / tot * (W - L - Rr), y = v => T + (1 - v / ymax) * (H - T - B);
+    const x = v => (W - L) - v / tot * (W - L - Rr), y = v => T + (1 - v / ymax) * (H - T - B);   // RTL: zero on the right, like the ceiling slider
     let cum = 0, d = `M${x(0)} ${y(P[0].density)}`, area = `M${x(0)} ${y(0)}L${x(0)} ${y(P[0].density)}`;
     P.forEach((p, i) => { const step = mode === 'posts' ? 1 : p.cost, x1 = x(cum + step);
       d += `L${x1} ${y(p.density)}`; if (i + 1 < P.length) d += `L${x1} ${y(P[i + 1].density)}`;
       if (i < al.cut) { area += `L${x1} ${y(p.density)}`; if (i + 1 < al.cut) area += `L${x1} ${y(P[i + 1].density)}`; else area += `L${x1} ${y(0)}`; }
       cum += step; });
     let s = '';
-    for (let i = 0; i <= 4; i++) { const v = ymax / 1.08 * i / 4; s += `<line x1="${L}" x2="${W - Rr}" y1="${y(v)}" y2="${y(v)}" class="s-rule2" stroke-width="1"/><text x="${L - 6}" y="${y(v) + 3}" text-anchor="end" class="t-ax">${n(v, 0)}</text>`; }
+    for (let i = 0; i <= 4; i++) { const v = ymax / 1.08 * i / 4; s += `<line x1="${Rr}" x2="${W - L}" y1="${y(v)}" y2="${y(v)}" class="s-rule2" stroke-width="1"/><text x="${W - L + 6}" y="${y(v) + 3}" text-anchor="start" class="t-ax">${n(v, 0)}</text>`; }
     for (let i = 0; i <= 5; i++) { const v = tot * i / 5; s += `<text x="${x(v)}" y="${H - 14}" text-anchor="middle" class="t-ax">${mode === 'posts' ? n(Math.round(v)) : n(v / 1e6, 0) + 'M'}</text>`; }
     if (al.cut > 0) s += `<path d="${area}Z" class="f-maroon-t"/>`;
     s += `<path d="${d}" fill="none" class="s-ink" stroke-width="1.6" stroke-linejoin="round"/>`;

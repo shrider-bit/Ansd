@@ -35,10 +35,10 @@ BY.FAM_COST = { health: 1.18, it: 1.15, eng: 1.15, legal: 1.10 };
 BY.DOCS = ['بيانات عبء العمل لثلاث سنوات', 'الهيكل التنظيمي المعتمد للوحدة', 'بطاقات الوصف الوظيفي', 'بيان الشواغر الحالية', 'خطة التقطير للوظائف المطلوبة'];
 BY.JUST = {
   growth: { ar: 'نمو حجم الخدمة', text: q => `شهدت الوحدة ارتفاعاً متواصلاً في ${q.fam.driver} خلال السنوات الثلاث الماضية، وأصبح الكادر الحالي (${q.staff} موظفاً) غير كافٍ للوفاء بمستويات الخدمة المستهدفة. وعليه نطلب استحداث ${q.requested} وظيفة لمواكبة النمو المتوقع في عام 2027.` },
-  mandate:{ ar: 'اختصاص جديد', text: q => `أُسندت إلى الوحدة اختصاصات إضافية ضمن إعادة تنظيم الجهة، ويتطلب تشغيلها استحداث ${q.requested} وظيفة في المجموعة ${q.fam.ar} لتغطية المهام المضافة دون الإخلال بالأعمال القائمة.` },
+  mandate:{ ar: 'اختصاص جديد', text: q => `أُسندت إلى الوحدة اختصاصات إضافية ضمن إعادة تنظيم الجهة، ويتطلب تشغيلها استحداث ${q.requested} وظيفة في مجموعة الوظائف «${q.fam.ar}» لتغطية المهام المضافة دون الإخلال بالأعمال القائمة.` },
   retire: { ar: 'إحلال المتقاعدين', text: q => `يُتوقع أن يبلغ عدد من موظفي الوحدة سن التقاعد خلال الأعوام القليلة المقبلة، ونطلب استحداث ${q.requested} وظيفة لضمان استمرارية العمل ونقل المعرفة قبل مغادرتهم.` },
   overtime:{ ar: 'تقليل العمل الإضافي والإسناد', text: q => `تعتمد الوحدة حالياً على العمل الإضافي وعقود الإسناد الخارجي لتغطية حجم العمل، ونطلب استحداث ${q.requested} وظيفة دائمة لخفض هذه التكاليف وتحسين استقرار الخدمة.` },
-  qatar:  { ar: 'رفع نسبة التقطير', text: q => `ضمن خطة الجهة لرفع نسبة التقطير في المجموعة ${q.fam.ar}، نطلب استحداث ${q.requested} وظيفة تُخصَّص لاستقطاب الكفاءات الوطنية في الوحدة وتأهيلها.` },
+  qatar:  { ar: 'رفع نسبة التقطير', text: q => `ضمن خطة الجهة لرفع نسبة التقطير في مجموعة الوظائف «${q.fam.ar}»، نطلب استحداث ${q.requested} وظيفة تُخصَّص لاستقطاب الكفاءات الوطنية في الوحدة وتأهيلها.` },
 };
 
 BY.generate = function () {
@@ -101,7 +101,7 @@ BY.generate = function () {
       const suitable = arche === 'redeploy' ? Math.round(T * U(1, 2.2)) + 3 : arche === 'digital' ? 0 : (R() < .4 ? R.int(1, 4) : 0);
       const project = arche === 'digital' ? true : R() < .22;
       const readiness = arche === 'digital' ? U(.75, 1) : track[e.id].readiness;
-      const band = arche === 'retire' ? R.pick(['spec', 'senior']) : wpick({ entry: 2, spec: 5, senior: 2.5, mgr: .5 });
+      const band = arche === 'retire' ? R.pick(['spec', 'senior']) : wpick(requested > 5 ? { entry: 2.5, spec: 5, senior: 2 } : { entry: 2, spec: 5, senior: 2.5, mgr: 1 });
       const oneMissing = arche !== 'missing' && R() < .2 ? R.int(1, 4) : -1;   // طلب مكتمل قد ينقصه مرفق واحد غير أساسي
       const docs = BY.DOCS.map((d, i) => i === 0 ? hasW : arche === 'missing' ? R() > .45 : i !== oneMissing);
       const jt = arche === 'retire' ? 'retire' : arche === 'digital' ? R.pick(['growth', 'overtime']) : wpick({ growth: 4, mandate: 2, overtime: 2, qatar: 1.5 });

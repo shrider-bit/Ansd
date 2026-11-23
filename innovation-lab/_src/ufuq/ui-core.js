@@ -1,7 +1,7 @@
 /* أُفُق — الحالة المشتركة، الروافع، وبطاقة الأفق الزمني المشتركة بين الشاشات. */
 const UF = (() => {
   'use strict';
-  const E = UFE, C = CGB, ltr = UFC.ltr, esc = UFC.esc;
+  const E = UFE, C = CGB, ltr = UFC.ltr, esc = UFC.esc, bidi = UFC.bidi;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const LAST = E.NY - 1;
   const S = { L: Object.assign({}, E.DEFAULTS), base: null, cur: null, year: LAST, fam: -1, metric: 'sd', view: 'scene', pins: { A: null, B: null }, timer: null };
@@ -9,18 +9,18 @@ const UF = (() => {
 
   // ---------- formatting ----------
   const n0 = v => C.num(Math.round(v));
-  const p1 = v => (v * 100).toFixed(1) + '%';
+  const p1 = v => ltr((v * 100).toFixed(1) + '%');
   const num = s => `<span class="num">${s}</span>`;
   const sgn = (v, f) => ltr((v > 0 ? '+' : v < 0 ? '−' : '') + f(Math.abs(v)));
   /* delta chip: good = +1 when an increase is desirable, -1 when a decrease is desirable, 0 neutral */
-  function delta(d, f, good, eps = 0) {
+  function delta(d, f, good, eps = 0, unit = '') {
     if (Math.abs(d) <= eps) return '<span class="dl flat">مطابق لخط الأساس</span>';
     const cls = good === 0 ? 'flat' : (d * good > 0 ? 'up' : 'down');
-    return `<span class="dl ${cls}">${sgn(d, f)} <i>عن خط الأساس</i></span>`;
+    return `<span class="dl ${cls}">${sgn(d, f)}${unit ? ' ' + unit : ''} <i>عن خط الأساس</i></span>`;
   }
 
   // ---------- levers ----------
-  const pct0 = v => Math.round(v * 100) + '%';
+  const pct0 = v => ltr(Math.round(v * 100) + '%');
   const LEVERS = [
     { k: 'retAge', g: 'ret', t: 'range', min: 60, max: 65, step: 1, label: 'سن التقاعد النظامي', fmt: v => v + ' سنة', hint: 'عند التمديد يُفترض أن 65% ممن يبلغون الستين يختارون البقاء.' },
     { k: 'retScope', g: 'ret', t: 'seg', label: 'نطاق التمديد', opts: [['all', 'كل المجموعات'], ['scarce', 'التخصصات النادرة فقط']], fmt: v => v === 'all' ? 'كل المجموعات' : 'التخصصات النادرة فقط' },
@@ -30,7 +30,7 @@ const UF = (() => {
     { k: 'qTarget', g: 'qat', t: 'range', min: .3, max: .95, step: .05, label: 'حصة القطريين من التعيينات الجديدة', fmt: pct0, hint: 'هدف تُقيّده أعداد الخريجين المتاحين في كل مجموعة وظيفية.' },
     { k: 'pipeline', g: 'qat', t: 'range', min: 0, max: 1, step: .05, label: 'توسعة الابتعاث والتدريب', fmt: v => ltr('+' + Math.round(v * 100) + '%'), hint: 'زيادة أعداد الخريجين القطريين. يظهر الأثر بعد 4 سنوات.' },
     { k: 'redirect', g: 'qat', t: 'range', min: 0, max: .5, step: .05, label: 'توجيه الخريجين نحو التخصصات النادرة', fmt: pct0, hint: 'نسبة تُحوَّل من مسارات الإدارة والموارد البشرية وخدمة المتعاملين.' },
-    { k: 'replace', g: 'qat', t: 'range', min: 0, max: .10, step: .005, label: 'الإحلال السنوي', fmt: v => (v * 100).toFixed(1) + '%', hint: 'نسبة وظائف غير القطريين التي تُحوَّل سنوياً، بشرط توافر مرشح قطري.' },
+    { k: 'replace', g: 'qat', t: 'range', min: 0, max: .10, step: .005, label: 'الإحلال السنوي', fmt: v => ltr((v * 100).toFixed(1) + '%'), hint: 'نسبة وظائف غير القطريين التي تُحوَّل سنوياً، بشرط توافر مرشح قطري.' },
     { k: 'demand', g: 'dem', t: 'seg', label: 'نمو الطلب على الخدمات', opts: [['low', 'منخفض'], ['med', 'متوسط'], ['high', 'مرتفع']], fmt: v => ({ low: 'منخفض', med: 'متوسط', high: 'مرتفع' }[v]) },
     { k: 'dx', g: 'dem', t: 'range', min: 0, max: 1, step: .05, label: 'طموح التحول الرقمي', fmt: pct0, hint: 'عند 100% ينخفض الطلب على الوظائف الإدارية والمالية وخدمة المتعاملين 25% بحلول 2035 ويرتفع على التقنية 20%.' },
   ];
@@ -110,7 +110,7 @@ const UF = (() => {
     sd: { label: 'العرض والطلب', key: 'S', axis: v => C.num(Math.round(v)), val: n0, unit: 'موظف' },
     short: { label: 'العجز', key: 'short', axis: v => C.num(Math.round(v)), val: n0, unit: 'وظيفة شاغرة بلا شاغل', zero: true },
     q: { label: 'التقطير', key: 'q', axis: v => (v * 100).toFixed(0) + '%', val: p1, unit: 'نسبة القطريين', minSpan: .08 },
-    wage: { label: 'كتلة الأجور', key: 'W', axis: v => (v / 1e9).toFixed(v < 3e9 ? 2 : 1), val: v => C.qar(v), unit: 'مليار ر.ق سنوياً، بالأسعار الثابتة' },
+    wage: { label: 'كتلة الأجور', key: 'W', axis: v => (v / 1e9).toFixed(v < 3e9 ? 2 : 1), val: v => (v / 1e9).toFixed(2), unit: 'مليار ر.ق سنوياً، بالأسعار الثابتة' },
     ret: { label: 'التقاعدات', key: 'ret', axis: v => C.num(Math.round(v)), val: n0, unit: 'متقاعد في السنة (نظامي ومبكر)', zero: true },
   };
   function cardHTML(title) {
@@ -125,7 +125,7 @@ const UF = (() => {
         <input class="yr" type="range" min="0" max="${LAST}" step="1" aria-label="السنة المعروضة">
         <output class="yr-out num"></output>
       </div>
-      <p class="band-note">المساحة المظلّلة: النطاق الذي يقع فيه 80% من 200 مسار محتمل (P10–P90) عند اضطراب معدلات التسرّب والتقاعد المبكر ونمو الطلب.</p>
+      <p class="band-note">المساحة المظلّلة: النطاق الذي يقع فيه ${ltr('80%')} من 200 مسار محتمل (P10–P90) عند اضطراب معدلات التسرّب والتقاعد المبكر ونمو الطلب.</p>
     </div>`;
   }
   function cardBind(el) {
@@ -149,7 +149,7 @@ const UF = (() => {
       lines.push({ v: tb[M.key], cls: 'base', band: band(base, M.key), area: true, name: S.metric === 'sd' ? 'العرض — خط الأساس' : 'خط الأساس' });
     }
     UFC.horizon($('.hz', el), { lines, fmt: M.axis, year: S.year, onYear: i => setYear(i), zero: M.zero, minSpan: M.minSpan,
-      bench: S.metric === 'q' ? { v: C.RULES.qatarizationBenchmark, label: 'المستهدف المرجعي 60%' } : null, label: M.label + ' حتى 2040' });
+      bench: S.metric === 'q' ? { v: C.RULES.qatarizationBenchmark, label: 'المستهدف المرجعي ' + ltr('60%') } : null, label: M.label + ' حتى 2040' });
     $('.legend', el).innerHTML = lines.slice().reverse().map(l => `<span class="lg ${l.cls}"><i></i>${l.name}<b class="num">${ltr(M.val(l.v[S.year]))}</b></span>`).join('') +
       `<span class="lg-unit">${M.unit} · سنة ${num(E.Y0 + S.year)}</span>`;
     $$('[data-metric]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.metric === S.metric)));
@@ -181,7 +181,7 @@ const UF = (() => {
   let toastT; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); }
   let exp = null;
   function openExport(o) {
-    exp = o; $('#modalTitle').textContent = o.title; $('#modalNote').textContent = o.note || ''; $('#modalText').value = o.text; $('#modalStatus').textContent = '';
+    o.text = o.text.replace(/[\u2066\u2069]/g, ''); exp = o; $('#modalTitle').textContent = o.title; $('#modalNote').textContent = o.note || ''; $('#modalText').value = o.text; $('#modalStatus').textContent = '';
     $('#modal').hidden = false; $('#modalDownload').focus();
   }
   function closeAll() { $('#modal').hidden = true; $('#drawer').hidden = true; $('#scrim').hidden = true; }
@@ -219,7 +219,7 @@ const UF = (() => {
   function openMethod() {
     const rows = E.F.map((f, i) => `<tr><td>${esc(f.ar)}</td><td class="n">${n0(E.BASE.size[i])}</td><td class="n">${pct0(f.qShare)}</td><td class="n">${ltr((f.g * 100).toFixed(1) + '%')}</td><td class="n">${n0(E.BASE.P0[i])}</td><td class="n">${pct0(f.fill)}</td></tr>`).join('');
     const W = E.WEIGHTS;
-    $('#drawerBody').innerHTML = `
+    $('#drawerBody').innerHTML = bidi(`
       <section><h3>ما هذا النموذج؟</h3><p>نموذج مخزون وتدفقات بالأفواج العمرية (Cohort-component). الحالة هي عدد الموظفين في كل مجموعة وظيفية (12) × الجنسية (قطري / غير قطري) × العمر (22–64). يتقدّم النموذج سنة بسنة من 2026 إلى 2040. كل الأعداد والمعدلات افتراضية مولَّدة لأغراض العرض، وليست تنبؤاً.</p></section>
       <section><h3>خطوة السنة الواحدة</h3><div class="eq">stock[t+1] = stock[t]
           − early_retirement − attrition − statutory_retirement
@@ -239,7 +239,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
 (each term clamped to 0…1)</div><p>الأوزان افتراض قابل للنقاش، وتُعرض هنا ليُراجعها صاحب القرار.</p></section>
       <section><h3>المسار العكسي</h3><p>بحث عددي: تُحاكى 1,400 حزمة سياسات عشوائية على النموذج المرجّح، ثم يُجرى تحسين موضعي حول أفضلها. ليس ذكاءً اصطناعياً، ولا يضمن الحل الأمثل، لكنه يستكشف الفضاء أوسع مما تتيحه التجربة اليدوية.</p></section>
       <section><h3>افتراضات المجموعات الوظيفية</h3><div class="tbl-scroll"><table class="mini"><thead><tr><th>المجموعة</th><th class="n">العدد 2026</th><th class="n">التقطير</th><th class="n">نمو الطلب</th><th class="n">خريجون / سنة</th><th class="n">يُسر الاستقطاب</th></tr></thead><tbody>${rows}</tbody></table></div></section>
-      <section><h3>حدود النموذج</h3><ul><li>لا يمثّل الجهات فرادى ولا الدرجات الوظيفية ولا الترقيات.</li><li>التكلفة متوسطات بحسب الجنسية والفئة العمرية بالأسعار الثابتة، ولا تشمل التزامات التقاعد.</li><li>لا يحاكي سلوك الأفراد، ولا أثر السياسات في جاذبية القطاع الحكومي.</li><li>يحتاج التطبيق الفعلي إلى معايرة بالبيانات التاريخية للتعيين والتسرّب والتقاعد.</li></ul></section>`;
+      <section><h3>حدود النموذج</h3><ul><li>لا يمثّل الجهات فرادى ولا الدرجات الوظيفية ولا الترقيات.</li><li>التكلفة متوسطات بحسب الجنسية والفئة العمرية بالأسعار الثابتة، ولا تشمل التزامات التقاعد.</li><li>لا يحاكي سلوك الأفراد، ولا أثر السياسات في جاذبية القطاع الحكومي.</li><li>يحتاج التطبيق الفعلي إلى معايرة بالبيانات التاريخية للتعيين والتسرّب والتقاعد.</li></ul></section>`);
     $('#scrim').hidden = false; $('#drawer').hidden = false;
   }
 
@@ -249,7 +249,7 @@ experience   = 1 − (peak_retirement_rate − 1.5%) ÷ 2%
     const h = (location.hash || '').replace('#', '');
     go(views[h] ? h : 'scene');
   }
-  return { S, E, C, $, $$, views, LEVERS, SHOCKS, GROUPS, PRESETS, METRICS, D, LAST, n0, p1, num, sgn, delta, pct0, ltr, esc,
+  return { bidi, S, E, C, $, $$, views, LEVERS, SHOCKS, GROUPS, PRESETS, METRICS, D, LAST, n0, p1, num, sgn, delta, pct0, ltr, esc,
     same, presetOf, scenarioName, changes, compute, T, band, isBase, famName, setLevers, setYear, setFam, setMetric, play, stop, refresh, go,
     cardHTML, cardBind, cardUpdate, pyramidUpdate, toast, openExport, openMethod, closeAll, boot };
 })();

@@ -147,7 +147,7 @@ table.heat { border-collapse: separate; border-spacing: 2px; width: 100%; min-wi
 .sheet h3 { font-size: 15.5px; font-weight: 600; color: var(--sea); margin: 20px 0 4px; }
 .sheet p, .sheet li { font-size: 14px; color: #2D5560; }
 .sheet ul { margin: 4px 0; padding-inline-start: 20px; }
-.sheet code { font-family: var(--font); background: var(--foam); padding: 1px 6px; border-radius: 5px; font-size: 13px; direction: ltr; unicode-bidi: isolate; display: inline-block; }
+.sheet .formula { background: var(--foam); padding: 8px 12px; border-radius: 8px; font-weight: 500; color: var(--ink); }
 .x { position: absolute; top: 14px; inset-inline-end: 14px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); font-size: 18px; line-height: 1; }
 .modal { position: fixed; inset: 0; z-index: 90; display: none; place-items: center; padding: 16px; }
 .modal.on { display: grid; }

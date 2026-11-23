@@ -34,7 +34,7 @@
       <div class="wrap">
         <div class="snap" id="snap" aria-label="صورة سنة 2026">
           <div><span>إجمالي القوة العاملة</span><b class="num">${n0(t.S[0])}</b><small>موظف في 24 جهة افتراضية</small></div>
-          <div><span>نسبة التقطير</span><b class="num">${p1(t.q[0])}</b><small>المستهدف المرجعي 60%</small></div>
+          <div><span>نسبة التقطير</span><b class="num">${p1(t.q[0])}</b><small>المستهدف المرجعي ${ltr('60%')}</small></div>
           <div><span>من تجاوزوا الخمسين</span><b class="num">${p1(f.p0.share50)}</b><small>يبلغون سنّ التقاعد خلال عشر سنوات</small></div>
           <div><span>كتلة الأجور السنوية</span><b class="num">${ltr((t.W[0] / 1e9).toFixed(1))}</b><small>مليار ر.ق</small></div>
           <div><span>العجز الحالي</span><b class="num">${n0(t.short[0])}</b><small>وظيفة، أي ${p1(t.shortPct[0])} من الطلب</small></div>
@@ -46,7 +46,7 @@
         </div>
         <div class="findings" id="findings">
           <article>
-            <div class="f-top"><b class="num">${n0(f.retSum)}</b>${UFC.spark(Array.from(t.ret), 110, 30)}</div>
+            <div class="f-top"><b class="num">${n0(f.retSum)}</b>${UFC.spark(Array.from(t.ret).slice(1), 110, 30)}</div>
             <h3>موظف يغادرون بالتقاعد حتى 2040</h3>
             <p>أي ${p1(f.retSum / t.S[0])} من قوة اليوم. ترتفع التقاعدات السنوية من ${num(n0(t.ret[2]))} سنة 2028 إلى ذروة ${num(n0(t.ret[f.peakT]))} سنة ${num(E.Y0 + f.peakT)}.</p>
           </article>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="next">
-          <div><h2>ما الذي يمكن تغييره؟</h2><p>أحد عشر رافعة وثلاث صدمات. اختبرها واحدة واحدة أو ابدأ بسيناريو جاهز.</p></div>
+          <div><h2>ما الذي يمكن تغييره؟</h2><p>إحدى عشرة رافعة وثلاث صدمات. اختبرها واحدة واحدة أو ابدأ بسيناريو جاهز.</p></div>
           <button class="btn primary" type="button" data-go="lab">انتقل إلى منصة السياسات</button>
         </div>
       </div>`;
@@ -94,7 +94,7 @@
         return `<tr data-f="${i}" tabindex="0" class="${S.fam === i ? 'sel' : ''}">
           <th scope="row">${esc(f.ar)}${f.scarce ? '<em>تخصص نادر</em>' : ''}</th>
           <td class="n">${n0(t.S[0])}</td>
-          <td class="n q">${p1(t.q[0]).replace('.0', '')}<i>←</i><b class="${t.q[L] < t.q[0] - .005 ? 'down' : t.q[L] > t.q[0] + .005 ? 'up' : ''}">${p1(t.q[L])}</b></td>
+          <td class="q">${num(p1(t.q[0]))}<i>←</i><b class="num ${t.q[L] < t.q[0] - .005 ? 'down' : t.q[L] > t.q[0] + .005 ? 'up' : ''}">${p1(t.q[L])}</b></td>
           <td class="n">${p1(p.share50)}</td>
           <td class="gapc"><span class="gbar"><i style="width:${Math.min(100, Math.abs(g) / .10 * 100).toFixed(0)}%;background:${UFC.heatColor(g)}"></i></span><b class="num">${ltr((g * 100).toFixed(1) + '%')}</b><small class="num">${n0(Math.abs(t.D[L] - t.S[L]))}</small></td>
           <td class="sp">${UFC.spark(series, 96, 24, g > 0 ? 'neg' : '')}</td></tr>`;

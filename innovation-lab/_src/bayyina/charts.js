@@ -7,7 +7,7 @@
   // 1) عبء العمل: أعمدة السنوات (الأقدم يميناً) + إسقاط 2027 + خط طاقة الكادر الحالي بالمعدل المعياري
   C.workload = (q, a) => {
     if (!a.hasW) return `<div class="ch-empty">لم ترد بيانات عبء العمل من الجهة</div>`;
-    const v = [...q.workload.volume, a.proj], cap = a.avail * a.std, max = Math.max(...v, cap) * 1.12, W = 232, H = 104, b = 34, gap = 20, x0 = W - 12;
+    const v = [...q.workload.volume, a.proj], cap = a.avail * a.std, max = Math.max(...v, cap) * 1.12, W = 232, H = 104, b = 30, gap = 26, x0 = W - 10;
     const y = t => 84 - t / max * 68; let s = '';
     v.forEach((t, i) => { const x = x0 - (i + 1) * b - i * gap;
       s += `<rect x="${x}" y="${y(t)}" width="${b}" height="${84 - y(t)}" class="${i === 3 ? 'f-hatch s-maroon' : 'f-slate'}" ${i === 3 ? 'stroke-width="1.2" stroke-dasharray="3 2"' : ''}/>`
@@ -99,6 +99,6 @@
     return `<span class="meter g-${a.grade}" title="قوة الأدلة ${a.score} من 100"><i class="${lv >= 1 ? 'on' : ''}"></i><i class="${lv >= 2 ? 'on' : ''}"></i><i class="${lv >= 3 ? 'on' : ''}"></i><b>${BY.GRADES[a.grade]}</b>${withScore ? `<em>${a.score}</em>` : ''}</span>`; };
 
   // شريط «المطلوب ← الموصى به» في صف الطلب
-  C.reqbar = (a, max) => { const w = Math.max(10, Math.sqrt(a.R / max) * 100);
+  C.reqbar = (a, max) => { const w = Math.max(22, Math.sqrt(a.R / max) * 100);
     return `<span class="reqbar" style="--w:${w.toFixed(1)}%"><span class="rb-track"><i class="rb-new" style="width:${a.N / a.R * 100}%"></i><i class="rb-cov" style="width:${a.covered / a.R * 100}%"></i></span></span>`; };
 })();

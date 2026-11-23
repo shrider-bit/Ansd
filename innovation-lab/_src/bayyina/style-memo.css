@@ -1,0 +1,41 @@
+/* ---------- كتاب الرد: ورقة رسمية بخط النسخ ---------- */
+.memo { position: relative; background: var(--sheet); border: 1px solid var(--rule); box-shadow: 0 1px 0 var(--rule), 0 22px 40px -30px rgba(29, 24, 27, .55); padding: 58px 50px 30px; max-width: 800px; font-family: var(--doc); font-size: 16.5px; line-height: 2; color: var(--ink); }
+.memo p { margin-top: 8px; }
+.memo-mark { position: absolute; top: 18px; inset-inline-end: 44px; transform: rotate(-2.5deg); border: 1.5px dashed var(--maroon); color: var(--maroon); font: 600 11px/1.6 var(--ui); padding: 3px 12px; background: rgba(255, 255, 255, .85); pointer-events: none; }
+.memo-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 24px; flex-wrap: wrap; border-bottom: 3px double var(--ink); padding-bottom: 12px; }
+.memo-org b { display: block; font: 700 14.5px/1.6 var(--ui); } .memo-org span { display: block; font: 400 12px/1.6 var(--ui); color: var(--ink2); }
+.memo-meta { font-family: var(--ui); font-size: 12px; } .memo-meta div { display: flex; gap: 10px; } .memo-meta dt { color: var(--ink3); min-width: 44px; } .memo-meta dd { font-weight: 600; }
+.memo .memo-to { margin-top: 18px; font-weight: 700; font-size: 18px; display: flex; justify-content: space-between; gap: 12px; }
+.memo .memo-subject { text-align: center; margin: 14px 0 6px; padding: 5px 10px; border-block: 1px solid var(--rule); font-size: 16.5px; }
+.memo-dec { margin: 6px 0 4px; } .memo-dec li { margin-bottom: 2px; padding-inline-start: 4px; }
+.memo-table { width: 100%; border-collapse: collapse; margin: 12px 0 4px; font-family: var(--ui); }
+.memo-table th, .memo-table td { border: 1px solid var(--ink2); text-align: center; padding: 3px 6px; }
+.memo-table th { font-size: 11.5px; font-weight: 600; background: var(--wash); line-height: 1.6; } .memo-table td { font-size: 15px; } .memo-table td b { color: var(--maroon); font-size: 17px; }
+.memo h4 { font: 700 13.5px/1.6 var(--ui); margin-top: 16px; padding-bottom: 2px; border-bottom: 1px solid var(--rule); }
+.memo-why { margin-top: 4px; } .memo-why li { position: relative; padding-inline-start: 16px; font-size: 16px; }
+.memo-why li::before { content: ""; position: absolute; inset-inline-start: 2px; top: .95em; width: 5px; height: 5px; background: var(--brass); transform: rotate(45deg); }
+.memo-why b { font-family: var(--ui); font-size: 12.5px; font-weight: 700; }
+.memo-follow { list-style: decimal; padding-inline-start: 24px; margin-top: 4px; font-size: 16px; }
+.memo .memo-close { margin-top: 16px; }
+.memo-sign { margin-top: 18px; margin-inline-start: auto; width: 250px; text-align: center; font-family: var(--ui); }
+.memo-sign b { display: block; font-size: 13.5px; font-weight: 700; } .memo-sign span { display: block; margin-top: 6px; padding: 14px 0; border: 1px dashed var(--ink4); font-size: 11px; color: var(--ink3); }
+.memo-foot { margin-top: 22px; padding-top: 8px; border-top: 1px solid var(--rule); font: 400 10.5px/1.7 var(--ui); color: var(--ink3); text-align: center; }
+
+@media (max-width: 760px) {
+  .memo { padding: 26px 18px 20px; font-size: 15.5px; } .memo-mark { top: 10px; inset-inline-end: 12px; font-size: 10px; } .memo { padding-top: 48px; }
+  .memo .memo-to { font-size: 16px; } .memo-table th { font-size: 10px; padding: 2px 3px; } .memo-table td { font-size: 13.5px; } .memo-sign { width: 210px; }
+}
+
+/* ---------- الطباعة ---------- */
+@media print {
+  @page { size: A4; margin: 15mm 16mm 16mm; }
+  body { background: #fff; }
+  .top, .page-foot, .toast, #tour, .modal, .drawer { display: none !important; }
+  .sheet { border: 0; padding: 0; max-width: none; }
+  body.printing > *:not(#print-root) { display: none !important; }
+  body.printing #print-root { display: block; }
+  #print-root .memo { border: 0; box-shadow: none; padding: 0; max-width: none; font-size: 12.5pt; line-height: 1.85; }
+  #print-root .memo-mark { top: 0; inset-inline-end: 2mm; } #print-root .memo { padding-top: 12mm; }
+  .memo-table, .memo-sign, .memo-why li, .memo-follow li { break-inside: avoid; }
+  .memo-table th { background: #f4f2f3 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

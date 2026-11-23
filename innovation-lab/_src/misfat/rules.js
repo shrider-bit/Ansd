@@ -215,9 +215,11 @@ MF.analyzeSteps = (table, map, settings) => {
     const order = { high: 0, med: 1, low: 2 };
     ctx.issues.sort((a, b) => order[a.sev] - order[b.sev] || b.n - a.n);
     ctx.score = MF.score(ctx, N);
-    const marks = new Map(); const rank = { low: 1, med: 2, high: 3 };
-    for (const is of ctx.issues) for (const [r, c] of is.cells) { const k = r * 4096 + c; const cur = marks.get(k); if (!cur || rank[is.sev] > rank[cur]) marks.set(k, is.sev); }
-    ctx.marks = marks;
+    // per-cell index: worst severity + which issues touch the cell (drives table highlighting and tooltips)
+    const marks = new Map(), cellIss = new Map(); const rank = { low: 1, med: 2, high: 3 };
+    ctx.issues.forEach((is, k) => { for (const [r, c] of is.cells) { const key = r * 4096 + c; const cur = marks.get(key);
+      if (!cur || rank[is.sev] > rank[cur]) marks.set(key, is.sev); const a = cellIss.get(key); if (a) a.push(k); else cellIss.set(key, [k]); } });
+    ctx.marks = marks; ctx.cellIss = cellIss;
   }]);
   return { steps, ctx };
 };

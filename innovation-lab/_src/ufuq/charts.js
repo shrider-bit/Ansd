@@ -4,8 +4,10 @@ const UFC = (() => {
   const E = UFE, NY = E.NY, NA = E.NA;
   const ltr = s => '⁦' + s + '⁩';                     // isolate numbers so signs/units keep their order in RTL
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  // physical anchor → SVG text-anchor under direction: rtl
-  const ANCH = { right: 'start', left: 'end', mid: 'middle' };
+  // where the text sits relative to x → SVG text-anchor under direction: rtl (start = right edge of the text)
+  const ANCH = { right: 'end', left: 'start', mid: 'middle' };
+  /* isolate every percentage / signed number in running Arabic text so it renders as 45.9% */
+  const bidi = s => String(s).replace(/[+−±≥≤]?\d[\d,.]*%/g, m => ltr(m));
   const txt = (x, y, s, a = 'mid', cls = '') => `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${ANCH[a]}" class="${cls}">${esc(s)}</text>`;
 
   function niceTicks(lo, hi, n = 4) {
@@ -49,7 +51,7 @@ const UFC = (() => {
     }
     if (cfg.bench) {
       const y = Y(cfg.bench.v);
-      s += `<line class="hz-bench" x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}"/>` + txt(W - pr - 6, y - 6, cfg.bench.label, 'right', 'hz-benchl');
+      s += `<line class="hz-bench" x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}"/>` + txt(W - pr - 6, y - 6, cfg.bench.label, 'left', 'hz-benchl');
     }
     // bands, then areas, then lines (scenario last so it sits on top)
     for (const l of cfg.lines) if (l.band) {
@@ -97,7 +99,7 @@ const UFC = (() => {
       host._sig = sig; host._max = max * 1.12;
       const yA = a => top + (NA - 1 - a) * rowH;
       let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="الهرم العمري">`;
-      s += txt(W - 4, 13, 'قطريون', 'right', 'py-h q') + txt(4, 13, 'غير قطريين', 'left', 'py-h n');
+      s += txt(W - 4, 13, 'قطريون', 'left', 'py-h q') + txt(4, 13, 'غير قطريين', 'right', 'py-h n');
       for (let a = 0; a < NA; a++) {
         const age = E.A0 + a;
         if (age % 5 === 0) s += txt(cx, yA(a) + rowH - .5, ltr(String(age)), 'mid', 'py-age');
@@ -133,6 +135,7 @@ const UFC = (() => {
     const a = Math.min(1, Math.abs(v) / .10);
     return v >= 0 ? `rgba(226, 84, 120, ${(.08 + a * .78).toFixed(3)})` : `rgba(134, 188, 203, ${(.08 + a * .7).toFixed(3)})`;
   }
+  const cell = v => { const s = (v * 100).toFixed(Math.abs(v) < .0995 ? 1 : 0); return parseFloat(s) === 0 ? '0.0' : s.replace('-', '−'); };
   function heatmap(host, cfg) {
     host._cfg = cfg;
     let s = '<div class="hm" role="grid" aria-label="العجز والفائض حسب المجموعة الوظيفية والسنة"><div class="hm-row hm-head"><span></span>';
@@ -142,7 +145,7 @@ const UFC = (() => {
       s += `<div class="hm-row${r.i === cfg.fam ? ' sel' : ''}" role="row"><button type="button" class="hm-lab" data-f="${r.i}" title="تصفية الرسوم على هذه المجموعة">${esc(r.label)}</button>`;
       for (let t = 0; t < NY; t++) {
         const v = r.v[t];
-        s += `<span class="hm-c${t === cfg.year ? ' on' : ''}" role="gridcell" data-f="${r.i}" data-t="${t}" style="background:${heatColor(v)}"><b>${ltr((v * 100).toFixed(Math.abs(v) < .0995 ? 1 : 0))}</b></span>`;
+        s += `<span class="hm-c${t === cfg.year ? ' on' : ''}" role="gridcell" data-f="${r.i}" data-t="${t}" style="background:${heatColor(v)}"><b>${ltr(cell(v))}</b></span>`;
       }
       s += '</div>';
     }
@@ -217,5 +220,5 @@ const UFC = (() => {
     });
   }
 
-  return { horizon, pyramid, heatmap, heatColor, gauge, spark, scatter, ltr, esc, niceTicks };
+  return { horizon, pyramid, heatmap, heatColor, gauge, spark, scatter, ltr, bidi, esc, niceTicks };
 })();

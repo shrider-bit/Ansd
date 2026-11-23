@@ -6,9 +6,18 @@ const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce
 const fam = f => D.F[f], famShort = f => D.FSHORT[D.F[f].id], famColor = f => D.FCOLOR[D.F[f].id];
 const ent = e => D.E[e];
 const band = b => CGB.GRADE_BANDS[b];
-const pc = v => Math.round(v * 100) + '%';
-const DUR = n => (n.dur === 'perm' ? 'دائم' : n.dur === 'temp' ? `مؤقت ${n.months} شهراً` : `مشروع ${n.months} شهراً`);
+const PCT = n => '\u2066' + n + '%\u2069';            // keeps "92%" reading left-to-right inside Arabic text
+const pc = v => PCT(Math.round(v * 100));
+// Arabic counted-noun agreement: 3–10 plural, 11–99 singular accusative, otherwise the bare singular
+const NOUN = { move: ['تحرك', 'تحركات', 'تحركاً'], need: ['احتياج', 'احتياجات', 'احتياجاً'], talent: ['كفاءة', 'كفاءات', 'كفاءة'],
+  trainee: ['متدرب', 'متدربين', 'متدرباً'], bridge: ['جسر', 'جسور', 'جسراً'], week: ['أسبوع', 'أسابيع', 'أسبوعاً'], month: ['شهر', 'أشهر', 'شهراً'],
+  year: ['سنة', 'سنوات', 'سنة'], day: ['يوم', 'أيام', 'يوماً'], job: ['وظيفة', 'وظائف', 'وظيفة'], emp: ['موظف', 'موظفين', 'موظفاً'], pair: ['زوج', 'أزواج', 'زوجاً'] };
+const unit = (n, k) => { const r = Math.abs(n) % 100, w = NOUN[k]; return r >= 3 && r <= 10 ? w[1] : r >= 11 ? w[2] : w[0]; };
+const ar = (n, k) => CGB.num(n) + ' ' + unit(n, k);
+const yearsAr = n => (n <= 0 ? 'أقل من سنة' : n === 1 ? 'سنة واحدة' : n === 2 ? 'سنتان' : ar(n, 'year'));
+const DUR = n => (n.dur === 'perm' ? 'دائم' : n.dur === 'temp' ? `مؤقت ${ar(n.months, 'month')}` : `مشروع ${ar(n.months, 'month')}`);
 
+let tourI = -1;
 const S = {
   view: 'map', P: JSON.parse(JSON.stringify(O.DEFAULTS)), preset: 'balanced',
   dec: new Map(), rejected: [], res: null, moves: [], dirty: false, dirtyWhy: '',
@@ -57,6 +66,7 @@ function go(view, opts = {}) {
 
 /* ---- small UI utilities ---- */
 function toast(msg, ms = 2600) {
+  if (tourI >= 0) return;                    // keep the tour card clear
   const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; $('#toasts').appendChild(el);
   setTimeout(() => el.remove(), ms);
 }
@@ -113,7 +123,6 @@ const TOUR = [
   { view: 'moves', sel: '#cards', title: 'القرار للإنسان',
     text: 'كل مقترح مفسَّر: المهارات المطابقة والناقصة وآلية التحرك. اعتمد أو ثبّت أو ارفض، ثم أعد التخصيص فيُبنى الحل حول قراراتك. بعدها تصدر «خطة التدوير» ورقةَ قرار جاهزة.' },
 ];
-let tourI = -1;
 function tourStart() { tourI = -1; $('#tour').classList.add('on'); tourStep(0); }
 function tourEnd() { if (tourI < 0) return; tourI = -1; $('#tour').classList.remove('on'); }
 function tourStep(i) {

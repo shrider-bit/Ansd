@@ -1,0 +1,287 @@
+name: "CGB"
+philosophy: "Official and calm. White pages, one maroon voice, Arabic first. A strong formal colour held back by a lot of white space."
+primary_mode: "light"
+brand_domain: "government HR analytics: Arabic RTL reports, dashboards, the team task system, launch pages and slides"
+brand_type: "ui-rich"
+mono_for_code: true      # Latin codes only: SAP field names, file names, entity codes
+mono_for_metrics: false  # every figure stays in the brand face with tabular numerals
+direction: "rtl"
+language: "ar"
+digits: "western"        # 0-9 everywhere; never mix with Arabic-Indic digits in one deliverable
+
+# Where each value comes from. "source" names the existing CGB skill that already fixed it.
+sources:
+  identity: "cgb-design-polish (maroon, deep maroon, pink, navy, Lusail+, RTL rules, bans)"
+  surfaces: "cgb-html-report (white, panel, line, text, muted) and dashboard-html-cgb (dark surfaces, status colours)"
+  gold: "dashboard-html-cgb and cgb-html-report (#E9C56B)"
+  added_by_hue: "8px spacing grid, ramp steps between the fixed colours, text-safe status shades, radius and motion tokens"
+
+# PRIMITIVES
+primitives:
+  colors:
+    neutral:              # maroon-tinted greys, anchored on the existing CGB surface values
+      0: "#FFFFFF"        # fixed: page
+      50: "#F8F5F6"       # fixed: panel
+      100: "#F5F0F2"      # fixed: dark-mode text
+      150: "#EFE8EA"
+      200: "#E6DDE0"      # fixed: line
+      300: "#D3C6CA"
+      400: "#A8999E"
+      500: "#7A6B70"
+      600: "#6B6B6B"      # fixed: muted text
+      700: "#4A3840"
+      750: "#3A2830"
+      800: "#2A1A1F"      # fixed: dark panel
+      900: "#1F1F1F"      # fixed: text
+      950: "#1A1014"      # fixed: dark page
+    brand:                # CGB maroon, 500 = primary
+      50: "#FBF0F3"
+      100: "#F5D9E1"
+      200: "#E8A9BC"
+      300: "#D4708E"
+      400: "#B4345A"
+      500: "#8E1837"      # fixed: maroon
+      600: "#7B1436"      # fixed: deep maroon
+      700: "#651029"
+      800: "#4A0E1E"      # fixed: dark sidebar
+      900: "#360A16"
+      950: "#22060E"
+    pink:  { 50: "#FDECF1", 500: "#DF456D", 900: "#5C1228" }   # fixed 500: highlight
+    navy:  { 50: "#EAF0FA", 300: "#8FAEE6", 500: "#002C77", 900: "#001A47" }   # fixed 500: secondary
+    gold:  { 50: "#FCF6E4", 500: "#E9C56B", 700: "#8A6A14", 900: "#4A3A0C" }   # fixed 500: non-Qatari, in progress
+    green: { 50: "#E6F7EE", 500: "#00B050", 700: "#0A7A3D", 900: "#0B3D22" }   # fixed 500: done
+    red:   { 50: "#FBEAEA", 300: "#F08A8A", 500: "#C00000", 900: "#4A0E0E" }   # fixed 500: late
+    grey:  { 500: "#A6A6A6" }                                                   # fixed: on hold
+  spacing: [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96]
+  radii: [6, 10, 14, 16, 999]
+
+# SEMANTIC TOKENS
+tokens:
+  colors:
+    light:
+      background: "{neutral.0}"
+      surface1: "{neutral.50}"
+      surface2: "{neutral.150}"
+      surface3: "{neutral.200}"
+      border: "{neutral.200}"
+      border_visible: "{neutral.300}"
+      text1: "{neutral.900}"
+      text2: "{neutral.600}"
+      text3: "{neutral.500}"
+      text4: "{neutral.400}"
+      accent: "{brand.500}"          # links, selected state, focus, indicators
+      accent_fill: "{brand.500}"     # primary button, header band, sidebar
+      accent_fill_hover: "{brand.600}"
+      on_accent: "{neutral.0}"
+      on_accent_soft: "#FFFFFFB8"    # secondary text on maroon: a tint of white, never grey
+      accent_subtle: "{brand.50}"
+      info: "{navy.500}"
+      info_bg: "{navy.50}"
+      highlight: "{pink.500}"
+      success_text: "{green.700}"
+      warning_text: "{gold.700}"
+      error_text: "{red.500}"
+      success_bg: "{green.50}"
+      warning_bg: "{gold.50}"
+      error_bg: "{red.50}"
+    dark:
+      background: "{neutral.950}"
+      surface1: "{neutral.800}"
+      surface2: "{neutral.750}"
+      surface3: "{neutral.700}"
+      border: "{neutral.750}"
+      border_visible: "{neutral.700}"
+      text1: "{neutral.100}"
+      text2: "{neutral.300}"
+      text3: "{neutral.400}"
+      text4: "{neutral.500}"
+      accent: "{pink.500}"           # maroon is too dark to read on the dark page; the official pink carries text and indicators
+      accent_fill: "{brand.400}"
+      accent_fill_hover: "{brand.500}"
+      on_accent: "{neutral.0}"
+      on_accent_soft: "#FFFFFFB8"
+      accent_subtle: "{brand.900}"
+      info: "{navy.300}"
+      info_bg: "{navy.900}"
+      highlight: "{pink.500}"
+      success_text: "{green.500}"
+      warning_text: "{gold.500}"
+      error_text: "{red.300}"
+      success_bg: "{green.900}"
+      warning_bg: "{gold.900}"
+      error_bg: "{red.900}"
+    # Status fills (dots, bars, chart marks). Same in both modes.
+    success: "{green.500}"
+    warning: "{gold.500}"
+    error: "{red.500}"
+    # Fixed data colours. Never swap, never restyle.
+    chart:
+      qatari: "{brand.500}"          # dark mode: {brand.400}
+      qatari_dark: "{brand.400}"
+      non_qatari: "{gold.500}"
+    task_status:
+      new: "{navy.500}"              # لم تبدأ
+      in_progress: "{gold.500}"      # قيد التنفيذ
+      done: "{green.500}"            # مكتمل
+      late: "{red.500}"              # متأخر
+      on_hold: "{grey.500}"          # موقوف
+
+  spacing:
+    2xs: 2
+    xs: 4
+    sm: 8
+    md: 16
+    lg: 24
+    xl: 32
+    2xl: 48
+    3xl: 64
+    4xl: 96
+
+  radii:
+    element: 6       # checkboxes, small icon buttons
+    control: 10      # buttons, inputs, selects
+    component: 14    # cards, panels, tables
+    container: 16    # modals, sheets
+    pill: 999        # badges, tags, segmented control only
+
+  typography:
+    display: { family: "Lusail+", fallback: "Tajawal, Cairo, Arial, sans-serif", size: "40px", weight: 700, line_height: 1.3 }
+    body:    { family: "Lusail+", fallback: "Tajawal, Cairo, Arial, sans-serif", size: "16px", weight: 400, line_height: 1.75 }
+    mono:    { family: "IBM Plex Mono", fallback: "ui-monospace, Consolas, monospace", size: "13px", weight: 400 }
+    web_fallback_loader: "https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    letter_spacing: "0 on every size. Arabic is a joined script and is never tracked."
+    scale:
+      display:    { size: "40px", line_height: 1.3,  weight: 700 }
+      heading:    { size: "28px", line_height: 1.35, weight: 700 }
+      subheading: { size: "20px", line_height: 1.4,  weight: 700 }
+      body:       { size: "16px", line_height: 1.75, weight: 400 }
+      body_sm:    { size: "14px", line_height: 1.7,  weight: 400 }
+      caption:    { size: "13px", line_height: 1.6,  weight: 400 }
+      label:      { size: "12px", line_height: 1.5,  weight: 500 }
+
+  elevation:
+    strategy: "flat"
+    rule: "A card has a 1px border and no shadow. A floating layer (menu, popover, modal) has a soft offset shadow and no border. Never both."
+    shadow_1: "none"
+    shadow_2_light: "0 8px 24px -12px rgba(31, 31, 31, 0.18)"
+    shadow_2_dark:  "0 8px 24px -12px rgba(0, 0, 0, 0.6)"
+    shadow_3_light: "0 24px 48px -20px rgba(31, 31, 31, 0.28)"
+    shadow_3_dark:  "0 24px 48px -20px rgba(0, 0, 0, 0.7)"
+
+  motion:
+    personality: "mechanical"
+    easing: "cubic-bezier(0.22, 1, 0.36, 1)"
+    duration_fast: "150ms"
+    duration_normal: "200ms"
+    duration_slow: "250ms"
+    rule: "State change and feedback only. One authored entrance is allowed on a persuade page."
+
+  hero_stage:
+    preset: "flat-blank"
+    observed_style:
+      description: "A solid deep-maroon field with white type. No gradient, no pattern, no foreground subject. The official CGB cover image may replace the field; nothing else may."
+      where_used: ["launch page hero", "report total banner", "slide covers"]
+    background:
+      medium: "absent"
+      color_mode: "monochrome"
+      saturation: "flat"
+      light_source: "none"
+      falloff: "hard"
+      vignette: "off"
+      texture: "clean"
+      motion: "static"
+      intensity: "subtle"
+      safe_zone: "full-bleed"
+      color_palette: ["#7B1436", "#8E1837", "#FFFFFF"]
+    hero:
+      subject: "none"
+    relation:
+      type: "flat"
+      bleed: 0
+    disclaimer: "The official CGB cover and closing images and the CGB logo are not included in this skill. Use the official files; never draw a look-alike."
+
+  iconography:
+    observed_style:
+      description: "Not observed. The existing CGB pages reviewed for this skill carry almost no icons, and the design guide only requires one real icon set at one stroke weight, with no emoji."
+      stroke_weight: "regular"
+      corner_treatment: "soft"
+      fill_style: "outline"
+      form_language: "geometric"
+      visual_density: "balanced"
+    fallback_kit:
+      name: "Tabler Icons"
+      weight: "outline (2px on a 24px grid)"
+      match_score: "medium"
+      match_reasoning: "Dashboards and data tools need breadth (charts, tables, filters, people, calendars), which is Tabler's strength. Its plain geometric outline stays neutral beside Arabic type. Lucide was second choice but has fewer data glyphs. Score is medium because there is no observed CGB icon style to match against."
+      cdn: "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.41.1/dist/tabler-icons.min.css"
+      icon_class_prefix: "ti ti-"
+      delivery: "Inline SVG copied from the @tabler/icons package, so pages stay self-contained and work offline."
+      rtl: "Mirror directional icons (arrows, chevrons, back and next). Never mirror search, clock, check or calendar."
+    disclaimer: "Icons are from the freely licensed Tabler kit. They are not official CGB artwork."
+
+components:
+  button_primary:
+    source: "derived"
+    justified_by: "Maroon is the single voice of the brand; verb plus object label"
+    background: "{accent_fill}"
+    color: "{on_accent}"
+    height: "44px"
+    padding: "0 20px"
+    radius: "{radii.control}"
+    font_weight: 500
+    hover: { background: "{accent_fill_hover}" }
+  button_secondary:
+    source: "derived"
+    background: "transparent"
+    color: "{text1}"
+    border: "1px solid {border_visible}"
+    hover: { background: "{surface1}" }
+  card:
+    source: "observed"
+    observed_in: "cgb-html-report panels"
+    background: "{background}"
+    border: "1px solid {border}"
+    radius: "{radii.component}"
+    padding: "{spacing.lg}"
+    shadow: "none"
+  total_banner:
+    source: "observed"
+    observed_in: "cgb-html-report maroon total banner"
+    background: "{accent_fill}"
+    color: "{on_accent}"
+    radius: "{radii.component}"
+  sidebar:
+    source: "observed"
+    observed_in: "dashboard-html-cgb"
+    background_light: "{brand.500}"
+    background_dark: "{brand.800}"
+    color: "{on_accent}"
+  status_badge:
+    source: "observed"
+    observed_in: "dashboard-html-cgb task statuses"
+    radius: "{radii.pill}"
+    padding: "4px 10px"
+    line_height: 1
+  data_table:
+    source: "derived"
+    justified_by: "First column on the right, numeric columns aligned the same way in every table, sticky header"
+  input:
+    source: "derived"
+    height: "44px"
+    border: "1px solid {border_visible}"
+    radius: "{radii.control}"
+    focus: "border {accent} plus 3px ring {accent_subtle}"
+
+app_screen:
+  archetype: "list-detail"
+  frame: "browser"
+  frame_params:
+    url: "tasks.example.gov.qa/q4"
+    title: "نظام مهام الفريق"
+  content_seed: "The team task system: maroon sidebar, a list of twelve tasks with status badges, and the selected task open with its details and activity. All names and figures are illustrative."
+  required_tokens_checklist:
+    - "background, surface1, surface2, surface3, border, border_visible"
+    - "text1, text2, text3, text4"
+    - "accent, accent_fill, accent_subtle, success, warning, error and their tints"
+    - "all seven type scale tokens"
+    - "radii element, control, component, pill"

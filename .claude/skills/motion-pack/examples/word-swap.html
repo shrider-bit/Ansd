@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Swap Hero</title>
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --fg: #ffffff;
+    --muted: #4a4a4f;
+    --accent: #f97316;
+    --dot: #2a2a2e;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-state: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+  }
+  .hero {
+    width: 100%;
+    max-width: 960px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -20% 10%;
+    background: radial-gradient(closest-side, rgba(249,115,22,.14), transparent);
+    filter: blur(20px);
+    z-index: -1;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #8a8a90;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-size: clamp(40px, 9vw, 96px);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .12em;
+  }
+  .muted { color: var(--muted); }
+
+  /* The pill */
+  .pill {
+    position: relative;
+    display: inline-block;
+    height: 1.18em;
+    border-radius: .28em;
+    background: var(--accent);
+    overflow: hidden;
+    transition: width 420ms var(--ease-state);
+    box-shadow: 0 10px 40px -10px rgba(249,115,22,.55);
+  }
+  .word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0 .32em;
+    line-height: 1.18em;
+    white-space: nowrap;
+    color: #fff;
+    transform: translateY(100%);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .word.is-active { transform: translateY(0); opacity: 1; }
+  .word.anim-in  { transition: transform 450ms var(--ease-out), opacity 450ms var(--ease-out); }
+  .word.anim-out { transition: transform 400ms var(--ease-out), opacity 300ms var(--ease-out); transform: translateY(-100%); opacity: 0; }
+  .measure { position: absolute; visibility: hidden; white-space: nowrap; padding: 0 .32em; pointer-events: none; }
+
+  /* Dots */
+  .dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 99px;
+    background: var(--dot);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: width 420ms var(--ease-state), background 300ms;
+  }
+  .dot[aria-current="true"] { width: 28px; background: var(--accent); }
+  .dot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  .cta {
+    margin-top: 36px;
+    display: inline-flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid #2a2a2e;
+    background: transparent;
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .btn.primary { background: #fff; color: #000; border-color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pill, .word, .dot { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <section class="hero">
+    <p class="eyebrow">Studio · Built with Claude</p>
+    <h1 id="headline" aria-label="We build landing pages that convert.">
+      <span aria-hidden="true">We build</span>
+      <span class="pill" id="pill" aria-hidden="true"></span>
+      <span class="muted" aria-hidden="true">that convert.</span>
+    </h1>
+    <div class="dots" id="dots" role="tablist" aria-label="Choose what we build"></div>
+    <div class="cta">
+      <button class="btn primary">Start a project</button>
+      <button class="btn">See our work</button>
+    </div>
+  </section>
+
+<script>
+(() => {
+  const WORDS = ["landing pages", "dashboards", "portfolios", "SaaS apps"];
+  const INTERVAL = 2200;
+
+  const pill = document.getElementById("pill");
+  const dotsEl = document.getElementById("dots");
+  const headline = document.getElementById("headline");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Build word layers, a measuring span and dots
+  const measure = document.createElement("span");
+  measure.className = "measure";
+  pill.appendChild(measure);
+
+  const words = WORDS.map((w, i) => {
+    const el = document.createElement("span");
+    el.className = "word" + (i === 0 ? " is-active" : "");
+    el.textContent = w;
+    pill.appendChild(el);
+    return el;
+  });
+
+  const dots = WORDS.map((w, i) => {
+    const b = document.createElement("button");
+    b.className = "dot";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-label", w);
+    b.setAttribute("aria-current", i === 0 ? "true" : "false");
+    b.addEventListener("click", () => { go(i); restart(); });
+    dotsEl.appendChild(b);
+    return b;
+  });
+
+  let widths = [];
+  const measureAll = () => {
+    widths = WORDS.map(w => { measure.textContent = w; return measure.getBoundingClientRect().width; });
+    pill.style.width = widths[current] + "px";
+  };
+
+  let current = 0;
+  function go(next) {
+    if (next === current) return;
+    const out = words[current], inn = words[next];
+
+    out.classList.remove("anim-in");
+    out.classList.add("anim-out");
+    out.classList.remove("is-active");
+
+    // reset incoming to below without transition, then animate in
+    inn.classList.remove("anim-out", "anim-in", "is-active");
+    inn.style.transform = "translateY(100%)";
+    inn.style.opacity = "0";
+    void inn.offsetWidth;
+    inn.style.transform = "";
+    inn.style.opacity = "";
+    inn.classList.add("anim-in", "is-active");
+
+    pill.style.width = widths[next] + "px";
+    dots[current].setAttribute("aria-current", "false");
+    dots[next].setAttribute("aria-current", "true");
+    headline.setAttribute("aria-label", `We build ${WORDS[next]} that convert.`);
+
+    const prev = out;
+    setTimeout(() => prev.classList.remove("anim-out"), 450);
+    current = next;
+  }
+
+  // Loop that pauses off-screen and when the tab is hidden
+  let timer = null, visible = true;
+  const tick = () => go((current + 1) % WORDS.length);
+  const start = () => { if (!timer && !reduce && visible && !document.hidden) timer = setInterval(tick, INTERVAL); };
+  const stop = () => { clearInterval(timer); timer = null; };
+  const restart = () => { stop(); start(); };
+
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }, { threshold: 0.3 })
+    .observe(document.querySelector(".hero"));
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { measureAll(); start(); });
+  addEventListener("resize", measureAll);
+})();
+</script>
+</body>
+</html>
